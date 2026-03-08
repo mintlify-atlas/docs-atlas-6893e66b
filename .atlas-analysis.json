@@ -1,0 +1,124 @@
+{
+  "projectType": "general",
+  "projectName": "ImageGlass",
+  "projectDescription": "A lightweight, versatile image viewer for Windows with support for 90+ image formats",
+  "theme": "palm",
+  "primaryColor": "#0e87d0",
+  "lightColor": "#81cce9",
+  "darkColor": "#040404",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "installation",
+              "quickstart"
+            ]
+          },
+          {
+            "group": "User Guide",
+            "pages": [
+              "guide/features",
+              "guide/supported-formats",
+              "guide/keyboard-shortcuts",
+              "guide/mouse-gestures",
+              "guide/viewing-images",
+              "guide/image-operations"
+            ]
+          },
+          {
+            "group": "Configuration",
+            "pages": [
+              "configuration/settings-overview",
+              "configuration/appearance",
+              "configuration/performance",
+              "configuration/advanced-configs",
+              "configuration/themes",
+              "configuration/languages"
+            ]
+          },
+          {
+            "group": "Advanced Features",
+            "pages": [
+              "advanced/slideshow",
+              "advanced/color-management",
+              "advanced/editing-integration",
+              "advanced/clipboard-operations",
+              "advanced/exif-metadata"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "CLI Reference",
+        "groups": [
+          {
+            "group": "Command Line",
+            "pages": [
+              "cli/overview",
+              "cli/igcmd-commands",
+              "cli/quick-setup",
+              "cli/set-wallpaper",
+              "cli/file-associations",
+              "cli/export-frames"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Development",
+        "groups": [
+          {
+            "group": "Contributing",
+            "pages": [
+              "development/getting-started",
+              "development/architecture",
+              "development/building-from-source",
+              "development/contributing-guide",
+              "development/translations"
+            ]
+          },
+          {
+            "group": "Extensions",
+            "pages": [
+              "development/theme-development",
+              "development/language-packs"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "Support for 90+ image formats including WEBP, GIF, SVG, PNG, JXL, HEIC, AVIF",
+    "Direct2D hardware-accelerated rendering for smooth performance",
+    "Customizable themes and language packs",
+    "Slideshow mode with configurable intervals",
+    "Command-line utilities for automation and integration",
+    "Color profile management and EXIF metadata display",
+    "Image editing integration and clipboard operations",
+    "Touch and gesture support for Windows tablets",
+    "Set desktop wallpaper and lock screen background",
+    "Export frames from animated images"
+  ],
+  "publicApiSurface": [
+    "igcmd quick_setup - Quick setup wizard for first-time users",
+    "igcmd set_wallpaper <path> <style> - Set desktop wallpaper",
+    "igcmd set_default_photo_viewer [exts] - Register as default photo viewer",
+    "igcmd remove_default_photo_viewer [exts] - Unregister as default photo viewer",
+    "igcmd start_slideshow <path> - Start slideshow from file",
+    "igcmd export_frames <path> - Export frames from animated images",
+    "igcmd check_for_update - Check for application updates",
+    "igcmd install_languages <paths> - Install language packs",
+    "igcmd install_themes <paths> - Install theme packs",
+    "igcmd uninstall_theme <path> - Uninstall theme pack",
+    "igcmd set_lock_screen <path> - Set Windows lock screen background",
+    "igcmd lossless_compress <path> - Lossless image compression",
+    "igcmd set_startup_boost - Enable startup optimization",
+    "igcmd remove_startup_boost - Disable startup optimization"
+  ]
+}
