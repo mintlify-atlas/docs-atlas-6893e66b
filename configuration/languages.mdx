@@ -1,0 +1,450 @@
+---
+title: Languages
+description: Install and manage language packs for ImageGlass localization
+icon: language
+---
+
+## Language System Overview
+
+ImageGlass supports multiple languages through `.iglang.json` language pack files. Each language pack contains translations for all UI text, menus, and messages.
+
+## Language File Location
+
+Language packs can be installed in two locations:
+
+<CodeGroup>
+```text User Language Packs
+%APPDATA%\ImageGlass\Languages\*.iglang.json
+```
+
+```text Built-in Language Packs
+[ImageGlass Installation]\Languages\*.iglang.json
+```
+</CodeGroup>
+
+User language packs take precedence over built-in packs.
+
+## Setting Language
+
+### Via Configuration File
+
+<ParamField path="Language" type="string" default="English">
+  Language pack filename (with or without `.iglang.json` extension)
+  
+  **Example:** `"Language": "Spanish.iglang.json"`
+  
+  Or simply: `"Language": "Spanish"`
+</ParamField>
+
+### Via Settings UI
+
+<Steps>
+  <Step title="Open Settings">
+    Launch ImageGlass → Menu → Settings
+  </Step>
+  
+  <Step title="Navigate to Language">
+    Click **Language** in the left sidebar
+  </Step>
+  
+  <Step title="Select Language">
+    Choose from installed language packs in the dropdown
+  </Step>
+  
+  <Step title="Apply">
+    Click Apply to switch language immediately
+  </Step>
+</Steps>
+
+## Available Languages
+
+ImageGlass includes these built-in language packs:
+
+<CardGroup cols={3}>
+  <Card title="English" icon="flag-usa">
+    Default language
+  </Card>
+  
+  <Card title="Arabic" icon="language">
+    العربية (ar-SA)
+  </Card>
+  
+  <Card title="Armenian" icon="language">
+    Հայերեն
+  </Card>
+  
+  <Card title="Bulgarian" icon="language">
+    Български
+  </Card>
+  
+  <Card title="Catalan" icon="language">
+    Català
+  </Card>
+  
+  <Card title="Chinese (Simplified)" icon="language">
+    简体中文
+  </Card>
+  
+  <Card title="And many more..." icon="ellipsis">
+    [View all languages](https://imageglass.org/languages)
+  </Card>
+</CardGroup>
+
+## Installing Language Packs
+
+<Steps>
+  <Step title="Download Language Pack">
+    Get `.iglang.json` file from:
+    - [ImageGlass Language Gallery](https://imageglass.org/languages)
+    - Community translations
+    - Create your own
+  </Step>
+  
+  <Step title="Install via Settings">
+    **Option 1: Using ImageGlass Settings**
+    1. Open Settings → Language tab
+    2. Click **Install new language packs…**
+    3. Select one or more `.iglang.json` files
+    4. Click Open to install
+  </Step>
+  
+  <Step title="Install Manually">
+    **Option 2: Manual Installation**
+    1. Copy `.iglang.json` file to `%APPDATA%\ImageGlass\Languages\`
+    2. Click **Refresh** button in Language settings
+    3. Select new language from dropdown
+  </Step>
+  
+  <Step title="Apply Language">
+    The language changes immediately when selected
+  </Step>
+</Steps>
+
+## Language Pack Structure
+
+### File Format
+
+Language packs use JSON format:
+
+```json Example.iglang.json
+{
+  "_Metadata": {
+    "Code": "en-US",
+    "EnglishName": "English",
+    "LocalName": "English",
+    "Author": "ImageGlass Team",
+    "MinVersion": "9.0"
+  },
+  "Items": {
+    "FrmMain.MnuFile": "File",
+    "FrmMain.MnuOpenFile": "Open file…",
+    "FrmMain.MnuSave": "Save",
+    "FrmMain.MnuExit": "Exit",
+    "_._OK": "OK",
+    "_._Cancel": "Cancel"
+    // ... hundreds more translations
+  }
+}
+```
+
+### Metadata Section
+
+<ParamField path="_Metadata.Code" type="string" required>
+  ISO language code (e.g., `"en-US"`, `"es-ES"`, `"zh-CN"`)
+</ParamField>
+
+<ParamField path="_Metadata.EnglishName" type="string" required>
+  Language name in English
+  
+  **Example:** `"Spanish"`, `"Chinese (Simplified)"`
+</ParamField>
+
+<ParamField path="_Metadata.LocalName" type="string" required>
+  Language name in the native language
+  
+  **Example:** `"Español"`, `"简体中文"`
+</ParamField>
+
+<ParamField path="_Metadata.Author" type="string">
+  Name(s) of translator(s)
+  
+  **Example:** `"John Doe, Jane Smith"`
+</ParamField>
+
+<ParamField path="_Metadata.MinVersion" type="string" required>
+  Minimum ImageGlass version required
+  
+  **Current:** `"9.0"` or `"9.3"`
+</ParamField>
+
+### Translation Items
+
+The `Items` object contains key-value pairs:
+
+- **Key**: Internal string identifier (don't change)
+- **Value**: Translated text in your language
+
+<ParamField path="Items.{KeyName}" type="string">
+  Translation for a specific UI element
+  
+  **Special characters:**
+  - `{0}`, `{1}`, etc. - Placeholders for dynamic values (preserve these!)
+  - `…` (U+2026) - Ellipsis character
+  - `\r\n` - Line breaks
+  
+  **Example:**
+  ```json
+  "FrmMain.MnuSave._Success": "Image saved to {0}"
+  ```
+</ParamField>
+
+<Warning>
+  **Always preserve placeholders** like `{0}`, `{1}` in your translations - they are replaced with dynamic values at runtime
+</Warning>
+
+## Creating a Language Pack
+
+<Steps>
+  <Step title="Export English Template">
+    1. Open ImageGlass Settings → Language
+    2. Select **English** language
+    3. Click **Export language pack…**
+    4. Save as `YourLanguage.iglang.json`
+  </Step>
+  
+  <Step title="Edit Metadata">
+    Open the file and update metadata:
+    ```json
+    {
+      "_Metadata": {
+        "Code": "es-ES",
+        "EnglishName": "Spanish",
+        "LocalName": "Español",
+        "Author": "Your Name",
+        "MinVersion": "9.0"
+      }
+    }
+    ```
+  </Step>
+  
+  <Step title="Translate Items">
+    Translate each string in the `Items` section:
+    
+    **Before:**
+    ```json
+    "FrmMain.MnuOpenFile": "Open file…"
+    ```
+    
+    **After:**
+    ```json
+    "FrmMain.MnuOpenFile": "Abrir archivo…"
+    ```
+    
+    <Tip>Use a JSON editor with validation to avoid syntax errors</Tip>
+  </Step>
+  
+  <Step title="Test Translation">
+    1. Save the file
+    2. Install it via Settings → Language
+    3. Select your language
+    4. Check all UI elements for correctness
+  </Step>
+  
+  <Step title="Submit to Community">
+    Share your translation:
+    - [Submit to ImageGlass](https://github.com/d2phap/ImageGlass)
+    - Help other users in your language
+  </Step>
+</Steps>
+
+## Translation Guidelines
+
+### String Length
+
+<Note>
+  Keep translations similar in length to English text when possible. Very long translations may be truncated in the UI.
+</Note>
+
+### Placeholders
+
+Preserve all placeholders in the correct order:
+
+```json
+// ✅ Correct
+"FrmExportFrames._Exporting": "Exportando {0}/{1} fotogramas\r\n{2}…"
+
+// ❌ Wrong - missing placeholders
+"FrmExportFrames._Exporting": "Exportando fotogramas…"
+
+// ❌ Wrong - wrong order
+"FrmExportFrames._Exporting": "Exportando {1}/{0} fotogramas…"
+```
+
+### Special Characters
+
+- **Ellipsis:** Use `…` (U+2026), not `...` (three periods)
+- **Line breaks:** Use `\r\n` for new lines
+- **Quotes:** Use proper typographic quotes for your language
+- **Ampersands:** `&` for keyboard shortcuts (e.g., `"&File"` for Alt+F)
+
+### Context Awareness
+
+Some keys have contextual suffixes:
+
+- `._Description` - Descriptive text or help message
+- `._Error` - Error message
+- `._Success` - Success message
+- `._Tooltip` - Tooltip text
+
+**Example:**
+```json
+"FrmMain.MnuSave": "Save",
+"FrmMain.MnuSave._Success": "Image saved successfully",
+"FrmMain.MnuSave._Error": "Could not save the image"
+```
+
+## Updating Existing Translations
+
+<Steps>
+  <Step title="Check for New Strings">
+    Compare your language pack with the latest English version:
+    1. Export current English pack
+    2. Compare with your translation
+    3. Find missing keys
+  </Step>
+  
+  <Step title="Add Missing Translations">
+    Add new keys to your `Items` section
+  </Step>
+  
+  <Step title="Update MinVersion">
+    Update `_Metadata.MinVersion` to current ImageGlass version
+  </Step>
+  
+  <Step title="Test">
+    Verify new strings appear correctly in ImageGlass
+  </Step>
+</Steps>
+
+## Language Pack Management
+
+### Refresh Language List
+
+After manually copying language files:
+
+1. Open Settings → Language
+2. Click **Refresh** button
+3. New languages appear in dropdown
+
+### Viewing Contributors
+
+1. Open Settings → Language
+2. Select a language
+3. Click **Contributors** to see translator names
+
+### Exporting Your Current Language
+
+1. Settings → Language
+2. Select active language
+3. Click **Export language pack…**
+4. Save for backup or sharing
+
+## Common Translation Keys
+
+### General UI
+
+<CodeGroup>
+```json Buttons
+"_._OK": "OK",
+"_._Cancel": "Cancel",
+"_._Apply": "Apply",
+"_._Close": "Close",
+"_._Save": "Save",
+"_._Delete": "Delete"
+```
+
+```json File Menu
+"FrmMain.MnuFile": "File",
+"FrmMain.MnuOpenFile": "Open file…",
+"FrmMain.MnuSave": "Save",
+"FrmMain.MnuSaveAs": "Save as…",
+"FrmMain.MnuPrint": "Print…",
+"FrmMain.MnuExit": "Exit"
+```
+
+```json Image Menu
+"FrmMain.MnuImage": "Image",
+"FrmMain.MnuRotateLeft": "Rotate left",
+"FrmMain.MnuRotateRight": "Rotate right",
+"FrmMain.MnuFlipHorizontal": "Flip Horizontal",
+"FrmMain.MnuFlipVertical": "Flip Vertical"
+```
+</CodeGroup>
+
+### Settings Tabs
+
+```json
+"FrmSettings.Nav._General": "General",
+"FrmSettings.Nav._Image": "Image",
+"FrmSettings.Nav._Viewer": "Viewer",
+"FrmSettings.Nav._Toolbar": "Toolbar",
+"FrmSettings.Nav._Gallery": "Gallery",
+"FrmSettings.Nav._Language": "Language",
+"FrmSettings.Nav._Appearance": "Appearance"
+```
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Language pack doesn't appear">
+    - Verify `.iglang.json` file extension
+    - Check JSON syntax is valid (use a validator)
+    - Ensure `_Metadata` section is complete
+    - Click **Refresh** in Language settings
+  </Accordion>
+  
+  <Accordion title="Some text stays in English">
+    - Translation key may be missing from your language pack
+    - Compare with latest English version for new keys
+    - Add missing translations to `Items` section
+  </Accordion>
+  
+  <Accordion title="Text appears as key names">
+    - JSON syntax error in language file
+    - Missing or incorrect translation value
+    - Validate JSON structure
+  </Accordion>
+  
+  <Accordion title="Special characters display incorrectly">
+    - Ensure file is saved as UTF-8 encoding
+    - Use proper JSON escape sequences
+    - Check for BOM (Byte Order Mark) issues
+  </Accordion>
+</AccordionGroup>
+
+## Contributing Translations
+
+Help make ImageGlass accessible to more users:
+
+1. **Check existing translations** at [ImageGlass Languages](https://imageglass.org/languages)
+2. **Create or improve** a language pack
+3. **Submit** via:
+   - [GitHub Pull Request](https://github.com/d2phap/ImageGlass)
+   - Email to ImageGlass team
+   - Community forums
+
+<Info>
+  Your contribution will be credited in the language pack metadata and ImageGlass about dialog
+</Info>
+
+## See Also
+
+<CardGroup cols={2}>
+  <Card title="Settings Overview" icon="settings" href="/configuration/settings-overview">
+    Configuration basics
+  </Card>
+  
+  <Card title="Themes" icon="brush" href="/configuration/themes">
+    Visual customization
+  </Card>
+</CardGroup>

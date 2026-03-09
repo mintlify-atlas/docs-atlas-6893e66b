@@ -1,0 +1,305 @@
+---
+title: Performance Settings
+description: Optimize ImageGlass performance with cache settings, async loading, and Image Booster
+icon: gauge
+---
+
+## Image Booster Cache
+
+Image Booster pre-loads adjacent images in memory for instant navigation. Configure these settings to balance performance and memory usage.
+
+### Cache Count
+
+<ParamField path="ImageBoosterCacheCount" type="number" default="1">
+  Number of images to cache in each direction (previous/next)
+  
+  **Range:** 0-10 images
+  
+  **Memory Impact:**
+  - `0` - No pre-loading, minimal memory usage
+  - `1` - Caches 1 image before and 1 after (default)
+  - `5` - Caches 5 images in each direction (high memory)
+  
+  **Example:** `"ImageBoosterCacheCount": 2`
+</ParamField>
+
+<Info>
+  With `ImageBoosterCacheCount: 2`, ImageGlass caches 5 images total: 2 before, current, and 2 after
+</Info>
+
+### Cache Dimension Limit
+
+<ParamField path="ImageBoosterCacheMaxDimension" type="number" default="8000">
+  Maximum image dimension (width or height) to cache in pixels
+  
+  Images larger than this dimension won't be pre-cached to save memory.
+  
+  **Special Values:**
+  - `0` or negative - No dimension limit (cache all sizes)
+  - Positive number - Maximum dimension in pixels
+  
+  **Example:** `"ImageBoosterCacheMaxDimension": 4000`
+</ParamField>
+
+### Cache File Size Limit
+
+<ParamField path="ImageBoosterCacheMaxFileSizeInMb" type="number" default="100.0">
+  Maximum file size to cache in megabytes
+  
+  Files larger than this won't be pre-cached to save memory and loading time.
+  
+  **Special Values:**
+  - `0` or negative - No file size limit
+  - Positive number - Maximum file size in MB
+  
+  **Example:** `"ImageBoosterCacheMaxFileSizeInMb": 50.0`
+</ParamField>
+
+<Tip>
+  **Recommended for 16GB RAM:** `ImageBoosterCacheCount: 2`, `MaxDimension: 8000`, `MaxFileSize: 100`
+  
+  **Recommended for 8GB RAM:** `ImageBoosterCacheCount: 1`, `MaxDimension: 4000`, `MaxFileSize: 50`
+</Tip>
+
+## Gallery Cache
+
+### Thumbnail Cache Size
+
+<ParamField path="GalleryCacheSizeInMb" type="number" default="400">
+  Maximum size of persistent thumbnail cache in megabytes
+  
+  Thumbnails are cached to disk for faster gallery loading on subsequent views.
+  
+  **Recommended Values:**
+  - Small collections (< 1000 images): 200 MB
+  - Medium collections (1000-5000 images): 400 MB
+  - Large collections (> 5000 images): 800 MB
+  
+  **Example:** `"GalleryCacheSizeInMb": 800`
+</ParamField>
+
+<ParamField path="ThumbnailSize" type="number" default="50">
+  Thumbnail dimension in pixels (affects memory usage)
+  
+  **Minimum:** 20 pixels
+  
+  Larger thumbnails look better but use more memory and cache space.
+</ParamField>
+
+## Image Loading
+
+### Async Loading
+
+<ParamField path="EnableImageAsyncLoading" type="boolean" default="true">
+  Load images asynchronously for better UI responsiveness
+  
+  <Warning>Disabling may cause UI freezing with large images</Warning>
+</ParamField>
+
+<ParamField path="ShowImagePreview" type="boolean" default="true">
+  Display low-resolution preview while loading full image
+  
+  Improves perceived performance for large files.
+</ParamField>
+
+### WIC Decoder Threshold
+
+<ParamField path="MinDimensionToUseWIC" type="number" default="16000">
+  Minimum image dimension to use Windows Imaging Component (WIC) decoder
+  
+  WIC is optimized for very large images. Images with width or height >= this value will use WIC if the format is supported.
+  
+  **Special Values:**
+  - `0` - Always use WIC when available
+  - High value (e.g., `100000`) - Rarely use WIC
+  
+  **Example:** `"MinDimensionToUseWIC": 8000`
+</ParamField>
+
+## Embedded Thumbnails
+
+Many RAW and other formats contain embedded thumbnails. Using these can dramatically speed up initial display.
+
+### RAW Formats
+
+<ParamField path="UseEmbeddedThumbnailRawFormats" type="boolean" default="false">
+  Use embedded thumbnail for RAW formats instead of full image
+  
+  **Pros:** Much faster loading
+  
+  **Cons:** Lower quality, limited to thumbnail size
+</ParamField>
+
+### Other Formats
+
+<ParamField path="UseEmbeddedThumbnailOtherFormats" type="boolean" default="false">
+  Use embedded thumbnail for non-RAW formats (JPEG, TIFF, etc.)
+  
+  Enable this for faster browsing of large photo libraries.
+</ParamField>
+
+### Thumbnail Size Threshold
+
+<ParamField path="EmbeddedThumbnailMinWidth" type="number" default="0">
+  Minimum width of embedded thumbnail to use
+  
+  **Special Values:**
+  - `0` - Accept any thumbnail size
+  - Positive number - Minimum width in pixels
+</ParamField>
+
+<ParamField path="EmbeddedThumbnailMinHeight" type="number" default="0">
+  Minimum height of embedded thumbnail to use
+  
+  Prevents using very small thumbnails that would look pixelated.
+</ParamField>
+
+<Tip>
+  **Fast RAW browsing:** Enable `UseEmbeddedThumbnailRawFormats` with `MinWidth: 1920`, `MinHeight: 1080`
+</Tip>
+
+## File Monitoring
+
+<ParamField path="EnableRealTimeFileUpdate" type="boolean" default="true">
+  Monitor file system for changes and auto-update
+  
+  Disabling can reduce CPU usage when viewing network drives.
+</ParamField>
+
+<ParamField path="ShouldAutoOpenNewAddedImage" type="boolean" default="false">
+  Automatically open newly added images in the viewing folder
+  
+  Useful when monitoring a folder for new photos.
+</ParamField>
+
+## Image Loading Order
+
+<ParamField path="ImageLoadingOrder" type="string" default="Name">
+  Sort order for images in the list
+  
+  **Options:**
+  - `"Name"` - Alphabetical by filename
+  - `"Random"` - Random order
+  - `"FileSize"` - By file size
+  - `"Extension"` - By file extension
+  - `"DateCreated"` - By creation date
+  - `"DateModified"` - By modification date
+  - `"DateAccessed"` - By access date
+  - `"ExifDateTaken"` - By EXIF date taken
+  - `"ExifRating"` - By EXIF rating
+</ParamField>
+
+<ParamField path="ImageLoadingOrderType" type="string" default="Asc">
+  Sort direction
+  
+  **Options:**
+  - `"Asc"` - Ascending
+  - `"Desc"` - Descending
+</ParamField>
+
+<ParamField path="ShouldUseExplorerSortOrder" type="boolean" default="true">
+  Use Windows File Explorer sort order when possible
+  
+  Ensures consistency with File Explorer.
+</ParamField>
+
+### Advanced Loading Options
+
+<ParamField path="EnableRecursiveLoading" type="boolean" default="false">
+  Load images from subfolders recursively
+  
+  <Warning>Can be slow with deeply nested folder structures</Warning>
+</ParamField>
+
+<ParamField path="ShouldGroupImagesByDirectory" type="boolean" default="false">
+  Group images by directory when using recursive loading
+</ParamField>
+
+<ParamField path="ShouldLoadHiddenImages" type="boolean" default="false">
+  Include hidden files in the image list
+</ParamField>
+
+## Format-Specific Settings
+
+### SVG Rendering
+
+<ParamField path="UseWebview2ForSvg" type="boolean" default="true">
+  Use Microsoft Edge WebView2 for rendering SVG files
+  
+  **Requires:** WebView2 Runtime installed
+  
+  Provides better SVG rendering quality and compatibility.
+</ParamField>
+
+### Multi-Frame Images
+
+<ParamField path="SingleFrameFormats" type="array" default='[".avif", ".heic", ".heif", ".psd", ".jxl"]'>
+  File formats to load only the first frame
+  
+  Prevents accidentally loading all frames from large multi-layer files.
+  
+  **Example:** `"SingleFrameFormats": [".avif", ".psd", ".tiff"]`
+</ParamField>
+
+## Performance Monitoring
+
+<ParamField path="EnableDebug" type="boolean" default="false">
+  Enable debug mode for performance logging
+  
+  Outputs detailed loading and caching information to help diagnose performance issues.
+  
+  <Warning>Only enable for troubleshooting - may impact performance</Warning>
+</ParamField>
+
+## Performance Profiles
+
+### Maximum Performance (High Memory)
+
+```json
+{
+  "ImageBoosterCacheCount": 5,
+  "ImageBoosterCacheMaxDimension": 0,
+  "ImageBoosterCacheMaxFileSizeInMb": 0,
+  "GalleryCacheSizeInMb": 1000,
+  "EnableImageAsyncLoading": true,
+  "ShowImagePreview": true
+}
+```
+
+### Balanced (Recommended)
+
+```json
+{
+  "ImageBoosterCacheCount": 1,
+  "ImageBoosterCacheMaxDimension": 8000,
+  "ImageBoosterCacheMaxFileSizeInMb": 100,
+  "GalleryCacheSizeInMb": 400,
+  "EnableImageAsyncLoading": true,
+  "ShowImagePreview": true
+}
+```
+
+### Low Memory
+
+```json
+{
+  "ImageBoosterCacheCount": 0,
+  "ImageBoosterCacheMaxDimension": 4000,
+  "ImageBoosterCacheMaxFileSizeInMb": 50,
+  "GalleryCacheSizeInMb": 100,
+  "EnableImageAsyncLoading": true,
+  "ShowImagePreview": false
+}
+```
+
+## See Also
+
+<CardGroup cols={2}>
+  <Card title="Advanced Configs" icon="code" href="/configuration/advanced-configs">
+    Additional performance tweaks
+  </Card>
+  
+  <Card title="Settings Overview" icon="settings" href="/configuration/settings-overview">
+    Configuration basics
+  </Card>
+</CardGroup>

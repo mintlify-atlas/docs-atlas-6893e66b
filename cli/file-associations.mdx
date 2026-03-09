@@ -1,0 +1,574 @@
+---
+title: File Associations
+description: Register or unregister ImageGlass as the default photo viewer using igcmd
+---
+
+ImageGlass can be registered as the default photo viewer for image file formats using command-line tools. This is useful for automated installations, system configuration, and user preferences management.
+
+## set-default-viewer
+
+Register ImageGlass as the default photo viewer for specified file extensions.
+
+### Syntax
+
+```bash
+igcmd.exe set-default-viewer [extensions] [--per-machine] [--ui]
+```
+
+### Parameters
+
+<ParamField path="extensions" type="string" default="all supported formats">
+  Semicolon-separated list of file extensions to register
+  
+  **Format:** `.ext1;.ext2;.ext3`
+  
+  **Examples:**
+  - `.jpg;.png;.gif` - Common web formats
+  - `.jpg;.jpeg;.png;.bmp` - Basic image formats
+  - `.webp;.avif;.heic` - Modern formats
+  
+  If omitted, all supported image formats are registered.
+</ParamField>
+
+<ParamField path="--per-machine" type="flag">
+  Apply registration system-wide for all users
+  
+  **Requires:** Administrator privileges
+  
+  **Without this flag:** Registration applies to current user only
+</ParamField>
+
+<ParamField path="--ui" type="flag">
+  Show confirmation dialog on successful registration
+  
+  Displays a user-friendly message with registration details
+</ParamField>
+
+### Exit Codes
+
+| Code | Description |
+|------|-------------|
+| `0` | Registration successful |
+| `1` | Administrator privileges required |
+| `2` | Error during registration |
+
+### Examples
+
+#### Register All Supported Formats
+
+```bash
+igcmd.exe set-default-viewer
+```
+
+Registers ImageGlass as default viewer for all supported image formats (PNG, JPG, GIF, WebP, BMP, TIFF, SVG, ICO, and more) for the current user.
+
+#### Register Specific Formats
+
+```bash
+igcmd.exe set-default-viewer ".jpg;.png;.gif"
+```
+
+Registers only common web image formats.
+
+#### System-Wide Registration
+
+```bash
+igcmd.exe set-default-viewer --per-machine
+```
+
+Registers for all users on the system. Requires administrator privileges.
+
+#### With User Confirmation
+
+```bash
+igcmd.exe set-default-viewer ".jpg;.png" --ui
+```
+
+Shows a confirmation dialog after successful registration.
+
+#### Complete Registration with UI
+
+```bash
+igcmd.exe set-default-viewer ".jpg;.jpeg;.png;.gif;.bmp;.webp" --per-machine --ui
+```
+
+Registers common formats system-wide and shows confirmation.
+
+### Common Extension Sets
+
+#### Basic Image Formats
+
+```bash
+igcmd.exe set-default-viewer ".jpg;.jpeg;.png;.gif;.bmp"
+```
+
+Legacy and widely-supported formats.
+
+#### Modern Web Formats
+
+```bash
+igcmd.exe set-default-viewer ".webp;.avif;.svg"
+```
+
+Next-generation web image formats.
+
+#### RAW Photography Formats
+
+```bash
+igcmd.exe set-default-viewer ".cr2;.nef;.arw;.dng;.raw"
+```
+
+Common camera RAW formats (requires codec support).
+
+#### All Common Formats
+
+```bash
+igcmd.exe set-default-viewer ".jpg;.jpeg;.png;.gif;.bmp;.tiff;.tif;.webp;.ico;.svg"
+```
+
+### Advanced Usage
+
+#### Installation Script
+
+```bash
+@echo off
+echo Installing ImageGlass as default photo viewer...
+
+rem Install for current user first
+igcmd.exe set-default-viewer --ui
+
+if %ERRORLEVEL% EQU 0 (
+    echo Successfully registered for current user
+) else (
+    echo Failed to register
+    exit /b 1
+)
+```
+
+#### System Deployment Script
+
+```bash
+@echo off
+rem Run with administrator privileges
+
+echo Registering ImageGlass system-wide...
+igcmd.exe set-default-viewer --per-machine
+
+if %ERRORLEVEL% EQU 1 (
+    echo Administrator privileges required
+    echo Please run as administrator
+    exit /b 1
+)
+
+if %ERRORLEVEL% EQU 0 (
+    echo Registration successful
+) else (
+    echo Registration failed
+    exit /b 2
+)
+```
+
+#### PowerShell Registration
+
+```powershell
+# Check for admin privileges
+$isAdmin = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+
+if ($isAdmin) {
+    Write-Host "Registering system-wide..."
+    & igcmd.exe set-default-viewer --per-machine --ui
+} else {
+    Write-Host "Registering for current user..."
+    & igcmd.exe set-default-viewer --ui
+}
+
+if ($LASTEXITCODE -eq 0) {
+    Write-Host "Registration successful" -ForegroundColor Green
+} else {
+    Write-Host "Registration failed" -ForegroundColor Red
+    exit $LASTEXITCODE
+}
+```
+
+---
+
+## remove-default-viewer
+
+Unregister ImageGlass as the default photo viewer for specified file extensions.
+
+### Syntax
+
+```bash
+igcmd.exe remove-default-viewer [extensions] [--per-machine] [--ui]
+```
+
+### Parameters
+
+<ParamField path="extensions" type="string" default="all registered formats">
+  Semicolon-separated list of file extensions to unregister
+  
+  **Format:** `.ext1;.ext2;.ext3`
+  
+  If omitted, all registered formats are unregistered.
+</ParamField>
+
+<ParamField path="--per-machine" type="flag">
+  Remove system-wide registration for all users
+  
+  **Requires:** Administrator privileges
+</ParamField>
+
+<ParamField path="--ui" type="flag">
+  Show confirmation dialog on successful removal
+</ParamField>
+
+### Exit Codes
+
+| Code | Description |
+|------|-------------|
+| `0` | Unregistration successful |
+| `1` | Administrator privileges required |
+| `2` | Error during unregistration |
+
+### Examples
+
+#### Remove All Associations
+
+```bash
+igcmd.exe remove-default-viewer
+```
+
+Removes ImageGlass as default viewer for all registered formats.
+
+#### Remove Specific Formats
+
+```bash
+igcmd.exe remove-default-viewer ".jpg;.png"
+```
+
+Removes only specified format associations.
+
+#### System-Wide Removal
+
+```bash
+igcmd.exe remove-default-viewer --per-machine
+```
+
+Removes system-wide associations. Requires administrator privileges.
+
+#### With Confirmation Dialog
+
+```bash
+igcmd.exe remove-default-viewer --ui
+```
+
+Shows confirmation after removal.
+
+### Advanced Usage
+
+#### Uninstall Script
+
+```bash
+@echo off
+echo Removing ImageGlass file associations...
+
+igcmd.exe remove-default-viewer --ui
+
+if %ERRORLEVEL% EQU 0 (
+    echo Associations removed successfully
+) else (
+    echo Failed to remove associations
+)
+```
+
+#### Clean Removal Script
+
+```bash
+@echo off
+rem Remove user and system associations
+
+echo Removing user associations...
+igcmd.exe remove-default-viewer
+
+if %ERRORLEVEL% EQU 0 (
+    echo User associations removed
+)
+
+echo Removing system associations...
+igcmd.exe remove-default-viewer --per-machine
+
+if %ERRORLEVEL% EQU 1 (
+    echo System removal requires administrator privileges
+) else if %ERRORLEVEL% EQU 0 (
+    echo System associations removed
+)
+```
+
+#### PowerShell Removal
+
+```powershell
+Write-Host "Removing ImageGlass associations..."
+
+& igcmd.exe remove-default-viewer --ui
+
+if ($LASTEXITCODE -eq 0) {
+    Write-Host "Successfully removed associations" -ForegroundColor Green
+} elseif ($LASTEXITCODE -eq 1) {
+    Write-Host "Administrator privileges required" -ForegroundColor Yellow
+} else {
+    Write-Host "Failed to remove associations" -ForegroundColor Red
+}
+```
+
+---
+
+## Understanding File Associations
+
+### Per-User vs Per-Machine
+
+#### Per-User Registration (Default)
+
+```bash
+igcmd.exe set-default-viewer
+```
+
+- Applies to current user only
+- No administrator privileges required
+- Stored in `HKEY_CURRENT_USER` registry
+- Does not affect other users
+- Preferred for personal installations
+
+#### Per-Machine Registration
+
+```bash
+igcmd.exe set-default-viewer --per-machine
+```
+
+- Applies to all users on the system
+- Requires administrator privileges
+- Stored in `HKEY_LOCAL_MACHINE` registry
+- Affects all user accounts
+- Preferred for enterprise deployments
+
+### Supported Image Formats
+
+When registering without specifying extensions, ImageGlass registers for all supported formats:
+
+- **Raster:** JPG, PNG, GIF, BMP, TIFF, WebP, AVIF, HEIC, HEIF
+- **Vector:** SVG
+- **Icons:** ICO, CUR
+- **RAW:** CR2, NEF, ARW, DNG, RAF, ORF (with codecs)
+- **Other:** TGA, PCX, PSD (preview)
+
+### Windows Default Apps
+
+After registration:
+- ImageGlass appears in Windows "Default apps" settings
+- Users can still manually change associations in Settings
+- Registration creates the necessary registry entries
+- Does not override user's explicit manual choices
+
+## Deployment Scenarios
+
+### Silent Installation
+
+```bash
+@echo off
+rem Silent installation with file associations
+
+msiexec /i ImageGlass.msi /quiet
+igcmd.exe set-default-viewer --per-machine
+exit /b %ERRORLEVEL%
+```
+
+### Interactive Installation
+
+```bash
+@echo off
+echo Installing ImageGlass...
+msiexec /i ImageGlass.msi /qb
+
+echo.
+echo Would you like to set ImageGlass as default photo viewer? (Y/N)
+set /p choice="Your choice: "
+
+if /i "%choice%"=="Y" (
+    igcmd.exe set-default-viewer --ui
+)
+```
+
+### Enterprise Group Policy Script
+
+```bash
+@echo off
+rem GPO startup script for IT deployment
+
+rem Check if ImageGlass is installed
+if not exist "C:\Program Files\ImageGlass\igcmd.exe" (
+    echo ImageGlass not installed
+    exit /b 1
+)
+
+rem Register system-wide
+"C:\Program Files\ImageGlass\igcmd.exe" set-default-viewer --per-machine
+
+if %ERRORLEVEL% EQU 0 (
+    echo ImageGlass registered successfully
+) else (
+    echo Failed to register ImageGlass
+    exit /b 1
+)
+```
+
+### PowerShell Deployment
+
+```powershell
+# Enterprise deployment script
+
+function Install-ImageGlassAssociations {
+    param(
+        [string]$Scope = "CurrentUser"
+    )
+    
+    $igcmdPath = "C:\Program Files\ImageGlass\igcmd.exe"
+    
+    if (-not (Test-Path $igcmdPath)) {
+        Write-Error "ImageGlass not found at $igcmdPath"
+        return $false
+    }
+    
+    $arguments = @("set-default-viewer")
+    
+    if ($Scope -eq "AllUsers") {
+        $arguments += "--per-machine"
+    }
+    
+    $result = Start-Process -FilePath $igcmdPath -ArgumentList $arguments -Wait -PassThru -NoNewWindow
+    
+    return ($result.ExitCode -eq 0)
+}
+
+# Usage
+if (Install-ImageGlassAssociations -Scope "AllUsers") {
+    Write-Host "Successfully registered ImageGlass" -ForegroundColor Green
+} else {
+    Write-Host "Failed to register ImageGlass" -ForegroundColor Red
+}
+```
+
+## Error Handling
+
+### Comprehensive Error Handling
+
+```bash
+@echo off
+setlocal
+
+set "extensions=.jpg;.png;.gif"
+
+echo Registering ImageGlass for: %extensions%
+igcmd.exe set-default-viewer "%extensions%" --ui
+
+if %ERRORLEVEL% EQU 0 (
+    echo Registration successful
+    exit /b 0
+)
+
+if %ERRORLEVEL% EQU 1 (
+    echo.
+    echo Administrator privileges required.
+    echo Please run this script as administrator.
+    echo.
+    pause
+    exit /b 1
+)
+
+if %ERRORLEVEL% EQU 2 (
+    echo.
+    echo An error occurred during registration.
+    echo Please check that ImageGlass is properly installed.
+    echo.
+    pause
+    exit /b 2
+)
+
+echo Unknown error
+exit /b %ERRORLEVEL%
+```
+
+### PowerShell Error Handling
+
+```powershell
+try {
+    $extensions = ".jpg;.png;.gif;.webp"
+    
+    Write-Host "Registering file associations: $extensions"
+    
+    $process = Start-Process -FilePath "igcmd.exe" `
+        -ArgumentList "set-default-viewer", $extensions, "--ui" `
+        -Wait -PassThru -NoNewWindow
+    
+    switch ($process.ExitCode) {
+        0 {
+            Write-Host "Registration successful" -ForegroundColor Green
+        }
+        1 {
+            Write-Warning "Administrator privileges required"
+            
+            # Prompt to elevate
+            $elevated = Start-Process -FilePath "igcmd.exe" `
+                -ArgumentList "set-default-viewer", $extensions, "--ui", "--per-machine" `
+                -Verb RunAs -Wait -PassThru
+            
+            if ($elevated.ExitCode -eq 0) {
+                Write-Host "Registration successful (elevated)" -ForegroundColor Green
+            }
+        }
+        2 {
+            Write-Error "Registration failed. Check ImageGlass installation."
+        }
+        default {
+            Write-Error "Unknown error occurred (exit code: $($process.ExitCode))"
+        }
+    }
+} catch {
+    Write-Error "Exception occurred: $_"
+}
+```
+
+## Testing Associations
+
+### Verify Registration
+
+```powershell
+# Check if ImageGlass is registered for a specific extension
+function Test-ImageGlassAssociation {
+    param([string]$Extension)
+    
+    $key = "HKCU:\Software\Classes\$Extension"
+    
+    if (Test-Path $key) {
+        $value = Get-ItemProperty -Path $key -Name "(Default)" -ErrorAction SilentlyContinue
+        
+        if ($value -and $value."(Default)" -match "ImageGlass") {
+            Write-Host "$Extension is associated with ImageGlass" -ForegroundColor Green
+            return $true
+        }
+    }
+    
+    Write-Host "$Extension is NOT associated with ImageGlass" -ForegroundColor Red
+    return $false
+}
+
+# Test common formats
+@(".jpg", ".png", ".gif", ".webp") | ForEach-Object {
+    Test-ImageGlassAssociation $_
+}
+```
+
+## See Also
+
+- [CLI Overview](/cli/overview)
+- [All Commands](/cli/igcmd-commands)
+- [Quick Setup](/cli/quick-setup)
+- [Set Wallpaper](/cli/set-wallpaper)

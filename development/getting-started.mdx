@@ -1,0 +1,178 @@
+---
+title: Getting Started with Development
+description: Set up your development environment for contributing to ImageGlass
+---
+
+## Prerequisites
+
+Before you start developing ImageGlass, ensure you have the following installed:
+
+### Required Software
+
+- **Windows 11** (recommended for development)
+- **Visual Studio 2026** with the following workloads:
+  - .NET desktop development
+  - Desktop development with C++
+- **.NET 10 SDK** (target framework: `net10.0-windows10.0.17763.0`)
+- **Git** for version control
+
+### Optional Tools
+
+- **WebView2 Runtime** (64-bit v119.0.2151 or later) - Required for WebView2-based features
+- **Windows Terminal** - For a better command-line experience
+- **Visual Studio Code** - For editing markdown and configuration files
+
+## Clone the Repository
+
+Clone the ImageGlass repository from GitHub:
+
+```bash
+git clone https://github.com/d2phap/ImageGlass.git
+cd ImageGlass
+```
+
+The repository uses two main branches:
+- `develop` - Contains the latest development commits
+- `prod` - Contains the final stable release
+
+<Note>
+Always base your pull requests on the `develop` branch, not `prod`.
+</Note>
+
+## Project Structure
+
+The ImageGlass solution is organized as follows:
+
+```
+ImageGlass/
+├── Source/
+│   ├── ImageGlass/           # Main application
+│   ├── igcmd/                # Command-line utility
+│   └── Components/
+│       ├── ImageGlass.Base/      # Core functionality and utilities
+│       ├── ImageGlass.UI/        # UI components and controls
+│       ├── ImageGlass.Viewer/    # Image viewer canvas
+│       ├── ImageGlass.Gallery/   # Image gallery/thumbnail viewer
+│       ├── ImageGlass.Settings/  # Settings management
+│       ├── ImageGlass.WebP/      # WebP codec support
+│       └── ImageGlass.WinTouch/  # Touch input handling
+├── Setup/
+│   └── Assets/
+│       ├── Themes/           # Application themes
+│       └── Language/         # Language packs
+├── Assets/                   # Application resources
+└── Tools/                    # Build and development tools
+```
+
+## Open the Solution
+
+1. Navigate to the `Source` directory
+2. Open the solution in Visual Studio 2026:
+   - Look for the `.csproj` files in the `Source/ImageGlass` directory
+   - The main entry point is `ImageGlass.csproj`
+
+<Warning>
+The solution targets **x64** and **ARM64** platforms. Make sure you select the appropriate platform configuration before building.
+</Warning>
+
+## Configure Build Settings
+
+ImageGlass supports three build configurations:
+
+- **Debug** - For development with debugging symbols
+- **Release** - Optimized build for testing
+- **Publish_Release** - Final production build
+
+### Platform Targets
+
+- **x64** - For 64-bit Intel/AMD processors
+- **ARM64** - For ARM64 processors
+
+Select your platform in Visual Studio:
+1. Go to **Build** > **Configuration Manager**
+2. Select the desired configuration (e.g., Debug)
+3. Choose the platform (e.g., x64)
+
+## Build the Solution
+
+### Using Visual Studio
+
+1. Open the solution in Visual Studio 2026
+2. Select **Build** > **Build Solution** (or press `Ctrl+Shift+B`)
+3. Wait for the build to complete
+
+The build output will be in:
+```
+Source/ImageGlass/bin/<Configuration>/<Platform>/
+```
+
+### Build Requirements from Project Files
+
+Based on the `.csproj` files, ImageGlass requires:
+
+- **Target Framework**: `net10.0-windows10.0.17763.0`
+- **Windows SDK**: 10.0.17763.0 or later
+- **Language Version**: Latest C# features
+- **Unsafe Code**: Enabled (required for performance-critical operations)
+
+## Run ImageGlass
+
+After a successful build:
+
+1. Set `ImageGlass` as the startup project
+2. Press `F5` to run with debugging, or `Ctrl+F5` to run without debugging
+3. The application will launch and you can test your changes
+
+## Development Tips
+
+### IntelliSense and Code Analysis
+
+ImageGlass uses several code analyzers:
+- **IDisposableAnalyzers** - Ensures proper disposal of resources
+- **Microsoft.VisualStudio.Threading.Analyzers** - Detects threading issues
+
+### Debug Configuration
+
+The project uses **embedded** debug symbols for all configurations, which makes debugging easier without separate PDB files.
+
+### High DPI Support
+
+ImageGlass is configured with:
+- `ApplicationHighDpiMode`: PerMonitorV2
+- `ForceDesignerDpiUnaware`: true
+
+Be mindful of DPI scaling when working on UI components.
+
+## Next Steps
+
+- Review the [Architecture](/development/architecture) to understand the codebase structure
+- Read the [Contributing Guide](/development/contributing-guide) for contribution guidelines
+- Check out [Building from Source](/development/building-from-source) for advanced build scenarios
+- Learn about [Translations](/development/translations) if you want to help localize ImageGlass
+
+## Common Issues
+
+### Build Errors
+
+If you encounter build errors:
+
+1. **Ensure .NET 10 SDK is installed**: Check with `dotnet --list-sdks`
+2. **Clean and rebuild**: Go to **Build** > **Clean Solution**, then rebuild
+3. **Check NuGet packages**: Right-click solution > **Restore NuGet Packages**
+4. **Verify platform target**: Make sure you're building for x64 or ARM64, not AnyCPU
+
+### Missing Dependencies
+
+ImageGlass uses several NuGet packages that are automatically restored. If restoration fails:
+
+```bash
+dotnet restore Source/ImageGlass/ImageGlass.csproj
+```
+
+## Getting Help
+
+If you need help:
+
+- [GitHub Issues](https://github.com/d2phap/ImageGlass/issues) - Report bugs or request features
+- [ImageGlass Discord](https://discord.gg/tWjbynH2X8) - Chat with the community
+- Email: phap@imageglass.org

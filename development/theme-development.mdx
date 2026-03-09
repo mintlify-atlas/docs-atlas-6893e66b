@@ -1,0 +1,478 @@
+---
+title: Theme Development
+description: Learn how to create custom themes for ImageGlass
+---
+
+## Overview
+
+ImageGlass themes allow you to customize the appearance of the application, including colors, icons, and UI elements. Themes are packaged as `.igtheme` files and can be easily shared with the community.
+
+## Theme File Structure
+
+A theme package consists of a folder containing:
+
+- **igtheme.json** - The main theme configuration file
+- **SVG icon files** - Custom toolbar and navigation icons
+- **preview.webp** (or other image format) - A preview image of your theme
+- **Logo.svg** (optional) - Custom application logo
+
+### Example Theme Structure
+
+```
+Kobe/
+├── igtheme.json
+├── preview.webp
+├── logo.svg
+├── ActualSize.svg
+├── AutoZoom.svg
+├── Checkerboard.svg
+├── ColorPicker.svg
+├── Crop.svg
+├── Delete.svg
+├── Edit.svg
+├── Exit.svg
+├── Export.svg
+├── FlipHorz.svg
+├── FlipVert.svg
+├── FullScreen.svg
+├── Gallery.svg
+├── LockZoom.svg
+├── MainMenu.svg
+├── OpenFile.svg
+├── Pause.svg
+├── Play.svg
+├── Print.svg
+├── Refresh.svg
+├── RotateLeft.svg
+├── RotateRight.svg
+├── Save.svg
+├── ScaleToFill.svg
+├── ScaleToFit.svg
+├── ScaleToHeight.svg
+├── ScaleToWidth.svg
+├── Slideshow.svg
+├── ViewFirstImage.svg
+├── ViewLastImage.svg
+├── ViewNextImage.svg
+├── ViewPreviousImage.svg
+├── WindowFit.svg
+├── ZoomIn.svg
+└── ZoomOut.svg
+```
+
+## Theme Configuration File
+
+The `igtheme.json` file defines all theme properties. Here's a complete example:
+
+### Dark Theme Example (Kobe)
+
+```json
+{
+  "_Metadata": {
+    "Description": "ImageGlass theme configuration file",
+    "Version": "9.0"
+  },
+  "Info": {
+    "Name": "Kobe",
+    "Author": "Dương Diệu Pháp",
+    "Email": "phap@imageglass.org",
+    "Website": "https://imageglass.org",
+    "Description": "ImageGlass Kobe theme",
+    "Version": "9.0"
+  },
+  "Settings": {
+    "IsDarkMode": true,
+    "IsShowTitlebarLogo": true,
+    "NavButtonLeft": "ViewPreviousImage.svg",
+    "NavButtonRight": "ViewNextImage.svg",
+    "PreviewImage": "preview.webp",
+    "AppLogo": "Logo.svg"
+  },
+  "Colors": {
+    "MenuBgHoverColor": "accent:50",
+    "ToolbarItemHoverColor": "accent:140",
+    "ToolbarItemActiveColor": "accent:80",
+    "ToolbarItemSelectedColor": "accent:100",
+    "GalleryItemHoverColor": "accent:140",
+    "GalleryItemActiveColor": "accent:80",
+    "GalleryItemSelectedColor": "accent:100",
+    "NavigationButtonColor": "accent:140"
+  },
+  "ToolbarIcons": {
+    "ActualSize": "ActualSize.svg",
+    "AutoZoom": "AutoZoom.svg",
+    "Checkerboard": "Checkerboard.svg",
+    "ColorPicker": "ColorPicker.svg",
+    "Crop": "Crop.svg",
+    "Delete": "Delete.svg",
+    "Edit": "Edit.svg",
+    "FlipHorz": "FlipHorz.svg",
+    "FlipVert": "FlipVert.svg",
+    "FullScreen": "FullScreen.svg",
+    "LockZoom": "LockZoom.svg",
+    "MainMenu": "MainMenu.svg",
+    "OpenFile": "OpenFile.svg",
+    "Print": "Print.svg",
+    "Refresh": "Refresh.svg",
+    "RotateLeft": "RotateLeft.svg",
+    "RotateRight": "RotateRight.svg",
+    "Save": "Save.svg",
+    "ScaleToFill": "ScaleToFill.svg",
+    "ScaleToFit": "ScaleToFit.svg",
+    "ScaleToHeight": "ScaleToHeight.svg",
+    "ScaleToWidth": "ScaleToWidth.svg",
+    "Slideshow": "Slideshow.svg",
+    "Gallery": "Gallery.svg",
+    "ViewFirstImage": "ViewFirstImage.svg",
+    "ViewLastImage": "ViewLastImage.svg",
+    "ViewNextImage": "ViewNextImage.svg",
+    "ViewPreviousImage": "ViewPreviousImage.svg",
+    "WindowFit": "WindowFit.svg",
+    "ZoomIn": "ZoomIn.svg",
+    "ZoomOut": "ZoomOut.svg",
+    "Play": "Play.svg",
+    "Pause": "Pause.svg",
+    "Export": "Export.svg",
+    "Exit": "Exit.svg"
+  }
+}
+```
+
+### Light Theme Example (Kobe-Light)
+
+```json
+{
+  "_Metadata": {
+    "Description": "ImageGlass theme configuration file",
+    "Version": "9.0"
+  },
+  "Info": {
+    "Name": "Kobe - Light",
+    "Author": "Dương Diệu Pháp",
+    "Email": "phap@imageglass.org",
+    "Website": "https://imageglass.org",
+    "Description": "ImageGlass Kobe theme",
+    "Version": "9.0"
+  },
+  "Settings": {
+    "IsDarkMode": false,
+    "IsShowTitlebarLogo": true,
+    "NavButtonLeft": "ViewPreviousImage.svg",
+    "NavButtonRight": "ViewNextImage.svg",
+    "PreviewImage": "preview.webp",
+    "AppLogo": "Logo.svg"
+  },
+  "Colors": {
+    "BgColor": "#ffffff00",
+    "TextColor": "#000",
+    "ToolbarBgColor": "#F5F6F700",
+    "ToolbarTextColor": "#000",
+    "ToolbarItemHoverColor": "accent:70",
+    "ToolbarItemActiveColor": "accent:120",
+    "ToolbarItemSelectedColor": "accent:100",
+    "GalleryBgColor": "#F5F6F700",
+    "GalleryTextColor": "#000",
+    "GalleryItemHoverColor": "accent:70",
+    "GalleryItemActiveColor": "accent:120",
+    "GalleryItemSelectedColor": "accent:100",
+    "MenuBgColor": "#F5F6F7",
+    "MenuBgHoverColor": "accent:120",
+    "MenuTextColor": "#000",
+    "MenuTextHoverColor": "#000",
+    "NavigationButtonColor": "accent:70"
+  },
+  "ToolbarIcons": {
+    "ActualSize": "ActualSize.svg",
+    "AutoZoom": "AutoZoom.svg",
+    "Checkerboard": "Checkerboard.svg",
+    "ColorPicker": "ColorPicker.svg",
+    "Crop": "Crop.svg",
+    "Delete": "Delete.svg",
+    "Edit": "Edit.svg",
+    "FlipHorz": "FlipHorz.svg",
+    "FlipVert": "FlipVert.svg",
+    "FullScreen": "FullScreen.svg",
+    "LockZoom": "LockZoom.svg",
+    "MainMenu": "MainMenu.svg",
+    "OpenFile": "OpenFile.svg",
+    "Print": "Print.svg",
+    "Refresh": "Refresh.svg",
+    "RotateLeft": "RotateLeft.svg",
+    "RotateRight": "RotateRight.svg",
+    "Save": "Save.svg",
+    "ScaleToFill": "ScaleToFill.svg",
+    "ScaleToFit": "ScaleToFit.svg",
+    "ScaleToHeight": "ScaleToHeight.svg",
+    "ScaleToWidth": "ScaleToWidth.svg",
+    "Slideshow": "Slideshow.svg",
+    "Gallery": "Gallery.svg",
+    "ViewFirstImage": "ViewFirstImage.svg",
+    "ViewLastImage": "ViewLastImage.svg",
+    "ViewNextImage": "ViewNextImage.svg",
+    "ViewPreviousImage": "ViewPreviousImage.svg",
+    "WindowFit": "WindowFit.svg",
+    "ZoomIn": "ZoomIn.svg",
+    "ZoomOut": "ZoomOut.svg",
+    "Play": "Play.svg",
+    "Pause": "Pause.svg",
+    "Export": "Export.svg",
+    "Exit": "Exit.svg"
+  }
+}
+```
+
+## Configuration Reference
+
+### Metadata Section
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `Description` | string | Description of the configuration file format |
+| `Version` | string | Theme configuration version (e.g., "9.0") |
+
+### Info Section
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| `Name` | string | Yes | The display name of your theme |
+| `Author` | string | Yes | Theme creator's name |
+| `Email` | string | No | Contact email address |
+| `Website` | string | No | Author's or theme's website |
+| `Description` | string | Yes | Brief description of the theme |
+| `Version` | string | Yes | Theme version number |
+
+### Settings Section
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `IsDarkMode` | boolean | Whether this is a dark theme (true) or light theme (false) |
+| `IsShowTitlebarLogo` | boolean | Display the logo in the title bar |
+| `NavButtonLeft` | string | Filename for the previous image button icon |
+| `NavButtonRight` | string | Filename for the next image button icon |
+| `PreviewImage` | string | Preview image filename shown in theme selector |
+| `AppLogo` | string | Custom application logo filename |
+
+### Colors Section
+
+Colors can be specified as:
+- **Hex values**: `#RRGGBB` or `#RRGGBBAA` (with alpha)
+- **Accent colors**: `accent:N` where N is 0-255 (uses system accent color with specified alpha)
+
+#### Available Color Properties
+
+| Property | Description |
+|----------|-------------|
+| `BgColor` | Main background color |
+| `TextColor` | Main text color |
+| `ToolbarBgColor` | Toolbar background color |
+| `ToolbarTextColor` | Toolbar text color |
+| `ToolbarItemHoverColor` | Toolbar button hover state |
+| `ToolbarItemActiveColor` | Toolbar button active/pressed state |
+| `ToolbarItemSelectedColor` | Toolbar button selected state |
+| `GalleryBgColor` | Gallery panel background |
+| `GalleryTextColor` | Gallery text color |
+| `GalleryItemHoverColor` | Gallery thumbnail hover state |
+| `GalleryItemActiveColor` | Gallery thumbnail active state |
+| `GalleryItemSelectedColor` | Gallery thumbnail selected state |
+| `MenuBgColor` | Menu background color |
+| `MenuBgHoverColor` | Menu item hover background |
+| `MenuTextColor` | Menu text color |
+| `MenuTextHoverColor` | Menu text hover color |
+| `NavigationButtonColor` | Navigation arrow button color |
+
+### ToolbarIcons Section
+
+Map each toolbar action to an SVG icon file. All icons should be SVG format for best quality and scaling.
+
+#### Required Icon Files
+
+- ActualSize.svg
+- AutoZoom.svg
+- Checkerboard.svg
+- ColorPicker.svg
+- Crop.svg
+- Delete.svg
+- Edit.svg
+- Exit.svg
+- Export.svg
+- FlipHorz.svg
+- FlipVert.svg
+- FullScreen.svg
+- Gallery.svg
+- LockZoom.svg
+- MainMenu.svg
+- OpenFile.svg
+- Pause.svg
+- Play.svg
+- Print.svg
+- Refresh.svg
+- RotateLeft.svg
+- RotateRight.svg
+- Save.svg
+- ScaleToFill.svg
+- ScaleToFit.svg
+- ScaleToHeight.svg
+- ScaleToWidth.svg
+- Slideshow.svg
+- ViewFirstImage.svg
+- ViewLastImage.svg
+- ViewNextImage.svg
+- ViewPreviousImage.svg
+- WindowFit.svg
+- ZoomIn.svg
+- ZoomOut.svg
+
+## Creating a Theme
+
+### Step 1: Set Up Theme Folder
+
+1. Create a new folder with your theme name (e.g., `MyTheme`)
+2. Copy icon templates from an existing theme or create your own SVG icons
+
+### Step 2: Create igtheme.json
+
+1. Create an `igtheme.json` file in your theme folder
+2. Fill in the metadata, info, settings, colors, and toolbar icons sections
+3. Choose appropriate colors for dark or light mode
+4. Set `IsDarkMode` to `true` for dark themes, `false` for light themes
+
+### Step 3: Design Icons
+
+1. Create or modify SVG icons for all toolbar actions
+2. Keep icons simple and clear at small sizes (16x16 to 32x32 pixels)
+3. Use consistent stroke width and style across all icons
+4. Test icons in both light and dark backgrounds
+
+### Step 4: Add Preview Image
+
+1. Create a preview screenshot showing your theme (recommended size: 800x600 or larger)
+2. Save as `preview.webp`, `preview.png`, or `preview.jpg`
+3. Reference it in the `PreviewImage` setting
+
+### Step 5: Test Your Theme
+
+1. Install the theme using the command line or UI
+2. Switch between light and dark modes to test appearance
+3. Check all toolbar icons and colors
+4. Test in different Windows theme modes
+
+## Installing Themes
+
+### Using the UI
+
+1. Open ImageGlass Settings
+2. Go to **Appearance** → **Theme**
+3. Click **Install theme packs**
+4. Select your `.igtheme` file
+
+### Using Command Line (igcmd)
+
+```bash
+igcmd.exe install-themes "C:\path\to\theme.igtheme"
+```
+
+The theme will be extracted and installed to:
+- Per-user: `%AppData%\ImageGlass\Themes\ThemeName`
+- System-wide: `<ImageGlass Install Dir>\Themes\ThemeName`
+
+## Packaging Themes
+
+### Create .igtheme Package
+
+1. Compress your theme folder into a ZIP file
+2. Rename the `.zip` extension to `.igtheme`
+3. Share your theme file
+
+### Example Structure
+
+```
+MyTheme.igtheme (ZIP file containing:)
+└── MyTheme/
+    ├── igtheme.json
+    ├── preview.webp
+    ├── Logo.svg
+    └── [all icon SVG files]
+```
+
+## Uninstalling Themes
+
+### Using the UI
+
+1. Open ImageGlass Settings → **Appearance** → **Theme**
+2. Select the theme to remove
+3. Click **Uninstall a theme pack**
+
+### Using Command Line
+
+```bash
+igcmd.exe uninstall-theme "C:\path\to\theme\folder"
+```
+
+<Note>
+  The default "Kobe" theme cannot be uninstalled.
+</Note>
+
+## Best Practices
+
+### Design Guidelines
+
+- **Consistency**: Maintain consistent visual style across all icons
+- **Contrast**: Ensure good contrast between UI elements and backgrounds
+- **Accessibility**: Test themes with different accessibility settings
+- **Performance**: Use optimized SVG files (remove unnecessary elements)
+
+### Color Selection
+
+- For dark themes: Use lighter text on darker backgrounds
+- For light themes: Use darker text on lighter backgrounds
+- Use the `accent:N` format to integrate with Windows accent color
+- Test with different Windows accent colors
+
+### Icon Design
+
+- Use SVG format for scalability
+- Keep file sizes small (< 5KB per icon)
+- Use simple, recognizable shapes
+- Avoid text in icons (use symbols instead)
+- Ensure icons work at small sizes (16x16px)
+
+## Sharing Your Theme
+
+1. Package your theme as `.igtheme` file
+2. Create a README with description and screenshots
+3. Share on ImageGlass community forums or GitHub
+4. Consider submitting to the official ImageGlass theme repository
+
+## Troubleshooting
+
+### Theme Not Loading
+
+- Verify `igtheme.json` is valid JSON (use a JSON validator)
+- Check that all referenced icon files exist
+- Ensure file and folder names match exactly (case-sensitive)
+- Review ImageGlass logs for error messages
+
+### Icons Not Displaying
+
+- Confirm SVG files are valid
+- Check file paths in `ToolbarIcons` section
+- Ensure icon files are in the same folder as `igtheme.json`
+
+### Colors Not Applied
+
+- Verify color format (hex or accent:N)
+- Check for typos in color property names
+- Test with simple colors first (e.g., `#FF0000` for red)
+
+## Resources
+
+- [ImageGlass Theme GitHub Repository](https://github.com/ImageGlass/theme)
+- Official theme examples: Kobe, Kobe-Light
+- Community themes: Check ImageGlass forums and discussions
+
+## Support
+
+For questions or issues with theme development:
+- Report issues on [GitHub](https://github.com/d2phap/ImageGlass/issues)
+- Join community discussions
+- Contact: phap@imageglass.org

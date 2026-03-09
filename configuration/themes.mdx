@@ -1,0 +1,464 @@
+---
+title: Themes
+description: Install, manage, and create custom theme packs for ImageGlass
+icon: brush
+---
+
+## Theme System Overview
+
+ImageGlass supports custom theme packs that control the visual appearance including colors, icons, and UI elements. Each theme is defined by an `igtheme.json` configuration file and associated assets.
+
+## Theme Locations
+
+Themes can be installed in two locations:
+
+<CodeGroup>
+```text User Themes
+%APPDATA%\ImageGlass\Themes\[ThemeName]\
+├── igtheme.json
+├── *.svg (toolbar icons)
+├── Logo.svg
+└── preview.webp
+```
+
+```text Built-in Themes
+[ImageGlass Installation]\Themes\[ThemeName]\
+├── igtheme.json
+├── *.svg (toolbar icons)
+└── ...
+```
+</CodeGroup>
+
+User themes take precedence over built-in themes with the same name.
+
+## Built-in Themes
+
+ImageGlass includes these default themes:
+
+<CardGroup cols={2}>
+  <Card title="Kobe (Dark)" icon="moon">
+    Modern dark theme with accent color integration
+    
+    **Best for:** Low-light environments, photo editing
+  </Card>
+  
+  <Card title="Kobe-Light" icon="sun">
+    Clean light theme with subtle colors
+    
+    **Best for:** Bright environments, document viewing
+  </Card>
+</CardGroup>
+
+## Installing Themes
+
+<Steps>
+  <Step title="Download Theme Pack">
+    Obtain a `.igtheme` file or theme folder from:
+    - [ImageGlass Theme Gallery](https://imageglass.org/themes)
+    - Community sources
+    - Custom created themes
+  </Step>
+  
+  <Step title="Install via Settings">
+    **Option 1: Using ImageGlass Settings**
+    1. Open ImageGlass Settings → Appearance tab
+    2. Click **Install theme packs**
+    3. Select the `.igtheme` file or folder
+    4. Confirm installation
+  </Step>
+  
+  <Step title="Install Manually">
+    **Option 2: Manual Installation**
+    1. Extract theme folder to `%APPDATA%\ImageGlass\Themes\`
+    2. Ensure folder contains `igtheme.json`
+    3. Restart ImageGlass
+    4. Select theme in Settings → Appearance
+  </Step>
+  
+  <Step title="Apply Theme">
+    1. Open Settings → Appearance
+    2. Select theme for **Dark mode** and/or **Light mode**
+    3. Click Apply
+  </Step>
+</Steps>
+
+## Theme Structure
+
+### igtheme.json Configuration
+
+Every theme pack requires an `igtheme.json` file:
+
+```json igtheme.json
+{
+  "_Metadata": {
+    "Description": "ImageGlass theme configuration file",
+    "Version": "9.0"
+  },
+  "Info": {
+    "Name": "My Custom Theme",
+    "Author": "Your Name",
+    "Email": "your@email.com",
+    "Website": "https://yoursite.com",
+    "Description": "A custom theme for ImageGlass",
+    "Version": "1.0"
+  },
+  "Settings": {
+    "IsDarkMode": true,
+    "NavButtonLeft": "ViewPreviousImage.svg",
+    "NavButtonRight": "ViewNextImage.svg",
+    "PreviewImage": "preview.webp",
+    "AppLogo": "Logo.svg"
+  },
+  "Colors": {
+    "BgColor": "#1e1e1e",
+    "TextColor": "#ffffff",
+    "ToolbarBgColor": "#2d2d30",
+    "MenuBgHoverColor": "accent:50"
+  },
+  "ToolbarIcons": {
+    "OpenFile": "OpenFile.svg",
+    "Save": "Save.svg"
+    // ... more icons
+  }
+}
+```
+
+### Theme Info Section
+
+<ParamField path="Info.Name" type="string" required>
+  Display name of the theme
+</ParamField>
+
+<ParamField path="Info.Author" type="string">
+  Theme creator's name
+</ParamField>
+
+<ParamField path="Info.Email" type="string">
+  Contact email for theme support
+</ParamField>
+
+<ParamField path="Info.Website" type="string">
+  Theme or author website
+</ParamField>
+
+<ParamField path="Info.Description" type="string">
+  Brief description of the theme
+</ParamField>
+
+<ParamField path="Info.Version" type="string" required>
+  Theme version number
+</ParamField>
+
+### Theme Settings
+
+<ParamField path="Settings.IsDarkMode" type="boolean" required>
+  Whether this is a dark or light theme
+  
+  Determines default text and UI colors.
+</ParamField>
+
+<ParamField path="Settings.NavButtonLeft" type="string">
+  Filename of left navigation button image (SVG recommended)
+  
+  **Example:** `"ViewPreviousImage.svg"`
+</ParamField>
+
+<ParamField path="Settings.NavButtonRight" type="string">
+  Filename of right navigation button image
+  
+  **Example:** `"ViewNextImage.svg"`
+</ParamField>
+
+<ParamField path="Settings.PreviewImage" type="string">
+  Preview image shown in theme selector
+  
+  **Recommended:** 800x600 WebP or PNG
+</ParamField>
+
+<ParamField path="Settings.AppLogo" type="string">
+  Application logo image (shown in about dialog)
+  
+  **Recommended:** 256x256 SVG or PNG
+</ParamField>
+
+### Theme Colors
+
+ImageGlass supports extensive color customization:
+
+#### Main Colors
+
+<ParamField path="Colors.BgColor" type="string">
+  Main background color
+  
+  **Format:** Hex color with optional alpha (`#RRGGBB` or `#RRGGBBAA`)
+  
+  **Example:** `"#1e1e1e00"` (transparent), `"#ffffff"` (white)
+</ParamField>
+
+<ParamField path="Colors.TextColor" type="string">
+  Primary text color
+</ParamField>
+
+#### Toolbar Colors
+
+<ParamField path="Colors.ToolbarBgColor" type="string">
+  Toolbar background color
+</ParamField>
+
+<ParamField path="Colors.ToolbarTextColor" type="string">
+  Toolbar text and icon color
+</ParamField>
+
+<ParamField path="Colors.ToolbarItemHoverColor" type="string">
+  Toolbar button hover highlight
+  
+  **Example:** `"accent:140"` (system accent with alpha 140)
+</ParamField>
+
+<ParamField path="Colors.ToolbarItemActiveColor" type="string">
+  Toolbar button pressed state
+</ParamField>
+
+<ParamField path="Colors.ToolbarItemSelectedColor" type="string">
+  Toolbar button selected/active state
+</ParamField>
+
+#### Gallery Colors
+
+<ParamField path="Colors.GalleryBgColor" type="string">
+  Gallery panel background
+</ParamField>
+
+<ParamField path="Colors.GalleryTextColor" type="string">
+  Gallery text color
+</ParamField>
+
+<ParamField path="Colors.GalleryItemHoverColor" type="string">
+  Gallery thumbnail hover state
+</ParamField>
+
+<ParamField path="Colors.GalleryItemActiveColor" type="string">
+  Gallery thumbnail click state
+</ParamField>
+
+<ParamField path="Colors.GalleryItemSelectedColor" type="string">
+  Gallery selected thumbnail
+</ParamField>
+
+#### Menu Colors
+
+<ParamField path="Colors.MenuBgColor" type="string">
+  Menu background color
+</ParamField>
+
+<ParamField path="Colors.MenuBgHoverColor" type="string">
+  Menu item hover background
+</ParamField>
+
+<ParamField path="Colors.MenuTextColor" type="string">
+  Menu item text color
+</ParamField>
+
+<ParamField path="Colors.MenuTextHoverColor" type="string">
+  Menu item text on hover
+</ParamField>
+
+#### Navigation Colors
+
+<ParamField path="Colors.NavigationButtonColor" type="string">
+  Navigation arrow button overlay color
+</ParamField>
+
+### System Accent Color
+
+Use Windows system accent color in your theme:
+
+```json
+"Colors": {
+  "ToolbarItemHoverColor": "accent:140",
+  "MenuBgHoverColor": "accent:50"
+}
+```
+
+Format: `accent:[alpha]` where alpha is 0-255
+
+<Tip>
+  System accent color automatically adjusts when users change their Windows theme
+</Tip>
+
+### Toolbar Icons
+
+Define toolbar icon filenames in the `ToolbarIcons` section:
+
+<ParamField path="ToolbarIcons.{IconName}" type="string">
+  Filename of toolbar icon (relative to theme folder)
+  
+  **Supported formats:** SVG (recommended), PNG, WebP
+  
+  **Available icons:**
+  - `ActualSize`, `AutoZoom`, `Checkerboard`
+  - `ColorPicker`, `Crop`, `Delete`
+  - `Edit`, `FlipHorz`, `FlipVert`
+  - `FullScreen`, `Gallery`, `GoToImage`
+  - `LockZoom`, `MainMenu`, `OpenFile`
+  - `Print`, `Refresh`, `RotateLeft`, `RotateRight`
+  - `Save`, `ScaleToFill`, `ScaleToFit`
+  - `ScaleToHeight`, `ScaleToWidth`
+  - `Slideshow`, `ViewFirstImage`, `ViewLastImage`
+  - `ViewNextImage`, `ViewPreviousImage`
+  - `WindowFit`, `ZoomIn`, `ZoomOut`
+  - `Play`, `Pause`, `Export`, `Exit`
+</ParamField>
+
+<Info>
+  **SVG is recommended** for icons - they scale perfectly at any DPI and size
+</Info>
+
+## Creating a Custom Theme
+
+<Steps>
+  <Step title="Create Theme Folder">
+    Create a new folder in `%APPDATA%\ImageGlass\Themes\MyTheme\`
+  </Step>
+  
+  <Step title="Create igtheme.json">
+    Copy and modify the example configuration above
+  </Step>
+  
+  <Step title="Add Icons (Optional)">
+    Create or add SVG icons for toolbar buttons. Icon size is automatically scaled.
+    
+    **Recommended:** 24x24px base size, scalable SVG
+  </Step>
+  
+  <Step title="Add Preview Image">
+    Create `preview.webp` showing your theme (800x600 recommended)
+  </Step>
+  
+  <Step title="Test Theme">
+    1. Restart ImageGlass
+    2. Open Settings → Appearance
+    3. Select your theme
+    4. Verify all colors and icons appear correctly
+  </Step>
+</Steps>
+
+## Theme Compatibility
+
+<ParamField path="_Metadata.Version" type="string" required>
+  Theme API version
+  
+  **Current version:** `"9.0"`
+  
+  ImageGlass checks this for compatibility.
+</ParamField>
+
+Themes with older API versions may not work correctly with newer ImageGlass versions.
+
+## Uninstalling Themes
+
+<Tabs>
+  <Tab title="Via Settings">
+    1. Open ImageGlass Settings → Appearance
+    2. Click **Uninstall a theme pack**
+    3. Select theme to remove
+    4. Confirm deletion
+  </Tab>
+  
+  <Tab title="Manual Removal">
+    1. Navigate to `%APPDATA%\ImageGlass\Themes\`
+    2. Delete the theme folder
+    3. Restart ImageGlass
+  </Tab>
+</Tabs>
+
+<Warning>
+  If you delete the currently active theme, ImageGlass will fall back to the default **Kobe** theme
+</Warning>
+
+## Sharing Your Theme
+
+To share your custom theme:
+
+1. **Package the theme folder** with all assets
+2. **Create a ZIP file** or `.igtheme` package
+3. **Include README** with installation instructions
+4. **Share on:**
+   - [ImageGlass Community](https://imageglass.org/community)
+   - GitHub repositories
+   - Your own website
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Theme doesn't appear in list">
+    - Ensure `igtheme.json` exists in theme folder
+    - Check JSON syntax is valid
+    - Verify `Info.Name` and `_Metadata.Version` are present
+    - Restart ImageGlass
+  </Accordion>
+  
+  <Accordion title="Icons not displaying">
+    - Check icon filenames match `ToolbarIcons` section exactly
+    - Ensure icon files are in theme folder
+    - Verify SVG files are valid
+    - Try PNG format as fallback
+  </Accordion>
+  
+  <Accordion title="Colors not applying">
+    - Validate hex color format (`#RRGGBB` or `#RRGGBBAA`)
+    - Check for typos in color property names
+    - Ensure colors contrast properly (dark vs light mode)
+  </Accordion>
+  
+  <Accordion title="Theme shows but looks broken">
+    - Verify `Settings.IsDarkMode` matches your color scheme
+    - Check all required color properties are defined
+    - Compare with built-in theme structure
+  </Accordion>
+</AccordionGroup>
+
+## Example: Minimal Dark Theme
+
+```json igtheme.json
+{
+  "_Metadata": {
+    "Description": "ImageGlass theme configuration file",
+    "Version": "9.0"
+  },
+  "Info": {
+    "Name": "Minimal Dark",
+    "Author": "Your Name",
+    "Version": "1.0"
+  },
+  "Settings": {
+    "IsDarkMode": true
+  },
+  "Colors": {
+    "BgColor": "#0d0d0d",
+    "TextColor": "#e0e0e0",
+    "ToolbarBgColor": "#1a1a1a",
+    "ToolbarTextColor": "#e0e0e0",
+    "ToolbarItemHoverColor": "accent:100",
+    "GalleryBgColor": "#1a1a1a",
+    "GalleryTextColor": "#e0e0e0",
+    "MenuBgColor": "#1a1a1a",
+    "MenuTextColor": "#e0e0e0"
+  },
+  "ToolbarIcons": {}
+}
+```
+
+This minimal theme uses default icons and system accent colors.
+
+## See Also
+
+<CardGroup cols={2}>
+  <Card title="Appearance Settings" icon="palette" href="/configuration/appearance">
+    Configure theme selection and visual options
+  </Card>
+  
+  <Card title="Advanced Configs" icon="code" href="/configuration/advanced-configs">
+    Advanced customization options
+  </Card>
+</CardGroup>

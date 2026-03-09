@@ -1,0 +1,337 @@
+---
+title: Contributing Guide
+description: Guidelines for contributing to ImageGlass development
+---
+
+## Introduction
+
+First, thank you for considering contributing to ImageGlass! It's people like you that make the open source community such a great community!
+
+We welcome any type of contribution, not only code. You can help with:
+
+- **QA**: File bug reports with detailed information (screenshots with console open are helpful)
+- **Marketing**: Write blog posts, howto guides, print stickers, spread the word
+- **Community**: Present the project at meetups, organize local community events
+- **Code**: Work on [open issues](https://github.com/d2phap/ImageGlass/issues), comment on issues to show support
+- **Money**: Support via [GitHub Sponsors](https://github.com/sponsors/d2phap) or [PayPal](https://www.paypal.me/d2phap)
+- **Translation**: Help make ImageGlass accessible to everyone via [Crowdin](https://crowdin.com/project/imageglass/invite)
+
+## Getting Started
+
+Before you start contributing:
+
+1. **Set up your development environment** - Follow the [Getting Started](/development/getting-started) guide
+2. **Understand the architecture** - Read the [Architecture](/development/architecture) documentation
+3. **Build from source** - Try [Building from Source](/development/building-from-source) to ensure your environment is ready
+
+## Ways to Contribute
+
+### Reporting Bugs
+
+Good bug reports are extremely helpful. Here's how to file a good bug report:
+
+1. **Search existing issues** - Check if the bug has already been reported
+2. **Use the bug report template** - Follow the template in GitHub Issues
+3. **Provide detailed information**:
+   - ImageGlass version
+   - Windows version
+   - Steps to reproduce
+   - Expected behavior vs actual behavior
+   - Screenshots or video recordings
+   - Console output (if applicable)
+
+#### Example Bug Report
+
+```markdown
+**ImageGlass Version**: 9.4.1.303
+**Windows Version**: Windows 11 22H2
+
+**Steps to reproduce:**
+1. Open a large PNG file (> 50MB)
+2. Zoom in to 200%
+3. Pan to the bottom-right corner
+
+**Expected behavior:**
+Smooth panning without lag
+
+**Actual behavior:**
+Application freezes for 2-3 seconds
+
+**Screenshots:**
+[Attach screenshot showing the issue]
+
+**Additional context:**
+This only happens with PNG files, not JPEG
+```
+
+### Suggesting Features
+
+Feature requests are welcome! To suggest a feature:
+
+1. **Check existing feature requests** - See if it's already been suggested
+2. **Use the feature request template** - Available in GitHub Issues
+3. **Explain the use case** - Why would this feature be useful?
+4. **Provide examples** - How do other applications handle this?
+
+### Contributing Code
+
+Any code change should be submitted as a pull request, **based on the `develop` branch**.
+
+#### Branch Strategy
+
+- **`develop`** - Active development (base your PRs on this branch)
+- **`prod`** - Stable production releases (do not PR to this branch)
+
+#### Before You Start Coding
+
+1. **Create an issue** - Discuss the change you want to make
+2. **Get feedback** - Wait for maintainer feedback before investing significant time
+3. **Fork the repository** - Create your own fork to work in
+4. **Create a feature branch** - Branch from `develop`
+
+```bash
+git checkout develop
+git pull origin develop
+git checkout -b feature/my-awesome-feature
+```
+
+#### Coding Standards
+
+##### Code Style
+
+- **Use latest C# features** - The project uses `<LangVersion>latest</LangVersion>`
+- **Follow .editorconfig** - The project includes `.editorconfig` for consistent formatting
+- **Enable nullable reference types** - All projects use `<Nullable>enable</Nullable>`
+- **Use implicit usings** - Enabled via `<ImplicitUsings>enable</ImplicitUsings>`
+
+##### Code Quality
+
+- **Fix all analyzer warnings** - The project uses:
+  - IDisposableAnalyzers - Ensures proper disposal
+  - Microsoft.VisualStudio.Threading.Analyzers - Detects threading issues
+- **Dispose resources properly** - Always dispose IDisposable objects
+- **Use async/await correctly** - Follow async best practices
+- **Avoid unsafe code unless necessary** - Only use `unsafe` for performance-critical sections
+
+##### Example Code
+
+```csharp
+// Good: Proper disposal with using statement
+using var bitmap = new Bitmap(filePath);
+var color = bitmap.GetPixelColor(x, y);
+
+// Good: Async method with proper cancellation
+public async Task LoadImageAsync(string path, CancellationToken token = default)
+{
+    await Task.Run(() => LoadImage(path), token);
+}
+
+// Good: Nullable reference handling
+public Color? GetAverageColor(Bitmap? bitmap)
+{
+    if (bitmap == null) return null;
+    // ... implementation
+}
+```
+
+#### Writing Tests
+
+While ImageGlass doesn't currently have extensive unit tests, contributions that include tests are highly valued:
+
+- Test critical functionality
+- Test edge cases
+- Test error handling
+
+#### Commit Messages
+
+Write clear, descriptive commit messages:
+
+```bash
+# Good commit messages
+git commit -m "Fix: Memory leak when loading large PNG files"
+git commit -m "Add: Support for AVIF image format"
+git commit -m "Update: Improve zoom performance by 30%"
+
+# Bad commit messages
+git commit -m "fix bug"
+git commit -m "update"
+git commit -m "WIP"
+```
+
+**Commit message format**:
+- Start with a type: `Fix:`, `Add:`, `Update:`, `Refactor:`, `Docs:`
+- Use imperative mood: "Fix bug" not "Fixed bug"
+- Keep first line under 72 characters
+- Add detailed description if needed (separated by blank line)
+
+#### Submitting a Pull Request
+
+1. **Push your branch** to your fork:
+   ```bash
+   git push origin feature/my-awesome-feature
+   ```
+
+2. **Create a pull request** on GitHub:
+   - Set base branch to `develop`
+   - Use a clear title describing the change
+   - Fill out the PR template completely
+
+3. **PR description should include**:
+   - What changes were made
+   - Why the changes were necessary
+   - How to test the changes
+   - Screenshots/videos for UI changes
+   - Related issue numbers (e.g., "Fixes #123")
+
+#### Example Pull Request Description
+
+```markdown
+## Summary
+Adds support for AVIF image format using libavif library.
+
+## Changes
+- Added libavif NuGet package dependency
+- Implemented AvifCodec class in ImageGlass.Base/Photoing/
+- Updated supported formats list in Const.cs
+- Added AVIF to file associations
+
+## Testing
+1. Open an AVIF file (test files included in PR)
+2. Verify image loads correctly
+3. Test zoom, pan, and rotation
+4. Test thumbnail generation
+
+## Screenshots
+[Screenshot showing AVIF file opened in ImageGlass]
+
+## Related Issues
+Fixes #456
+Related to #234
+```
+
+### Code Review Process
+
+The bigger the pull request, the longer it will take to review and merge. 
+
+**Tips for faster reviews**:
+- **Break down large PRs** - Split into smaller, focused changes
+- **Provide context** - Explain what and why, not just what
+- **Respond to feedback** - Address reviewer comments promptly
+- **Keep PRs focused** - One feature or fix per PR
+
+**Review timeline**:
+- Small PRs (< 100 lines): Usually reviewed within 1-3 days
+- Medium PRs (100-500 lines): May take 3-7 days
+- Large PRs (> 500 lines): Could take 1-2 weeks
+
+## Contributing Documentation
+
+Documentation improvements are always welcome!
+
+### Types of Documentation
+
+- **Code comments** - Document complex algorithms and business logic
+- **API documentation** - XML documentation comments for public APIs
+- **User guides** - Help users understand features
+- **Developer guides** - Help other developers contribute
+
+### Documentation Standards
+
+```csharp
+/// <summary>
+/// Loads an image from the specified file path.
+/// </summary>
+/// <param name="path">The full path to the image file.</param>
+/// <param name="token">Cancellation token for async operation.</param>
+/// <returns>A task that represents the asynchronous operation.</returns>
+/// <exception cref="FileNotFoundException">Thrown when the file does not exist.</exception>
+public async Task LoadImageAsync(string path, CancellationToken token = default)
+{
+    // Implementation
+}
+```
+
+## Contributing Translations
+
+ImageGlass uses [Crowdin](https://crowdin.com/project/imageglass/invite) for translations.
+
+See the [Translations](/development/translations) guide for detailed instructions.
+
+## Financial Contributions
+
+ImageGlass is free and open source. Financial contributions help maintain and improve the project:
+
+- [GitHub Sponsors](https://github.com/sponsors/d2phap) - Recurring or one-time donations
+- [PayPal](https://www.paypal.me/d2phap) - One-time donations
+
+Sponsors receive:
+- Recognition in the README
+- Sponsor badge on GitHub
+- Eternal gratitude from the maintainer
+
+## Community Guidelines
+
+### Code of Conduct
+
+- **Be respectful** - Treat everyone with respect and kindness
+- **Be constructive** - Provide helpful feedback
+- **Be patient** - Maintainers are volunteers
+- **Be collaborative** - We're all here to make ImageGlass better
+
+### Communication Channels
+
+- **GitHub Issues** - Bug reports and feature requests
+- **GitHub Discussions** - General questions and discussions
+- **Discord** - Real-time chat at [ImageGlass Discord](https://discord.gg/tWjbynH2X8)
+- **Email** - phap@imageglass.org for private matters
+
+### Response Times
+
+Please be patient. Maintainers are volunteers and may not respond immediately:
+
+- **Issues**: Usually responded to within 1-3 days
+- **Pull requests**: Reviews may take 1-7 days depending on complexity
+- **Discord**: Real-time responses from community members
+
+## Licensing
+
+By contributing to ImageGlass, you agree that your contributions will be licensed under the GNU General Public License v3.0.
+
+See the [LICENSE](https://github.com/d2phap/ImageGlass/blob/master/LICENSE) file for details.
+
+### Third-Party Dependencies
+
+If your contribution adds a new dependency:
+
+1. **Check the license** - Must be compatible with GPL-3.0
+2. **Document the dependency** - Add to the appropriate `.csproj` file
+3. **Add license attribution** - Include in `License/` folder
+
+## Questions?
+
+If you have any questions:
+
+1. **Search existing issues** - Your question may already be answered
+2. **Check the docs** - Review the [documentation](https://imageglass.org/docs)
+3. **Ask on Discord** - Join [ImageGlass Discord](https://discord.gg/tWjbynH2X8)
+4. **Create an issue** - If you can't find an answer
+5. **Email** - phap@imageglass.org for private questions
+
+## Recognition
+
+Contributors are recognized in:
+
+- GitHub contributors page
+- Release notes (for significant contributions)
+- README acknowledgments
+
+## Thank You!
+
+Your contributions, whether code, documentation, bug reports, or support, make ImageGlass better for everyone. Thank you for being part of this community!
+
+## Next Steps
+
+- [Getting Started](/development/getting-started) - Set up your development environment
+- [Architecture](/development/architecture) - Understand the codebase
+- [Building from Source](/development/building-from-source) - Build ImageGlass locally
+- [Translations](/development/translations) - Help translate ImageGlass

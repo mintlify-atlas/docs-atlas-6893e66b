@@ -1,0 +1,398 @@
+---
+title: Building from Source
+description: Detailed instructions for building ImageGlass from source code
+---
+
+## Prerequisites
+
+Before building ImageGlass, ensure you have:
+
+- **Windows 11** (Windows 10 version 1809 or later also supported)
+- **Visual Studio 2026** with:
+  - .NET desktop development workload
+  - Desktop development with C++ workload
+- **.NET 10 SDK** installed
+- **Git** for cloning the repository
+
+## Clone the Repository
+
+```bash
+git clone https://github.com/d2phap/ImageGlass.git
+cd ImageGlass
+```
+
+### Branch Strategy
+
+- **`develop`** - Active development branch (use this for contributions)
+- **`prod`** - Stable production releases
+
+<Note>
+Always base your work on the `develop` branch unless you're applying a hotfix.
+</Note>
+
+## Project Configuration
+
+### Target Framework
+
+All ImageGlass projects target:
+```xml
+<TargetFramework>net10.0-windows10.0.17763.0</TargetFramework>
+```
+
+This requires:
+- .NET 10 SDK
+- Windows SDK 10.0.17763.0 or later
+
+### Platform Support
+
+ImageGlass supports two platforms:
+- **x64** - 64-bit Intel/AMD processors
+- **ARM64** - ARM64 processors (e.g., Surface Pro X, Windows Dev Kit)
+
+### Build Configurations
+
+1. **Debug** - For development with full debugging symbols
+2. **Release** - Optimized build for testing
+3. **Publish_Release** - Production build with all optimizations
+
+## Building with Visual Studio
+
+### Step 1: Open the Solution
+
+1. Navigate to `Source/ImageGlass/`
+2. Open `ImageGlass.csproj` in Visual Studio 2026
+3. Visual Studio will automatically discover all related projects
+
+### Step 2: Restore NuGet Packages
+
+Visual Studio should automatically restore packages. If not:
+
+1. Right-click on the solution in Solution Explorer
+2. Select **Restore NuGet Packages**
+
+Or use the command line:
+```bash
+dotnet restore Source/ImageGlass/ImageGlass.csproj
+```
+
+### Step 3: Select Configuration and Platform
+
+1. In the toolbar, select a configuration (e.g., **Debug**)
+2. Select a platform (e.g., **x64**)
+
+### Step 4: Build
+
+**Option 1: Build Solution**
+- Menu: **Build** > **Build Solution**
+- Keyboard: `Ctrl+Shift+B`
+
+**Option 2: Build Individual Projects**
+- Right-click a project in Solution Explorer
+- Select **Build**
+
+### Build Output Location
+
+Built binaries are located at:
+```
+Source/ImageGlass/bin/<Configuration>/<Platform>/net10.0-windows10.0.17763.0/
+```
+
+Example:
+```
+Source/ImageGlass/bin/Debug/x64/net10.0-windows10.0.17763.0/ImageGlass.exe
+```
+
+## Building from Command Line
+
+### Using MSBuild
+
+```bash
+# Build for x64 Debug
+msbuild Source/ImageGlass/ImageGlass.csproj /p:Configuration=Debug /p:Platform=x64
+
+# Build for x64 Release
+msbuild Source/ImageGlass/ImageGlass.csproj /p:Configuration=Release /p:Platform=x64
+
+# Build for ARM64 Release
+msbuild Source/ImageGlass/ImageGlass.csproj /p:Configuration=Release /p:Platform=ARM64
+```
+
+### Using .NET CLI
+
+```bash
+# Restore packages
+dotnet restore Source/ImageGlass/ImageGlass.csproj
+
+# Build for x64
+dotnet build Source/ImageGlass/ImageGlass.csproj -c Debug /p:Platform=x64
+
+# Build for ARM64
+dotnet build Source/ImageGlass/ImageGlass.csproj -c Release /p:Platform=ARM64
+```
+
+## Build Process Details
+
+### NuGet Dependencies
+
+ImageGlass relies on several NuGet packages:
+
+#### Main Application (ImageGlass.csproj)
+
+- **D2Phap.FileWatcherEx** (3.0.0) - File system monitoring
+- **ImageGlass.Tools** (1.9200.2) - Utility tools
+- **IDisposableAnalyzers** (4.0.8) - Code analysis for proper disposal
+- **Microsoft.VisualStudio.Threading.Analyzers** (17.14.15) - Threading analyzers
+
+#### ImageGlass.Base Component
+
+- **Magick.NET-Q16-HDRI-OpenMP** (14.10.3) - ImageMagick for .NET
+  - Platform-specific: `-arm64` or `-x64`
+- **Magick.NET.SystemDrawing** (8.0.16)
+- **Magick.NET.SystemWindowsMedia** (8.0.16)
+- **Microsoft.Web.WebView2** (1.0.2151.40) - WebView2 runtime
+- **Microsoft.Windows.CsWin32** (0.3.269) - Windows API source generation
+- **PhotoSauce.MagicScaler** (0.15.0) - High-performance image scaling
+- **DirectNStandard** (1.18.0) - Direct2D/DirectX interop
+- **WicNet** (1.8.4.1) - Windows Imaging Component
+- **ZString** (2.6.0) - Zero-allocation string operations
+- **D2Phap.EggShell** (platform-specific)
+
+#### ImageGlass.Settings Component
+
+- **Microsoft.Extensions.Configuration** (10.0.3)
+- **Microsoft.Extensions.Configuration.Binder** (10.0.3)
+- **Microsoft.Extensions.Configuration.CommandLine** (10.0.3)
+- **Microsoft.Extensions.Configuration.Json** (10.0.3)
+
+### Post-Build Steps
+
+The main ImageGlass project has automatic post-build steps defined in `ImageGlass.csproj`:
+
+```xml
+<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+  <ItemGroup>
+    <IG_Themes Include="../../Setup/Assets/Themes/**/*.*" />
+    <IG_Langs Include="../../Setup/Assets/Language/**/*.*" />
+    <Web_UI Include="../Components/ImageGlass.Settings/WebUI/dist/**/*.*" />
+  </ItemGroup>
+
+  <Copy SourceFiles="@(IG_Themes)" 
+        DestinationFolder="$(OutputPath)\Themes\%(RecursiveDir)" 
+        SkipUnchangedFiles="true" />
+  <Copy SourceFiles="@(IG_Langs)" 
+        DestinationFolder="$(OutputPath)\Language\%(RecursiveDir)" 
+        SkipUnchangedFiles="true" />
+  <Copy SourceFiles="@(Web_UI)" 
+        DestinationFolder="$(OutputPath)\WebUI\%(RecursiveDir)" 
+        SkipUnchangedFiles="true" />
+</Target>
+```
+
+This automatically copies:
+- **Themes** from `Setup/Assets/Themes/` to output
+- **Language packs** from `Setup/Assets/Language/` to output
+- **WebUI assets** from Settings component to output
+
+### Clean Build
+
+The project defines a custom clean target:
+
+```xml
+<Target Name="DeleteFiles" AfterTargets="AfterClean">
+  <ItemGroup>
+    <IG_FilesToClean Include="$(OutDir)/**/*.*" 
+                     Exclude="$(OutDir)/**/igconfig.json" />
+  </ItemGroup>
+  <Delete Files="@(IG_FilesToClean)" />
+</Target>
+```
+
+This preserves `igconfig.json` during clean operations.
+
+To perform a clean build:
+
+```bash
+# Visual Studio
+Build > Clean Solution
+Build > Build Solution
+
+# Command line
+dotnet clean Source/ImageGlass/ImageGlass.csproj
+dotnet build Source/ImageGlass/ImageGlass.csproj -c Release /p:Platform=x64
+```
+
+## Building Individual Components
+
+You can build components independently:
+
+### ImageGlass.Base
+
+```bash
+dotnet build Source/Components/ImageGlass.Base/ImageGlass.Base.csproj -c Debug /p:Platform=x64
+```
+
+### ImageGlass.UI
+
+```bash
+dotnet build Source/Components/ImageGlass.UI/ImageGlass.UI.csproj -c Debug /p:Platform=x64
+```
+
+### ImageGlass.Viewer
+
+```bash
+dotnet build Source/Components/ImageGlass.Views/ImageGlass.Viewer.csproj -c Debug /p:Platform=x64
+```
+
+### igcmd (Command-Line Tool)
+
+```bash
+dotnet build Source/igcmd/igcmd.csproj -c Debug /p:Platform=x64
+```
+
+## Advanced Build Scenarios
+
+### Building for Multiple Platforms
+
+Build for both x64 and ARM64:
+
+```bash
+# Build x64
+dotnet build Source/ImageGlass/ImageGlass.csproj -c Release /p:Platform=x64
+
+# Build ARM64
+dotnet build Source/ImageGlass/ImageGlass.csproj -c Release /p:Platform=ARM64
+```
+
+### Build with Specific Version
+
+Version is defined in the `.csproj` file:
+
+```xml
+<Version>9.4.1.303</Version>
+<FileVersion>$(Version)</FileVersion>
+```
+
+To override during build:
+
+```bash
+dotnet build Source/ImageGlass/ImageGlass.csproj \
+  -c Release \
+  /p:Platform=x64 \
+  /p:Version=9.5.0.0
+```
+
+### Publish Build
+
+For distribution-ready builds:
+
+```bash
+dotnet publish Source/ImageGlass/ImageGlass.csproj \
+  -c Publish_Release \
+  /p:Platform=x64 \
+  --self-contained false
+```
+
+## Troubleshooting
+
+### Build Errors
+
+#### Error: SDK not found
+
+**Problem**: .NET 10 SDK not installed
+
+**Solution**:
+```bash
+# Check installed SDKs
+dotnet --list-sdks
+
+# Install .NET 10 SDK from:
+# https://dotnet.microsoft.com/download
+```
+
+#### Error: Platform 'AnyCPU' not supported
+
+**Problem**: Wrong platform selected
+
+**Solution**: ImageGlass only supports x64 and ARM64. Select one of these platforms in Visual Studio or specify in the command line:
+
+```bash
+dotnet build Source/ImageGlass/ImageGlass.csproj /p:Platform=x64
+```
+
+#### Error: Package restore failed
+
+**Problem**: NuGet packages cannot be downloaded
+
+**Solution**:
+```bash
+# Clear NuGet cache
+dotnet nuget locals all --clear
+
+# Restore packages
+dotnet restore Source/ImageGlass/ImageGlass.csproj
+```
+
+#### Error: Windows SDK not found
+
+**Problem**: Required Windows SDK version not installed
+
+**Solution**: Install Windows SDK 10.0.17763.0 or later through Visual Studio Installer:
+
+1. Open Visual Studio Installer
+2. Modify your Visual Studio installation
+3. Go to **Individual components**
+4. Search for "Windows 10 SDK"
+5. Select version 10.0.17763.0 or later
+
+### Missing Files After Build
+
+#### Missing Themes/Language files
+
+**Problem**: Post-build copy step failed
+
+**Solution**: Verify the paths exist:
+```bash
+# Check if assets exist
+dir Setup\Assets\Themes
+dir Setup\Assets\Language
+
+# Rebuild
+dotnet build Source/ImageGlass/ImageGlass.csproj -c Debug /p:Platform=x64
+```
+
+### Performance Issues
+
+#### Slow build times
+
+**Solutions**:
+- Build only changed projects (not full solution)
+- Disable antivirus scanning on the source directory
+- Use SSD for source code storage
+- Increase RAM available to MSBuild:
+  ```bash
+  set MSBUILDMEMORY=8192
+  ```
+
+### Debug vs Release Performance
+
+**Debug builds** include:
+- Full debugging symbols (embedded)
+- No optimizations
+- Additional runtime checks
+
+**Release builds** include:
+- Optimized code
+- Smaller binary size
+- Better performance
+
+For testing performance, always use Release or Publish_Release configuration.
+
+## Continuous Integration
+
+For automated builds, refer to GitHub Actions workflows in `.github/workflows/` (if available).
+
+## Next Steps
+
+- [Architecture](/development/architecture) - Understand the codebase structure
+- [Contributing Guide](/development/contributing-guide) - Submit your changes
+- [Getting Started](/development/getting-started) - Development environment setup

@@ -1,0 +1,507 @@
+---
+title: Clipboard Operations
+description: Copy, cut, and paste images and file paths with full transparency support
+---
+
+## Overview
+
+ImageGlass provides comprehensive clipboard operations with support for multiple formats, including full alpha channel transparency. Copy images, file paths, or entire image data to integrate seamlessly with other applications.
+
+## Clipboard Features
+
+### Supported Operations
+
+- **Copy image data** - Copies the rendered image with transparency
+- **Copy file path** - Copies the full file path as text
+- **Copy multiple files** - Copies file references for pasting in Explorer
+- **Paste images** - Opens images from clipboard
+- **Paste file paths** - Opens files from clipboard text
+
+### Format Support
+
+ImageGlass copies images in three formats simultaneously:
+
+1. **PNG format** - Preserves full transparency and quality
+2. **DIB format** - Compatible with professional image editors
+3. **Standard Bitmap** - Universal compatibility
+
+<Note>
+Applications automatically select the best format they support, with PNG preferred by most modern software.
+</Note>
+
+## Copying Images
+
+### Copy Image Data
+
+Copy the current image as rendered on screen:
+
+**Keyboard shortcut:** `Ctrl+C`
+
+**Menu:** Right-click → **Copy image data**
+
+This operation:
+- Captures the image as displayed
+- Preserves alpha transparency
+- Copies the selected region if a selection is active
+- Applies current zoom and transformations
+
+<Tip>
+Use **Copy image data** to capture exactly what you see, including any applied transformations or zoomed views.
+</Tip>
+
+### Copy Selected Region
+
+To copy only part of an image:
+
+<Steps>
+  <Step title="Enable Selection Tool">
+    Activate selection mode in ImageGlass
+  </Step>
+  
+  <Step title="Select Area">
+    Click and drag to select the desired region
+  </Step>
+  
+  <Step title="Copy Selection">
+    Press `Ctrl+C` or right-click → **Copy image data**
+  </Step>
+</Steps>
+
+Only the selected area is copied to the clipboard.
+
+### Copy File Path
+
+Copy the full file path as text:
+
+**Keyboard shortcut:** `Ctrl+L`
+
+**Menu:** Right-click → **Copy path**
+
+**Output example:**
+```
+C:\Users\Username\Pictures\IMG_1234.jpg
+```
+
+**Use cases:**
+- Sharing file locations
+- Command-line operations
+- Documentation and notes
+- File management scripts
+
+### Copy File Reference
+
+Copy the file itself (not just the path) for pasting in Explorer:
+
+**Keyboard shortcut:** `Ctrl+Shift+C`
+
+**Menu:** Right-click → **Copy file**
+
+This allows you to:
+- Paste the file into other folders
+- Attach to emails
+- Drag into other applications
+- Copy to network locations
+
+<Note>
+This copies a file reference, not the actual image data. Use **Copy image data** to paste into image editors.
+</Note>
+
+## Copy Multiple Files
+
+ImageGlass can copy multiple files to the clipboard sequentially:
+
+<Steps>
+  <Step title="Enable Multiple File Copy">
+    Go to **Settings > Edit**
+    
+    Enable **Allow copying multiple files**
+  </Step>
+  
+  <Step title="Copy First File">
+    Navigate to an image and press `Ctrl+Shift+C`
+  </Step>
+  
+  <Step title="Copy Additional Files">
+    Navigate to other images and press `Ctrl+Shift+C` again
+    
+    Each file is added to the clipboard collection
+  </Step>
+  
+  <Step title="Paste All Files">
+    Open Explorer or another application
+    
+    Press `Ctrl+V` to paste all copied files
+  </Step>
+</Steps>
+
+**Status indicator:**
+
+ImageGlass shows a message indicating how many files are in the clipboard:
+```
+File copied (3 items in clipboard)
+```
+
+<Tip>
+Use this feature to quickly collect images from different folders without navigating away from ImageGlass.
+</Tip>
+
+## Pasting Images
+
+### Paste from Clipboard
+
+Open images directly from clipboard:
+
+**Keyboard shortcut:** `Ctrl+V`
+
+**Menu:** File → **Paste image**
+
+ImageGlass supports pasting:
+
+- **Image data** - Screenshots, copied images, etc.
+- **File paths** - Text containing file paths
+- **File references** - Files copied from Explorer
+
+### Paste Image Data
+
+When you paste image data:
+
+<Steps>
+  <Step title="ImageGlass Receives Data">
+    Detects clipboard contains image data
+  </Step>
+  
+  <Step title="Creates Temporary File">
+    Saves clipboard content to a temporary file
+  </Step>
+  
+  <Step title="Opens Image">
+    Displays the pasted image immediately
+  </Step>
+</Steps>
+
+**Supported sources:**
+- Screenshots (Windows Snipping Tool, Print Screen)
+- Copied images from web browsers
+- Image data from Photoshop, GIMP, etc.
+- Drawing applications
+
+### Paste File Paths
+
+Paste text containing image file paths:
+
+**Example clipboard content:**
+```
+C:\Pictures\photo1.jpg
+```
+
+ImageGlass automatically:
+1. Detects the text contains a file path
+2. Validates the file exists
+3. Opens the image file
+
+### Paste Multiple Files
+
+Paste multiple files from Explorer:
+
+<Steps>
+  <Step title="Copy Files in Explorer">
+    Select multiple images in File Explorer
+    
+    Press `Ctrl+C`
+  </Step>
+  
+  <Step title="Switch to ImageGlass">
+    Activate the ImageGlass window
+  </Step>
+  
+  <Step title="Paste Files">
+    Press `Ctrl+V`
+    
+    ImageGlass opens the first file and loads the folder
+  </Step>
+</Steps>
+
+## Transparency Support
+
+ImageGlass preserves full alpha channel transparency when copying images.
+
+### How Transparency Works
+
+```csharp
+public static void SetClipboardImage(
+    WicBitmapSource img,              // Source image with alpha
+    WicBitmapSource nonAlphaImg = null  // Optional non-alpha version
+)
+```
+
+**Format priority:**
+
+1. **PNG** - Full 8-bit alpha channel
+2. **DIB** - Professional format with transparency
+3. **Bitmap** - No transparency (fallback)
+
+### Application Compatibility
+
+| Application | Transparency Support |
+|-------------|---------------------|
+| **Photoshop** | Full (prefers PNG/DIB) |
+| **GIMP** | Full (prefers PNG) |
+| **Paint.NET** | Full (PNG) |
+| **MS Paint** | None (uses Bitmap) |
+| **Word/PowerPoint** | Full (PNG) |
+| **Chrome/Firefox** | Full (PNG) |
+| **Slack/Discord** | Full (PNG) |
+
+<Tip>
+When pasting into applications without transparency support, ImageGlass automatically provides a non-transparent version.
+</Tip>
+
+## Advanced Features
+
+### Copy with Transformations
+
+Copied images include current transformations:
+
+- **Rotation** - Image copied in rotated state
+- **Flip** - Horizontal/vertical flips preserved
+- **Zoom** - Copies visible region at current zoom
+- **Color adjustments** - Applied filters included
+
+### Clipboard Clearing
+
+ImageGlass safely clears the clipboard before copying to prevent errors:
+
+```csharp
+try
+{
+    Clipboard.Clear();
+}
+catch (ExternalException) { }
+```
+
+<Note>
+Some applications may lock the clipboard temporarily. ImageGlass handles these situations gracefully.
+</Note>
+
+### Thread Safety
+
+Clipboard operations run on an STA (Single-Threaded Apartment) thread for compatibility:
+
+```csharp
+BHelper.RunAsThread(() =>
+{
+    Clipboard.SetDataObject(data, true);
+}, ApartmentState.STA).Join();
+```
+
+This ensures:
+- Compatibility with all applications
+- Reliable clipboard operations
+- No threading conflicts
+
+## Clipboard Detection
+
+ImageGlass can detect clipboard contents:
+
+```csharp
+public static bool ContainsImage()
+{
+    var dataObj = Clipboard.GetDataObject();
+    
+    // Check for PNG format
+    var hasPng = dataObj.GetDataPresent("PNG", false);
+    
+    // Check for standard bitmap
+    var hasBitmap = Clipboard.ContainsImage();
+    
+    // Check for Image object
+    var hasImage = dataObj.GetDataPresent(typeof(Image));
+    
+    return hasPng || hasBitmap || hasImage;
+}
+```
+
+**Detection order:**
+1. PNG format (highest quality)
+2. Standard Bitmap
+3. Generic Image object
+
+## Practical Examples
+
+### Screenshot Workflow
+
+<Steps>
+  <Step title="Capture Screenshot">
+    Press `Win+Shift+S` (Windows Snipping Tool)
+    
+    Select area to capture
+  </Step>
+  
+  <Step title="Paste into ImageGlass">
+    Switch to ImageGlass
+    
+    Press `Ctrl+V`
+  </Step>
+  
+  <Step title="Review and Edit">
+    View the screenshot in full quality
+    
+    Optionally launch external editor (`E`)
+  </Step>
+</Steps>
+
+### Image Comparison
+
+<Steps>
+  <Step title="Open First Image">
+    Browse to first image in ImageGlass
+  </Step>
+  
+  <Step title="Copy Image Data">
+    Press `Ctrl+C` to copy to clipboard
+  </Step>
+  
+  <Step title="Open in Editor">
+    Launch Photoshop or GIMP
+    
+    Create new document from clipboard
+  </Step>
+  
+  <Step title="Compare">
+    Use layers or side-by-side windows to compare
+  </Step>
+</Steps>
+
+### Collect Images from Multiple Folders
+
+<Steps>
+  <Step title="Enable Multiple Copy">
+    Settings → Enable **Allow copying multiple files**
+  </Step>
+  
+  <Step title="Browse and Copy">
+    Navigate through folders
+    
+    Press `Ctrl+Shift+C` for each desired image
+  </Step>
+  
+  <Step title="Create Destination">
+    Open Explorer and create target folder
+  </Step>
+  
+  <Step title="Paste All">
+    Press `Ctrl+V` in the target folder
+    
+    All selected images are copied at once
+  </Step>
+</Steps>
+
+### Share Image on Social Media
+
+<Steps>
+  <Step title="Open Image">
+    Display desired image in ImageGlass
+  </Step>
+  
+  <Step title="Copy Image">
+    Press `Ctrl+C` to copy image data
+  </Step>
+  
+  <Step title="Paste to Web">
+    Open social media site
+    
+    Paste (`Ctrl+V`) directly into post
+  </Step>
+</Steps>
+
+<Tip>
+Most modern web applications support direct image pasting, preserving transparency.
+</Tip>
+
+## Troubleshooting
+
+### Copy Operation Fails
+
+**Symptoms:**
+- Nothing copied to clipboard
+- Error message appears
+
+**Solutions:**
+- Close other applications using clipboard
+- Restart ImageGlass
+- Check image file isn't corrupted
+- Verify sufficient memory available
+
+### Paste Doesn't Work
+
+**Symptoms:**
+- Paste command does nothing
+- Clipboard appears empty
+
+**Solutions:**
+- Verify clipboard actually contains data
+- Try copying again
+- Check file path is valid (if pasting path)
+- Restart ImageGlass
+
+### Transparency Lost
+
+**Symptoms:**
+- Transparent areas become white/black
+- Alpha channel missing in target application
+
+**Causes:**
+- Target application doesn't support transparency
+- Fallback to Bitmap format
+
+**Solutions:**
+- Use PNG-compatible applications
+- Save file instead of using clipboard
+- Check target application documentation
+
+### Multiple Files Not Pasting
+
+**Symptoms:**
+- Only one file pastes instead of all
+- Files not collected properly
+
+**Solutions:**
+- Verify **Allow copying multiple files** is enabled
+- Check message shows increasing count
+- Don't copy anything else between ImageGlass copies
+- Paste immediately after collecting all files
+
+### Clipboard Conflicts
+
+**Symptoms:**
+- Clipboard managers interfere
+- Copy/paste unreliable
+
+**Solutions:**
+- Temporarily disable clipboard managers
+- Check clipboard manager settings
+- Configure exclusions for ImageGlass
+
+## Best Practices
+
+<Tip>
+**Use PNG format**: Most applications prefer PNG, which preserves quality and transparency.
+</Tip>
+
+<Tip>
+**Copy before editing**: Copy original before launching external editors for easy comparison.
+</Tip>
+
+<Tip>
+**Clear clipboard**: If experiencing issues, manually clear clipboard before copying.
+</Tip>
+
+<Tip>
+**Verify paste destination**: Ensure target application supports the format you need (especially transparency).
+</Tip>
+
+## Related Features
+
+- [External Editor Integration](/advanced/editing-integration) - Open images in editors after copying
+- [Keyboard Shortcuts](/user-guide/keyboard-shortcuts) - Complete list of clipboard shortcuts
+- [Selection Tools](/user-guide/interface#selection) - Copy selected regions

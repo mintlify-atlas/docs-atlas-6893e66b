@@ -1,0 +1,331 @@
+---
+title: Color Management
+description: Configure ICC profiles and color spaces for accurate image display
+---
+
+## Overview
+
+ImageGlass supports ICC (International Color Consortium) color profiles to ensure accurate color representation across different devices and displays. Proper color management is essential for photographers, designers, and anyone working with color-critical images.
+
+## Understanding Color Profiles
+
+### What is an ICC Profile?
+
+An ICC profile describes how colors should be interpreted and displayed. It ensures that:
+
+- Colors appear consistently across different devices
+- Images look the same on your monitor as they will in print
+- Color accuracy is maintained throughout your workflow
+
+### Color Profile Types
+
+- **Embedded profiles**: Color information stored within image files (JPEG, PNG, TIFF, etc.)
+- **Monitor profiles**: Describe your display's color characteristics
+- **Working space profiles**: Standard color spaces like sRGB, Adobe RGB, ProPhoto RGB
+
+## Configuring Color Profiles
+
+<Steps>
+  <Step title="Open Settings">
+    Go to **Settings > Image** section
+  </Step>
+  
+  <Step title="Locate Color Profile Settings">
+    Find the **Color profile** dropdown
+  </Step>
+  
+  <Step title="Select Profile Option">
+    Choose from the available options:
+    - **Current monitor profile** (recommended)
+    - **sRGB**
+    - **Adobe RGB**
+    - **Custom ICC/ICM file path**
+  </Step>
+  
+  <Step title="Configure Application Scope">
+    Enable **Apply color profile for all images** if you want to override embedded profiles
+  </Step>
+</Steps>
+
+## Color Profile Options
+
+### Current Monitor Profile
+
+```
+ColorProfileOption.CurrentMonitorProfile
+```
+
+Uses the ICC profile associated with your active monitor. This is the **recommended setting** for most users.
+
+**Advantages:**
+- Automatically adapts to your display
+- No configuration required
+- Updates automatically if monitor profile changes
+
+**When to use:**
+- General image viewing
+- Calibrated monitors
+- Multi-monitor setups
+
+### sRGB (Standard RGB)
+
+```
+ColorProfileOption.sRGB
+```
+
+The most common color space for web and digital images.
+
+**Advantages:**
+- Universal compatibility
+- Standard for web browsers
+- Smaller color gamut (easier to display accurately)
+
+**When to use:**
+- Web images
+- Smartphone photos
+- Images without embedded profiles
+
+### Adobe RGB
+
+```
+ColorProfileOption.AdobeRGB
+```
+
+A wider color gamut than sRGB, commonly used in professional photography.
+
+**Advantages:**
+- Wider range of colors
+- Better for print reproduction
+- Professional photography standard
+
+**When to use:**
+- Professional photography workflows
+- Print preparation
+- High-end camera raw files
+
+<Warning>
+Adobe RGB images may appear dull if displayed without proper color management. Always ensure your monitor is calibrated for Adobe RGB.
+</Warning>
+
+### Custom ICC/ICM File
+
+You can specify a custom color profile by providing the full path to an ICC or ICM file:
+
+```
+C:\Windows\System32\spool\drivers\color\YourProfile.icc
+```
+
+**When to use:**
+- Custom calibrated profiles
+- Specialized workflows
+- Matching specific output devices
+
+<Note>
+Windows stores system color profiles in `C:\Windows\System32\spool\drivers\color\`
+</Note>
+
+## Advanced Settings
+
+### Apply Color Profile for All Images
+
+When enabled, ImageGlass applies your chosen profile to **all images**, overriding any embedded profiles.
+
+```csharp
+Config.ShouldUseColorProfileForAll = true;
+```
+
+**Use cases:**
+- Consistent viewing experience across all images
+- Previewing how images will look in a specific color space
+- Troubleshooting color issues
+
+**Caution:**
+<Warning>
+Enabling this option may cause images with embedded profiles to display incorrectly. Only use if you understand the implications.
+</Warning>
+
+### Ignore Color Profile
+
+To disable color management entirely:
+
+```csharp
+CodecReadOptions.IgnoreColorProfile = true;
+```
+
+This displays raw image data without any color transformation.
+
+## Viewing Color Information
+
+ImageGlass displays color space information in the title bar and image info:
+
+1. **Color Space**: The image's color space (e.g., RGB, CMYK, Grayscale)
+2. **Color Profile**: The embedded ICC profile name (if present)
+
+### Display Format
+
+```
+ColorSpace/ProfileName
+```
+
+Examples:
+- `sRGB/sRGB IEC61966-2.1`
+- `RGB/Adobe RGB (1998)`
+- `RGB/-` (no embedded profile)
+
+<Tip>
+Enable the **Color space** tag in image info settings to see this information in the title bar.
+</Tip>
+
+## Color Management Workflow
+
+### For Photographers
+
+<Steps>
+  <Step title="Calibrate Your Monitor">
+    Use a hardware calibrator (like X-Rite ColorMunki or Datacolor SpyderX)
+  </Step>
+  
+  <Step title="Configure ImageGlass">
+    Set color profile to **Current monitor profile**
+  </Step>
+  
+  <Step title="Use Embedded Profiles">
+    Leave **Apply color profile for all images** disabled
+  </Step>
+  
+  <Step title="Verify in ImageGlass">
+    Check that colors match your editing software (Lightroom, Photoshop)
+  </Step>
+</Steps>
+
+### For Web Designers
+
+<Steps>
+  <Step title="Set Default to sRGB">
+    Configure color profile to **sRGB**
+  </Step>
+  
+  <Step title="Enable for All Images">
+    Turn on **Apply color profile for all images**
+  </Step>
+  
+  <Step title="Preview Web Colors">
+    Images now display as they will in web browsers
+  </Step>
+</Steps>
+
+### For Print Production
+
+<Steps>
+  <Step title="Use Custom Profile">
+    Load your printer's ICC profile
+  </Step>
+  
+  <Step title="Soft Proof">
+    Preview how images will look when printed
+  </Step>
+  
+  <Step title="Compare Profiles">
+    Toggle between monitor and print profiles to identify gamut issues
+  </Step>
+</Steps>
+
+## Technical Details
+
+### Color Space Detection
+
+ImageGlass automatically detects:
+
+- **Embedded ICC profiles** from image metadata
+- **EXIF color space tags**
+- **Default color space** based on file format
+
+### Supported Color Spaces
+
+- RGB (Red, Green, Blue)
+- CMYK (Cyan, Magenta, Yellow, Black)
+- Grayscale
+- LAB (L*a*b*)
+- And more...
+
+### Profile Application
+
+Color profiles are applied during image decoding:
+
+```csharp
+var readSettings = new CodecReadOptions()
+{
+    ColorProfileName = Config.ColorProfile,
+    ApplyColorProfileForAll = Config.ShouldUseColorProfileForAll,
+};
+```
+
+## Troubleshooting
+
+### Colors Look Washed Out
+
+**Possible causes:**
+- Monitor not calibrated
+- Using Adobe RGB profile on sRGB monitor
+- Incorrect color profile selected
+
+**Solutions:**
+- Switch to **Current monitor profile**
+- Calibrate your monitor
+- Use sRGB for general viewing
+
+### Colors Don't Match Other Applications
+
+**Possible causes:**
+- Different color management settings
+- Application not using ICC profiles
+- Monitor profile mismatch
+
+**Solutions:**
+- Verify both applications use the same color profile
+- Check if other application supports color management
+- Ensure Windows color management is configured correctly
+
+### Custom Profile Not Working
+
+**Checklist:**
+- Verify the ICC/ICM file path is correct
+- Ensure the file exists and is readable
+- Check file permissions
+- Confirm the profile is valid (try opening in other software)
+
+### Images Look Too Saturated
+
+**Possible causes:**
+- Wide gamut profile on standard monitor
+- Incorrect monitor profile
+- Display driver issues
+
+**Solutions:**
+- Switch to sRGB profile
+- Update display drivers
+- Recalibrate monitor
+
+## Best Practices
+
+<Tip>
+**Always calibrate**: Regular monitor calibration ensures accurate color representation.
+</Tip>
+
+<Tip>
+**Respect embedded profiles**: Leave "Apply for all images" disabled unless you have a specific need.
+</Tip>
+
+<Tip>
+**Match your workflow**: Use the same color profile across all applications in your workflow.
+</Tip>
+
+<Tip>
+**Understand your display**: Know whether your monitor is sRGB or wide gamut (Adobe RGB, DCI-P3).
+</Tip>
+
+## Related Features
+
+- [EXIF Metadata](/advanced/exif-metadata) - View color space information in image metadata
+- [Image Settings](/user-guide/settings#image-settings) - Configure other image display options
+- [Slideshow](/advanced/slideshow) - Color profiles apply during slideshow mode

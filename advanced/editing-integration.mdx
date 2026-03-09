@@ -1,0 +1,407 @@
+---
+title: External Editor Integration
+description: Configure external applications to edit images from ImageGlass
+---
+
+## Overview
+
+ImageGlass seamlessly integrates with external editing applications, allowing you to quickly open images in your preferred photo editor. Configure default editors per file type and control what happens to ImageGlass after launching the editor.
+
+## Quick Start
+
+To open the current image in an external editor:
+
+1. Press **`E`** (default shortcut) or
+2. Right-click the image and select **Edit**
+3. ImageGlass launches your configured editor
+
+<Note>
+If no editor is configured for the image type, ImageGlass will prompt you to set one up.
+</Note>
+
+## Configuring Edit Apps
+
+<Steps>
+  <Step title="Open Settings">
+    Go to **Settings > Edit** section
+  </Step>
+  
+  <Step title="Add New Editor">
+    Click **Add** to create a new editor configuration
+  </Step>
+  
+  <Step title="Configure Editor Details">
+    Fill in the editor information:
+    - **App Name**: Friendly name (e.g., "Photoshop", "GIMP")
+    - **Executable**: Full path to the application executable
+    - **Arguments**: Command-line arguments (optional)
+    - **File Extensions**: Comma-separated list of extensions
+  </Step>
+  
+  <Step title="Save Configuration">
+    Click **Save** to add the editor
+  </Step>
+</Steps>
+
+## Edit App Configuration
+
+### Basic Structure
+
+Each edit app consists of three components:
+
+```csharp
+public class EditApp
+{
+    public string AppName { get; set; }      // Display name
+    public string Executable { get; set; }   // Path to .exe
+    public string Argument { get; set; }     // Command arguments
+}
+```
+
+### File Extension Mapping
+
+ImageGlass stores edit apps in a dictionary keyed by file extensions:
+
+```csharp
+Dictionary<string, EditApp> EditApps
+```
+
+**Example configuration:**
+
+| Extension | App Name | Executable | Argument |
+|-----------|----------|------------|----------|
+| `.jpg` | Photoshop | `C:\Program Files\Adobe\Photoshop\Photoshop.exe` | `"%1"` |
+| `.png` | Photoshop | `C:\Program Files\Adobe\Photoshop\Photoshop.exe` | `"%1"` |
+| `.psd` | Photoshop | `C:\Program Files\Adobe\Photoshop\Photoshop.exe` | `"%1"` |
+| `.svg` | Inkscape | `C:\Program Files\Inkscape\inkscape.exe` | `"%1"` |
+
+### Using Command Arguments
+
+The `%1` placeholder represents the image file path:
+
+```
+"%1"                    // Basic usage (quotes handle spaces)
+--file="%1"             // Named parameter
+"%1" --fullscreen        // Additional flags
+-o "%1" --edit-mode      // Multiple parameters
+```
+
+<Tip>
+Always wrap `%1` in quotes to handle file paths with spaces correctly.
+</Tip>
+
+## Popular Editor Examples
+
+### Adobe Photoshop
+
+```yaml
+App Name: Adobe Photoshop
+Executable: C:\Program Files\Adobe\Adobe Photoshop 2024\Photoshop.exe
+Argument: "%1"
+Extensions: .jpg, .jpeg, .png, .psd, .tif, .tiff, .bmp
+```
+
+### GIMP
+
+```yaml
+App Name: GIMP
+Executable: C:\Program Files\GIMP 2\bin\gimp-2.10.exe
+Argument: "%1"
+Extensions: .jpg, .jpeg, .png, .gif, .bmp, .xcf
+```
+
+### Paint.NET
+
+```yaml
+App Name: Paint.NET
+Executable: C:\Program Files\paint.net\paintdotnet.exe
+Argument: "%1"
+Extensions: .jpg, .jpeg, .png, .gif, .bmp, .pdn
+```
+
+### Affinity Photo
+
+```yaml
+App Name: Affinity Photo
+Executable: C:\Program Files\Affinity\Photo\Photo.exe
+Argument: "%1"
+Extensions: .jpg, .jpeg, .png, .tif, .tiff, .afphoto
+```
+
+### Inkscape (Vector Graphics)
+
+```yaml
+App Name: Inkscape
+Executable: C:\Program Files\Inkscape\bin\inkscape.exe
+Argument: "%1"
+Extensions: .svg, .svgz
+```
+
+### Adobe Lightroom
+
+```yaml
+App Name: Adobe Lightroom
+Executable: C:\Program Files\Adobe\Adobe Lightroom Classic\lightroom.exe
+Argument: "%1"
+Extensions: .jpg, .jpeg, .dng, .cr2, .nef, .arw
+```
+
+## After Editing Actions
+
+Control what happens to ImageGlass after launching an external editor:
+
+### Available Actions
+
+```csharp
+public enum AfterEditAppAction
+{
+    Nothing,    // ImageGlass continues running normally
+    Minimize,   // Minimizes ImageGlass window
+    Close       // Closes ImageGlass application
+}
+```
+
+### Configuration
+
+<Steps>
+  <Step title="Open Settings">
+    Go to **Settings > Edit**
+  </Step>
+  
+  <Step title="Choose Action">
+    Select from **After editing** dropdown:
+    - **Do nothing** (default)
+    - **Minimize ImageGlass**
+    - **Close ImageGlass**
+  </Step>
+  
+  <Step title="Save Settings">
+    Changes apply immediately
+  </Step>
+</Steps>
+
+### When to Use Each Option
+
+**Do Nothing**
+- Quick edits where you want to compare before/after
+- Using ImageGlass as a reference while editing
+- Multi-monitor workflows
+
+**Minimize**
+- Working on a single monitor
+- Reducing clutter while keeping ImageGlass active
+- Quick access to return to browsing
+
+**Close**
+- One-time edits where you won't return to ImageGlass
+- Freeing system resources for intensive editing
+- Batch editing workflows
+
+## Advanced Scenarios
+
+### Multiple Editors per Extension
+
+Configure different editors for the same file type:
+
+<Steps>
+  <Step title="Use Descriptive Names">
+    Create separate entries with clear names:
+    - "Photoshop (Quick Edit)"
+    - "Photoshop (RAW Processing)"
+  </Step>
+  
+  <Step title="Set Different Arguments">
+    Use different command-line options for each workflow
+  </Step>
+  
+  <Step title="Default Editor">
+    The first matching extension becomes the default (`E` shortcut)
+  </Step>
+  
+  <Step title="Alternative Access">
+    Use **Open With** menu for other configured editors
+  </Step>
+</Steps>
+
+### RAW File Processing
+
+For camera RAW files, configure specialized processors:
+
+```yaml
+App Name: Adobe Camera Raw
+Executable: C:\Program Files\Adobe\Adobe Photoshop 2024\Photoshop.exe
+Argument: "%1"
+Extensions: .cr2, .nef, .arw, .dng, .orf, .rw2
+```
+
+### Batch Processing Integration
+
+Combine with command-line batch processors:
+
+```yaml
+App Name: ImageMagick Convert
+Executable: C:\Program Files\ImageMagick\convert.exe
+Argument: "%1" -resize 1920x1080 "%1"
+Extensions: .jpg, .png
+```
+
+<Warning>
+Be careful with batch processing commands that overwrite the original file. Always test with copies first.
+</Warning>
+
+### Script Integration
+
+Launch custom scripts or batch files:
+
+```yaml
+App Name: Custom Edit Script
+Executable: C:\Scripts\edit-image.bat
+Argument: "%1"
+Extensions: .jpg, .png
+```
+
+Example batch script (`edit-image.bat`):
+
+```batch
+@echo off
+set IMAGE=%1
+echo Processing: %IMAGE%
+"C:\Program Files\MyEditor\editor.exe" %IMAGE%
+```
+
+## Open With Menu
+
+The **Open With** feature provides quick access to Windows file associations:
+
+### Usage
+
+1. Right-click on an image
+2. Select **Open with**
+3. Choose from:
+   - Windows default application for this file type
+   - Recently used applications
+   - "Choose another app" for more options
+
+### Keyboard Shortcut
+
+Press **`D`** to open the "Open with" dialog.
+
+<Tip>
+This is useful for one-time opens without configuring a permanent edit app.
+</Tip>
+
+## Configuration File
+
+Edit apps are stored in ImageGlass settings file:
+
+**Location:**
+```
+%AppData%\ImageGlass\Settings\igconfig.json
+```
+
+**Format:**
+```json
+{
+  "EditApps": {
+    ".jpg": {
+      "AppName": "Photoshop",
+      "Executable": "C:\\Program Files\\Adobe\\Photoshop\\Photoshop.exe",
+      "Argument": "\"%1\""
+    },
+    ".svg": {
+      "AppName": "Inkscape",
+      "Executable": "C:\\Program Files\\Inkscape\\inkscape.exe",
+      "Argument": "\"%1\""
+    }
+  }
+}
+```
+
+<Warning>
+Manually editing the configuration file requires closing ImageGlass first. Changes while the app is running will be overwritten.
+</Warning>
+
+## Troubleshooting
+
+### Editor Won't Launch
+
+**Checklist:**
+- Verify the executable path is correct
+- Check file exists and has `.exe` extension
+- Ensure you have permission to run the application
+- Test the command in Command Prompt manually
+
+**Example test:**
+```cmd
+"C:\Program Files\MyEditor\editor.exe" "C:\Pictures\test.jpg"
+```
+
+### File Path Issues
+
+**Symptoms:**
+- Editor opens but doesn't load the image
+- Error about file not found
+
+**Solutions:**
+- Ensure `%1` is wrapped in quotes: `"%1"`
+- Check if the editor requires specific argument format
+- Try using forward slashes in the path
+
+### Wrong Editor Opens
+
+**Possible causes:**
+- Multiple editors configured for the same extension
+- Windows file associations interfering
+
+**Solutions:**
+- Reorder edit apps (first matching extension is used)
+- Check Windows default programs settings
+- Use fully qualified file extensions (`.jpeg` vs `.jpg`)
+
+### Portable Applications
+
+**For portable editor installations:**
+
+1. Use absolute paths, not relative
+2. Avoid paths with Unicode characters
+3. Test the portable app launches independently first
+
+```yaml
+Executable: D:\PortableApps\GIMP\gimp-2.10.exe
+```
+
+### Network Paths
+
+Editors on network drives require UNC paths:
+
+```yaml
+Executable: \\SERVER\Apps\Photoshop\Photoshop.exe
+```
+
+<Note>
+Network paths may be slower to launch and require network connectivity.
+</Note>
+
+## Best Practices
+
+<Tip>
+**Use consistent naming**: Name editors clearly to distinguish between different workflows.
+</Tip>
+
+<Tip>
+**Test arguments**: Always test new editor configurations with a sample image first.
+</Tip>
+
+<Tip>
+**Document custom scripts**: Add comments to batch files and scripts for future reference.
+</Tip>
+
+<Tip>
+**Keep paths updated**: Review editor paths after software updates or reinstalls.
+</Tip>
+
+## Related Features
+
+- [Keyboard Shortcuts](/user-guide/keyboard-shortcuts) - Customize the edit image shortcut
+- [Context Menu](/user-guide/interface#context-menu) - Access edit commands from right-click menu
+- [Clipboard Operations](/advanced/clipboard-operations) - Copy images to edit in other applications

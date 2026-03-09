@@ -1,0 +1,175 @@
+---
+title: CLI Overview
+description: Command-line interface for ImageGlass automation and system integration
+---
+
+The `igcmd.exe` command-line tool provides powerful automation capabilities for ImageGlass, enabling you to integrate image viewing features into scripts, workflows, and system operations.
+
+## Getting Started
+
+The igcmd tool is located in your ImageGlass installation directory (typically `C:\Program Files\ImageGlass\`).
+
+### Basic Usage
+
+```bash
+igcmd.exe <command> [arguments] [options]
+```
+
+## Available Commands
+
+ImageGlass CLI provides 14 commands organized by functionality:
+
+### Quick Setup & Configuration
+- `quick-setup` - Launch the quick setup wizard
+- `check-for-update` - Check for ImageGlass updates
+
+### Wallpaper & Lock Screen
+- `set-wallpaper` - Set an image as desktop wallpaper
+- `set-lock-screen` - Set an image as Windows lock screen
+
+### File Associations
+- `set-default-viewer` - Register ImageGlass as default photo viewer
+- `remove-default-viewer` - Unregister ImageGlass as default photo viewer
+
+### Image Operations
+- `export-frames` - Export frames from animated images
+- `lossless-compress` - Compress images without quality loss
+- `start-slideshow` - Start a slideshow from a specific image
+
+### Customization
+- `install-languages` - Install language packs
+- `install-themes` - Install theme packs
+- `uninstall-theme` - Remove a theme pack
+
+### Performance
+- `set-startup-boost` - Enable startup boost (launch with Windows)
+- `remove-startup-boost` - Disable startup boost
+
+## Global Options
+
+These options can be used with most commands:
+
+<ParamField path="--ui" type="flag">
+  Show UI dialogs for success/error messages
+</ParamField>
+
+<ParamField path="--per-machine" type="flag">
+  Apply settings system-wide (requires administrator privileges)
+</ParamField>
+
+<ParamField path="--hide-admin-error-ui" type="flag">
+  Suppress administrator permission error dialogs
+</ParamField>
+
+## Exit Codes
+
+All igcmd commands return standard exit codes:
+
+| Code | Name | Description |
+|------|------|-------------|
+| `0` | Done | Command completed successfully |
+| `1` | AdminRequired | Administrator privileges required |
+| `2` | Error | General error occurred |
+| `3` | Error_FileNotFound | Specified file not found |
+
+### Checking Exit Codes
+
+```bash
+# Windows Command Prompt
+igcmd.exe set-wallpaper "image.jpg" Centered
+echo %ERRORLEVEL%
+
+# PowerShell
+igcmd.exe set-wallpaper "image.jpg" Centered
+echo $LASTEXITCODE
+```
+
+## Command Reference
+
+For detailed documentation of each command, see:
+
+<CardGroup cols={2}>
+  <Card title="All Commands" icon="terminal" href="/cli/igcmd-commands">
+    Complete reference of all 14 commands
+  </Card>
+  <Card title="Quick Setup" icon="rocket" href="/cli/quick-setup">
+    Initial configuration wizard
+  </Card>
+  <Card title="Set Wallpaper" icon="image" href="/cli/set-wallpaper">
+    Desktop wallpaper management
+  </Card>
+  <Card title="File Associations" icon="file-check" href="/cli/file-associations">
+    Default photo viewer registration
+  </Card>
+  <Card title="Export Frames" icon="film" href="/cli/export-frames">
+    Extract frames from animations
+  </Card>
+</CardGroup>
+
+## Examples
+
+### Set wallpaper and check result
+
+```bash
+igcmd.exe set-wallpaper "C:\Photos\landscape.jpg" Stretched
+if %ERRORLEVEL% EQU 0 (
+    echo Wallpaper set successfully
+) else (
+    echo Failed to set wallpaper
+)
+```
+
+### Install multiple themes
+
+```bash
+igcmd.exe install-themes "theme1.igtheme" "theme2.igtheme" --ui
+```
+
+### Set default viewer with confirmation
+
+```bash
+igcmd.exe set-default-viewer ".jpg;.png;.gif" --ui --per-machine
+```
+
+## Error Handling
+
+When using igcmd in scripts, always check exit codes:
+
+```bash
+@echo off
+igcmd.exe set-wallpaper "photo.jpg" Centered
+
+if %ERRORLEVEL% EQU 1 (
+    echo Administrator privileges required
+    echo Please run as administrator
+    exit /b 1
+)
+
+if %ERRORLEVEL% EQU 3 (
+    echo File not found: photo.jpg
+    exit /b 1
+)
+
+if %ERRORLEVEL% NEQ 0 (
+    echo An error occurred
+    exit /b 1
+)
+
+echo Success!
+```
+
+## Configuration Files
+
+Some commands can be configured using ImageGlass configuration files:
+
+- User settings: `%APPDATA%\ImageGlass\Config\`
+- Machine settings: `%ProgramData%\ImageGlass\Config\`
+
+Use the `--per-machine` flag to modify system-wide settings (requires admin rights).
+
+## See Also
+
+- [Quick Setup Guide](/cli/quick-setup)
+- [Wallpaper Commands](/cli/set-wallpaper)
+- [File Associations](/cli/file-associations)
+- [Image Operations](/cli/export-frames)

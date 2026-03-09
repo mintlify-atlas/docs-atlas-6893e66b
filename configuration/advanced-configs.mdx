@@ -1,0 +1,502 @@
+---
+title: Advanced Configuration
+description: Power user settings and hidden configuration options for ImageGlass
+icon: code
+---
+
+## Window State & Position
+
+ImageGlass saves window state and position between sessions. These settings are automatically managed but can be manually configured.
+
+### Main Window
+
+<ParamField path="FrmMainPositionX" type="number" default="200">
+  X coordinate of main window position in pixels
+</ParamField>
+
+<ParamField path="FrmMainPositionY" type="number" default="200">
+  Y coordinate of main window position in pixels
+</ParamField>
+
+<ParamField path="FrmMainWidth" type="number" default="1300">
+  Width of main window in pixels
+</ParamField>
+
+<ParamField path="FrmMainHeight" type="number" default="800">
+  Height of main window in pixels
+</ParamField>
+
+<ParamField path="FrmMainState" type="string" default="Normal">
+  Window state at startup
+  
+  **Options:**
+  - `"Normal"` - Standard window
+  - `"Maximized"` - Maximized window
+  - `"Minimized"` - Minimized window (not recommended)
+</ParamField>
+
+### Settings Window
+
+<ParamField path="FrmSettingsPositionX" type="number" default="200">
+  X coordinate of settings window
+</ParamField>
+
+<ParamField path="FrmSettingsPositionY" type="number" default="200">
+  Y coordinate of settings window
+</ParamField>
+
+<ParamField path="FrmSettingsWidth" type="number" default="1300">
+  Width of settings window
+</ParamField>
+
+<ParamField path="FrmSettingsHeight" type="number" default="800">
+  Height of settings window
+</ParamField>
+
+<ParamField path="FrmSettingsState" type="string" default="Normal">
+  Settings window state
+</ParamField>
+
+## Zoom Configuration
+
+### Zoom Levels
+
+<ParamField path="ZoomLevels" type="array" default="[]">
+  Custom zoom levels as percentages
+  
+  **Format:** Array of numbers representing percentages
+  
+  **Example:**
+  ```json
+  "ZoomLevels": [10, 25, 50, 75, 100, 125, 150, 200, 400, 800]
+  ```
+  
+  Empty array uses automatic zoom levels.
+</ParamField>
+
+<ParamField path="ZoomMode" type="string" default="AutoZoom">
+  Default zoom mode
+  
+  **Options:**
+  - `"AutoZoom"` - Fit to window
+  - `"LockZoom"` - Fixed zoom ratio
+  - `"ScaleToWidth"` - Fit width
+  - `"ScaleToHeight"` - Fit height
+  - `"ScaleToFill"` - Fill window
+  - `"ActualSize"` - 100% zoom
+</ParamField>
+
+<ParamField path="ZoomLockValue" type="number" default="100.0">
+  Fixed zoom percentage when using LockZoom mode
+  
+  **Minimum:** 0 (uses 100% as fallback)
+</ParamField>
+
+<ParamField path="ZoomSpeed" type="number" default="0">
+  Zoom acceleration/deceleration
+  
+  **Range:** -500 to 500
+  - Negative values: Slower zooming
+  - `0`: Default speed
+  - Positive values: Faster zooming
+</ParamField>
+
+### Image Interpolation
+
+<ParamField path="ImageInterpolationScaleDown" type="string" default="MultiSampleLinear">
+  Interpolation when zoom < 100%
+  
+  **Options:**
+  - `"NearestNeighbor"` - Fastest, pixelated
+  - `"Linear"` - Fast, smooth
+  - `"Cubic"` - High quality
+  - `"MultiSampleLinear"` - Balanced (recommended)
+  - `"Anisotropic"` - Highest quality
+  - `"HighQualityBicubic"` - Professional quality
+</ParamField>
+
+<ParamField path="ImageInterpolationScaleUp" type="string" default="NearestNeighbor">
+  Interpolation when zoom > 100%
+  
+  Same options as ScaleDown. NearestNeighbor preserves sharp edges when zooming in.
+</ParamField>
+
+## Panning
+
+<ParamField path="PanSpeed" type="number" default="20.0">
+  Panning speed multiplier
+  
+  **Range:** 0-100
+  - Lower values: Slower, more precise panning
+  - Higher values: Faster panning
+</ParamField>
+
+## Mouse & Keyboard Actions
+
+### Mouse Wheel Actions
+
+<ParamField path="MouseWheelActions" type="object" default="{}">
+  Configure mouse wheel behavior with modifiers
+  
+  **Structure:**
+  ```json
+  {
+    "Scroll": "Zoom",
+    "CtrlAndScroll": "BrowseImages",
+    "ShiftAndScroll": "PanHorizontally",
+    "AltAndScroll": "PanVertically"
+  }
+  ```
+  
+  **Action Options:**
+  - `"DoNothing"` - No action
+  - `"Zoom"` - Zoom in/out
+  - `"PanVertically"` - Pan up/down
+  - `"PanHorizontally"` - Pan left/right
+  - `"BrowseImages"` - Next/previous image
+</ParamField>
+
+### Mouse Click Actions
+
+<ParamField path="MouseClickActions" type="object" default="{}">
+  Configure mouse click actions
+  
+  **Example:**
+  ```json
+  {
+    "DoubleClick": "ToggleFullScreen"
+  }
+  ```
+</ParamField>
+
+### Menu Hotkeys
+
+<ParamField path="MenuHotkeys" type="object" default="{}">
+  Custom keyboard shortcuts for menu items
+  
+  **Structure:**
+  ```json
+  {
+    "MnuOpen": ["Ctrl+O", "O"],
+    "MnuSave": ["Ctrl+S"],
+    "MnuDelete": ["Delete", "Shift+Delete"]
+  }
+  ```
+  
+  Each menu item can have multiple hotkey combinations.
+</ParamField>
+
+## File Format Support
+
+<ParamField path="FileFormats" type="string" default="(See below)">
+  Semicolon-separated list of supported file extensions
+  
+  **Default formats:** `.3fr;.apng;.ari;.arw;.avif;.b64;.bay;.bmp;.cap;.cr2;.cr3;.crw;.cur;.cut;.dcr;.dcs;.dds;.dib;.dng;.drf;.eip;.emf;.erf;.exif;.exr;.fff;.fits;.flif;.gif;.gifv;.gpr;.hdp;.hdr;.heic;.heif;.hif;.ico;.iiq;.jfif;.jp2;.jpe;.jpeg;.jpg;.jxl;.jxr;.k25;.kdc;.mdc;.mef;.mjpeg;.mos;.mrw;.nef;.nrw;.obm;.orf;.pbm;.pcx;.pef;.pgm;.png;.ppm;.psb;.psd;.ptx;.pxn;.qoi;.r3d;.raf;.raw;.rw2;.rwl;.rwz;.sr2;.srf;.srw;.svg;.tga;.tif;.tiff;.viff;.wdp;.webp;.wmf;.wpg;.x3f;.xbm;.xpm;.xv`
+  
+  <Warning>Add custom formats carefully - ImageGlass may not render unsupported types</Warning>
+</ParamField>
+
+## Clipboard Operations
+
+<ParamField path="EnableCopyMultipleFiles" type="boolean" default="true">
+  Allow copying multiple selected files to clipboard
+</ParamField>
+
+<ParamField path="EnableCutMultipleFiles" type="boolean" default="true">
+  Allow cutting multiple selected files to clipboard
+</ParamField>
+
+## Edit Actions
+
+### Edit Apps
+
+<ParamField path="EditApps" type="object" default="{}">
+  Configure external editing applications per file type
+  
+  **Structure:**
+  ```json
+  {
+    ".jpg": {
+      "AppName": "Photoshop",
+      "Executable": "C:\\Program Files\\Adobe\\Photoshop\\photoshop.exe",
+      "Argument": "<file>"
+    }
+  }
+  ```
+  
+  Use `<file>` macro for the current image path.
+</ParamField>
+
+<ParamField path="AfterEditingAction" type="string" default="Nothing">
+  Action after launching external editor
+  
+  **Options:**
+  - `"Nothing"` - Keep ImageGlass open
+  - `"Minimize"` - Minimize ImageGlass
+  - `"Close"` - Close ImageGlass
+</ParamField>
+
+<ParamField path="ImageEditQuality" type="number" default="80">
+  JPEG quality when saving edited images (0-100)
+</ParamField>
+
+<ParamField path="ShouldPreserveModifiedDate" type="boolean" default="false">
+  Preserve original file modification date when saving
+</ParamField>
+
+<ParamField path="OpenSaveAsDialogInTheCurrentImageDir" type="boolean" default="true">
+  Open Save As dialog in current image's directory
+</ParamField>
+
+## Confirmation Dialogs
+
+<ParamField path="ShowDeleteConfirmation" type="boolean" default="true">
+  Show confirmation before deleting files
+</ParamField>
+
+<ParamField path="ShowSaveOverrideConfirmation" type="boolean" default="true">
+  Show confirmation before overwriting files
+</ParamField>
+
+## Color Management
+
+<ParamField path="ColorProfile" type="string" default="CurrentMonitorProfile">
+  Color profile for image display
+  
+  **Options:**
+  - `"None"` - No color management
+  - `"CurrentMonitorProfile"` - Use monitor's ICC profile
+  - File path to custom ICC/ICM profile
+  
+  **Example:** `"ColorProfile": "C:\\Windows\\System32\\spool\\drivers\\color\\sRGB.icm"`
+</ParamField>
+
+<ParamField path="ShouldUseColorProfileForAll" type="boolean" default="false">
+  Apply color profile to images without embedded profiles
+</ParamField>
+
+## Update Configuration
+
+<ParamField path="AutoUpdate" type="string" default="(ISO 8601 date)">
+  Last auto-update check timestamp in ISO 8601 format
+  
+  **Special Values:**
+  - `"0"` - Disable automatic update checks
+  - ISO date string - Last check time
+  
+  **Example:** `"AutoUpdate": "2026-03-08T00:00:00Z"`
+</ParamField>
+
+<ParamField path="ShowNewVersionIndicator" type="boolean" default="false">
+  Display new version indicator badge
+</ParamField>
+
+## Session State
+
+<ParamField path="LastSeenImagePath" type="string" default="">
+  Path to last viewed image
+</ParamField>
+
+<ParamField path="ShouldOpenLastSeenImage" type="boolean" default="true">
+  Reopen last image on startup
+</ParamField>
+
+<ParamField path="LastOpenedSetting" type="string" default="">
+  Last opened settings tab (internal use)
+</ParamField>
+
+## Multiple Instances
+
+<ParamField path="EnableMultiInstances" type="boolean" default="true">
+  Allow multiple ImageGlass windows
+  
+  <Warning>Disabling this may interfere with some workflows</Warning>
+</ParamField>
+
+## In-App Messages
+
+<ParamField path="InAppMessageDuration" type="number" default="2000">
+  Duration of in-app notifications in milliseconds
+  
+  **Example:** `"InAppMessageDuration": 3000` (3 seconds)
+</ParamField>
+
+## Image Info Tags
+
+<ParamField path="ImageInfoTags" type="array">
+  Information displayed in the image info overlay
+  
+  **Default tags:**
+  ```json
+  [
+    "Name",
+    "ListCount",
+    "FrameCount",
+    "Zoom",
+    "Dimension",
+    "FileSize",
+    "ColorSpace",
+    "ExifRating",
+    "DateTimeAuto",
+    "AppName"
+  ]
+  ```
+  
+  Customize which metadata appears in the viewer.
+</ParamField>
+
+## Slideshow Settings
+
+<ParamField path="SlideshowInterval" type="number" default="5.0">
+  Slideshow interval in seconds (minimum)
+  
+  **Minimum:** Must be > 0
+</ParamField>
+
+<ParamField path="SlideshowIntervalTo" type="number" default="5.0">
+  Maximum slideshow interval for random mode
+</ParamField>
+
+<ParamField path="UseRandomIntervalForSlideshow" type="boolean" default="false">
+  Use random interval between min and max
+</ParamField>
+
+<ParamField path="SlideshowImagesToNotifySound" type="number" default="0">
+  Play notification sound every N images (0 = disabled)
+</ParamField>
+
+<ParamField path="EnableLoopSlideshow" type="boolean" default="true">
+  Loop back to first image at end of slideshow
+</ParamField>
+
+<ParamField path="EnableFullscreenSlideshow" type="boolean" default="true">
+  Start slideshow in fullscreen mode
+</ParamField>
+
+<ParamField path="HideMainWindowInSlideshow" type="boolean" default="true">
+  Hide main window when slideshow starts
+</ParamField>
+
+<ParamField path="ShowSlideshowCountdown" type="boolean" default="true">
+  Display countdown timer in slideshow
+</ParamField>
+
+## Navigation
+
+<ParamField path="EnableLoopBackNavigation" type="boolean" default="true">
+  Loop to first image when reaching the last image
+</ParamField>
+
+## Tools Configuration
+
+<ParamField path="Tools" type="array" default="[{ExifGlass}]">
+  External tools integrated with ImageGlass
+  
+  **Structure:**
+  ```json
+  [
+    {
+      "ToolId": "Tool_ExifGlass",
+      "ToolName": "ExifGlass - EXIF metadata viewer",
+      "Executable": "exifglass",
+      "Argument": "<file>",
+      "IsIntegrated": true,
+      "Hotkeys": ["X"]
+    }
+  ]
+  ```
+</ParamField>
+
+<ParamField path="ToolSettings" type="object" default="{}">
+  Settings storage for integrated tools (managed by tools)
+</ParamField>
+
+## Disabled Menus
+
+<ParamField path="DisabledMenus" type="array" default="[]">
+  List of menu IDs to hide/disable
+  
+  **Example:**
+  ```json
+  "DisabledMenus": ["MnuDelete", "MnuEdit"]
+  ```
+  
+  Useful for kiosk or restricted environments.
+</ParamField>
+
+## Quick Setup
+
+<ParamField path="QuickSetupVersion" type="number" default="0.0">
+  Version of Quick Setup last completed
+  
+  When < 9.0, Quick Setup dialog appears on startup.
+</ParamField>
+
+## Debug Mode
+
+<ParamField path="EnableDebug" type="boolean" default="false">
+  Enable debug logging and diagnostics
+  
+  <Warning>Performance impact - use only for troubleshooting</Warning>
+</ParamField>
+
+## Example Advanced Configuration
+
+```json igconfig.json
+{
+  "_Metadata": {
+    "Description": "ImageGlass configuration file",
+    "Version": 9.1
+  },
+  
+  // Window configuration
+  "FrmMainWidth": 1920,
+  "FrmMainHeight": 1080,
+  "FrmMainState": "Maximized",
+  
+  // Custom zoom levels
+  "ZoomLevels": [10, 25, 50, 75, 100, 150, 200, 400, 800, 1600],
+  "ZoomMode": "AutoZoom",
+  
+  // Mouse actions
+  "MouseWheelActions": {
+    "Scroll": "Zoom",
+    "CtrlAndScroll": "BrowseImages"
+  },
+  
+  // Custom hotkeys
+  "MenuHotkeys": {
+    "MnuDelete": ["Delete"],
+    "MnuFullScreen": ["F11", "F"]
+  },
+  
+  // Advanced editing
+  "EditApps": {
+    ".jpg": {
+      "AppName": "Photoshop",
+      "Executable": "C:\\Program Files\\Adobe\\Photoshop\\photoshop.exe",
+      "Argument": "<file>"
+    },
+    ".png": {
+      "AppName": "GIMP",
+      "Executable": "C:\\Program Files\\GIMP\\bin\\gimp.exe",
+      "Argument": "<file>"
+    }
+  },
+  
+  // Disable auto-update
+  "AutoUpdate": "0"
+}
+```
+
+## See Also
+
+<CardGroup cols={2}>
+  <Card title="Performance" icon="gauge" href="/configuration/performance">
+    Performance optimization settings
+  </Card>
+  
+  <Card title="Appearance" icon="palette" href="/configuration/appearance">
+    Visual customization
+  </Card>
+</CardGroup>

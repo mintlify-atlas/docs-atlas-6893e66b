@@ -1,0 +1,253 @@
+---
+title: Quick Setup
+description: Launch the ImageGlass quick setup wizard for initial configuration
+---
+
+The `quick-setup` command launches the ImageGlass initial configuration wizard, helping you configure essential settings when first installing or resetting ImageGlass.
+
+## Syntax
+
+```bash
+igcmd.exe quick-setup
+```
+
+## Parameters
+
+This command takes no parameters.
+
+## Description
+
+The quick setup wizard guides you through:
+
+- **Language Selection** - Choose your preferred interface language
+- **Theme Configuration** - Select light or dark theme based on Windows settings
+- **File Associations** - Set ImageGlass as default photo viewer
+- **Initial Preferences** - Configure basic viewing options
+
+## Exit Codes
+
+| Code | Description |
+|------|-------------|
+| `0` | Setup completed successfully |
+| `2` | Error during setup |
+
+## Examples
+
+### Basic Usage
+
+```bash
+igcmd.exe quick-setup
+```
+
+This opens the interactive setup wizard.
+
+### Check Setup Result
+
+```bash
+@echo off
+igcmd.exe quick-setup
+
+if %ERRORLEVEL% EQU 0 (
+    echo Setup completed successfully
+) else (
+    echo Setup failed or was cancelled
+    exit /b 1
+)
+```
+
+### PowerShell Example
+
+```powershell
+# Run quick setup and check result
+& "C:\Program Files\ImageGlass\igcmd.exe" quick-setup
+
+if ($LASTEXITCODE -eq 0) {
+    Write-Host "Setup completed successfully" -ForegroundColor Green
+} else {
+    Write-Host "Setup failed" -ForegroundColor Red
+    exit 1
+}
+```
+
+## When to Use
+
+Run quick setup in these scenarios:
+
+### First Installation
+
+Run after installing ImageGlass for the first time:
+
+```bash
+# Post-installation script
+igcmd.exe quick-setup
+```
+
+### After Reset
+
+Reconfigure ImageGlass after resetting settings:
+
+```bash
+# Reset and reconfigure
+igcmd.exe quick-setup
+```
+
+### Deployment Scripts
+
+Include in automated deployment:
+
+```bash
+# Install and configure ImageGlass
+msiexec /i ImageGlass.msi /quiet
+igcmd.exe quick-setup
+igcmd.exe set-default-viewer --per-machine
+```
+
+## Setup Wizard Features
+
+### Language Configuration
+
+The wizard loads available language packs from:
+- Installation directory: `C:\Program Files\ImageGlass\Languages\`
+- User directory: `%APPDATA%\ImageGlass\Languages\`
+
+Default language is English if no preference is set.
+
+### Theme Selection
+
+Automatic theme selection based on:
+- Windows dark mode setting
+- Available theme packs
+- User preferences
+
+The wizard applies the appropriate theme automatically.
+
+### Interactive Interface
+
+The setup wizard provides:
+- Step-by-step guidance
+- Clear navigation
+- Immediate feedback
+- Ability to skip optional steps
+
+## Behavior
+
+### Configuration Loading
+
+The wizard loads:
+- Non-user settings (language, theme locations)
+- Default theme pack
+- Available language files
+
+### Settings Applied
+
+Upon completion, the wizard configures:
+- Interface language
+- Visual theme
+- Basic viewer preferences
+- (Optional) File associations
+
+### No Impact on Existing Settings
+
+Running quick setup on an existing installation:
+- Does not reset custom settings
+- Preserves file associations
+- Maintains installed themes and languages
+- Allows reconfiguration of basic options
+
+## Automation Considerations
+
+### Silent Installation Limitation
+
+The quick setup wizard requires user interaction and cannot run silently. For automated deployments, configure settings directly:
+
+```bash
+# Automated configuration (no GUI)
+igcmd.exe set-default-viewer --per-machine
+igcmd.exe install-languages "Language.iglang"
+igcmd.exe install-themes "Theme.igtheme"
+```
+
+### Deployment Scripts
+
+For interactive deployment:
+
+```bash
+@echo off
+echo Installing ImageGlass...
+msiexec /i ImageGlass.msi /qb
+
+echo Running quick setup...
+igcmd.exe quick-setup
+
+if %ERRORLEVEL% EQU 0 (
+    echo Installation and setup complete
+) else (
+    echo Setup incomplete
+)
+```
+
+### User Onboarding
+
+Include quick setup in user onboarding:
+
+```batch
+@echo off
+echo Welcome to ImageGlass!
+echo.
+echo This wizard will help you configure ImageGlass.
+echo.
+pause
+
+igcmd.exe quick-setup
+
+echo.
+echo Setup complete! You can now use ImageGlass.
+pause
+```
+
+## Error Handling
+
+### Exit Code Checking
+
+```bash
+@echo off
+igcmd.exe quick-setup
+
+if %ERRORLEVEL% NEQ 0 (
+    echo Setup failed with error code %ERRORLEVEL%
+    echo Please run setup again or configure manually.
+    exit /b 1
+)
+
+echo Setup successful!
+```
+
+### PowerShell Error Handling
+
+```powershell
+try {
+    $process = Start-Process "igcmd.exe" -ArgumentList "quick-setup" -Wait -PassThru
+    
+    if ($process.ExitCode -ne 0) {
+        throw "Setup failed with exit code $($process.ExitCode)"
+    }
+    
+    Write-Host "Setup completed successfully"
+} catch {
+    Write-Error "Setup error: $_"
+    exit 1
+}
+```
+
+## Related Commands
+
+- [check-for-update](/cli/igcmd-commands#check-for-update) - Check for ImageGlass updates
+- [install-languages](/cli/igcmd-commands#install-languages) - Install language packs
+- [install-themes](/cli/igcmd-commands#install-themes) - Install theme packs
+- [set-default-viewer](/cli/file-associations) - Set file associations
+
+## See Also
+
+- [CLI Overview](/cli/overview)
+- [All Commands](/cli/igcmd-commands)
+- [File Associations](/cli/file-associations)

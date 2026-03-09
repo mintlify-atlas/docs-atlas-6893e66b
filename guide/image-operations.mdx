@@ -1,0 +1,462 @@
+---
+title: Image Operations
+description: Learn how to manipulate and edit images in ImageGlass
+icon: wand-magic-sparkles
+---
+
+## File Operations
+
+### Opening Images
+
+<CardGroup cols={2}>
+  <Card title="Open File" icon="folder-open">
+    **Shortcut:** `Ctrl+O`
+    
+    Opens a file browser to select one or more images to view.
+  </Card>
+
+  <Card title="Paste from Clipboard" icon="clipboard">
+    **Shortcut:** `Ctrl+V`
+    
+    Paste and view an image directly from the clipboard. Perfect for viewing screenshots or copied images.
+  </Card>
+</CardGroup>
+
+### Saving Images
+
+<Tabs>
+  <Tab title="Save">
+    **Shortcut:** `Ctrl+S`
+    
+    Save the current image, preserving any transformations (rotations, flips) you've applied.
+    
+    - Saves to original file (overwrites)
+    - Preserves original format
+    - Applies pending transformations
+  </Tab>
+
+  <Tab title="Save As">
+    **Shortcut:** `Ctrl+Shift+S`
+    
+    Save the image with a new name or in a different format.
+    
+    **Supported output formats:**
+    - Modern: AVIF, WEBP, JXL
+    - Standard: PNG, JPG, GIF, BMP, TIFF
+    - Other: EMF, WMF, EXIF, ICO, Base64
+    
+    <Tip>
+      Use Save As to convert between formats or create backup copies.
+    </Tip>
+  </Tab>
+</Tabs>
+
+### File Management
+
+<Table>
+  <thead>
+    <tr>
+      <th>Action</th>
+      <th>Shortcut</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Rename</td>
+      <td>`F2`</td>
+      <td>Rename the current file directly</td>
+    </tr>
+    <tr>
+      <td>Delete (Recycle Bin)</td>
+      <td>`Delete`</td>
+      <td>Move file to Recycle Bin (recoverable)</td>
+    </tr>
+    <tr>
+      <td>Delete (Permanent)</td>
+      <td>`Shift+Delete`</td>
+      <td>Permanently delete file from disk</td>
+    </tr>
+    <tr>
+      <td>Open Location</td>
+      <td>`L`</td>
+      <td>Open file location in Windows Explorer</td>
+    </tr>
+    <tr>
+      <td>Properties</td>
+      <td>`Alt+Enter`</td>
+      <td>Show Windows file properties dialog</td>
+    </tr>
+  </tbody>
+</Table>
+
+<Warning>
+  Files deleted with `Shift+Delete` cannot be recovered from the Recycle Bin.
+</Warning>
+
+## Transform Operations
+
+### Rotation
+
+<CardGroup cols={2}>
+  <Card title="Rotate Left" icon="rotate-left">
+    **Shortcut:** `Ctrl+.`
+    
+    Rotate the image 90° counter-clockwise. Great for fixing portrait orientation.
+  </Card>
+
+  <Card title="Rotate Right" icon="rotate-right">
+    **Shortcut:** `Ctrl+/`
+    
+    Rotate the image 90° clockwise. Common for correcting phone photos.
+  </Card>
+</CardGroup>
+
+### Flip Operations
+
+<CardGroup cols={2}>
+  <Card title="Flip Horizontal" icon="left-right">
+    **Shortcut:** `Ctrl+;`
+    
+    Create a mirror image by flipping horizontally (left becomes right).
+  </Card>
+
+  <Card title="Flip Vertical" icon="up-down">
+    **Shortcut:** `Ctrl+'`
+    
+    Flip the image vertically (top becomes bottom).
+  </Card>
+</CardGroup>
+
+<Note>
+  All rotation and flip operations are non-destructive until you save the file.
+</Note>
+
+## Color Operations
+
+### Invert Colors
+
+**Shortcut:** `Ctrl+I`
+
+Invert all colors in the image, creating a negative effect. Useful for:
+- Analyzing dark images
+- Creating artistic effects
+- Viewing film negatives
+- Improving visibility of certain details
+
+### View Color Channels
+
+**Shortcut:** `Shift+C`
+
+View individual color channels of the image:
+
+<Tabs>
+  <Tab title="RGB Channels">
+    - **Red Channel** - View red component
+    - **Green Channel** - View green component
+    - **Blue Channel** - View blue component
+    - **All Channels** - Normal view
+  </Tab>
+
+  <Tab title="Alpha Channel">
+    - **Alpha Channel** - View transparency layer
+    - Useful for inspecting PNG transparency
+    - Shows which parts are transparent
+  </Tab>
+</Tabs>
+
+## Clipboard Operations
+
+<AccordionGroup>
+  <Accordion title="Copy Image Data" icon="copy">
+    **Shortcut:** `Ctrl+C`
+    
+    Copy the image pixels to clipboard. Can be pasted into:
+    - Image editors (Photoshop, GIMP, Paint)
+    - Document editors (Word, PowerPoint)
+    - Other applications supporting image data
+  </Accordion>
+
+  <Accordion title="Copy File" icon="file-export">
+    **Shortcut:** `Ctrl+Shift+C`
+    
+    Copy the file itself to clipboard. Use this to:
+    - Paste file into another folder
+    - Keep original file format
+    - Maintain all metadata
+  </Accordion>
+
+  <Accordion title="Cut File" icon="scissors">
+    **Shortcut:** `Ctrl+X`
+    
+    Cut the file to clipboard, allowing you to move it to another location.
+  </Accordion>
+
+  <Accordion title="Copy Path" icon="link">
+    **Shortcut:** `Ctrl+L`
+    
+    Copy the full file path to clipboard. Useful for:
+    - Sharing file location
+    - Command line operations
+    - Documentation
+  </Accordion>
+
+  <Accordion title="Clear Clipboard" icon="eraser">
+    **Shortcut:** `Ctrl+` ` (backtick)
+    
+    Clear the Windows clipboard contents entirely.
+  </Accordion>
+</AccordionGroup>
+
+## Built-in Tools
+
+### Color Picker
+
+**Shortcut:** `K`
+
+Extract colors from any pixel in the image:
+
+<Steps>
+  <Step title="Open Color Picker">
+    Press `K` or click the Color Picker button
+  </Step>
+  
+  <Step title="Select Color">
+    Click anywhere on the image to pick a color
+  </Step>
+  
+  <Step title="Copy Format">
+    Copy color in multiple formats:
+    - HEX (#FF5733)
+    - RGB (255, 87, 51)
+    - HSL (10°, 100%, 60%)
+    - CMYK (0%, 66%, 80%, 0%)
+    - HSV/HSB
+  </Step>
+</Steps>
+
+<Tip>
+  Configure color picker settings to customize output format and behavior.
+</Tip>
+
+### Crop Tool
+
+**Shortcut:** `C`
+
+Crop images with precision:
+
+<Accordion title="Crop Features" icon="crop">
+  1. **Free Crop** - Drag to select any area
+  2. **Aspect Ratio Presets:**
+     - 1:1 (Square)
+     - 16:9 (Widescreen)
+     - 4:3 (Standard)
+     - 3:2 (Photo)
+     - 9:16 (Portrait)
+     - And more...
+  3. **Manual Input** - Enter exact pixel dimensions
+  4. **Position Controls** - Fine-tune selection location
+  5. **Quick Selection** - Preset crop regions
+
+  <Note>
+    Hold `Shift` while dragging to constrain to square ratio.
+  </Note>
+</Accordion>
+
+### Resize Tool
+
+**Shortcut:** `Alt+R`
+
+Resize images by pixels or percentage:
+
+<Tabs>
+  <Tab title="Resize by Pixels">
+    - Enter exact width and height in pixels
+    - Lock aspect ratio to maintain proportions
+    - Preview current and new dimensions
+  </Tab>
+
+  <Tab title="Resize by Percentage">
+    - Scale by percentage (e.g., 50% or 200%)
+    - Easy for doubling or halving size
+    - Maintains aspect ratio automatically
+  </Tab>
+
+  <Tab title="Resampling Methods">
+    Choose quality vs. speed:
+    
+    - **Nearest Neighbor** - Fast, pixelated
+    - **Bilinear** - Good balance
+    - **Bicubic** - High quality (recommended)
+    - **Lanczos** - Best quality, slower
+  </Tab>
+</Tabs>
+
+### Frame Navigator
+
+**Shortcut:** `P`
+
+Manage multi-frame images (GIF, WEBP, TIFF, AVIF, HEIC):
+
+<CardGroup cols={2}>
+  <Card title="Playback Control" icon="play">
+    - Play/pause animation
+    - Adjust playback speed
+    - Loop settings
+    - Frame information display
+  </Card>
+
+  <Card title="Frame Management" icon="film">
+    - Navigate frame by frame
+    - Jump to specific frames
+    - Export individual frames
+    - Export all frames at once
+  </Card>
+</CardGroup>
+
+### Export Frames
+
+**Shortcut:** `Ctrl+J`
+
+Export frames from animated or multi-frame images:
+
+<Steps>
+  <Step title="Open Export Dialog">
+    Press `Ctrl+J` while viewing an animated image
+  </Step>
+  
+  <Step title="Configure Export">
+    - Select frame range (all, current, or custom)
+    - Choose output format (PNG, JPG, etc.)
+    - Set output directory
+    - Configure naming pattern
+  </Step>
+  
+  <Step title="Export">
+    Click Export to save all frames as individual files
+  </Step>
+</Steps>
+
+### Lossless Compression
+
+**Shortcut:** `Alt+C`
+
+Optimize image file sizes without quality loss:
+
+- Removes unnecessary metadata
+- Optimizes compression algorithms
+- Preserves visual quality 100%
+- Works on JPEG, PNG, and other formats
+
+<Warning>
+  Lossless compression is destructive. Create a backup before optimizing if you need to preserve metadata.
+</Warning>
+
+## External Operations
+
+### Open With
+
+**Shortcut:** `D`
+
+Open the current image in another application:
+
+1. Press `D` or click "Open with"
+2. Select from configured editors
+3. Image opens in chosen application
+4. Changes in external app can be reloaded in ImageGlass
+
+### Edit in Default Editor
+
+**Shortcut:** `E`
+
+Quickly open the image in your configured default editor:
+
+- Set per-format editors in Settings
+- Falls back to Windows default for format
+- Opens MS Paint on Windows 11 if no editor set
+
+### Print Image
+
+**Shortcut:** `Ctrl+P`
+
+Print the current image:
+
+1. Press `Ctrl+P` to open print dialog
+2. Select printer and settings
+3. Configure page layout
+4. Print
+
+### Share Image
+
+**Shortcut:** `S`
+
+Share via Windows Share menu:
+
+- Share to mail apps
+- Share to social media
+- Share to nearby devices
+- Share to cloud storage
+
+### Set as Desktop Background
+
+Set the current image as Windows desktop wallpaper:
+
+1. Right-click image or open menu
+2. Select "Set as desktop background"
+3. Choose fit style (Fill, Fit, Stretch, Tile, Center)
+
+### Set as Lock Screen
+
+Set the current image as Windows lock screen image (Windows 10/11).
+
+## Advanced Operations
+
+### Batch Operations
+
+<Accordion title="Multiple File Selection" icon="list-check">
+  While ImageGlass doesn't support traditional batch operations, you can:
+  
+  1. Open folder in ImageGlass
+  2. Navigate and perform operations on each image
+  3. Use keyboard shortcuts for speed
+  4. Combine with external tools for batch processing
+</Accordion>
+
+### Metadata Operations
+
+<Card title="EXIF Data" icon="tags">
+  Use external tools for EXIF management:
+  
+  - **ExifGlass** (press `X`) - View and edit EXIF data
+  - **Image Properties** (`Alt+Enter`) - Basic metadata
+  - Third-party EXIF editors via "Open with"
+</Card>
+
+## Tips & Best Practices
+
+<AccordionGroup>
+  <Accordion title="Non-Destructive Workflow" icon="shield-check">
+    - Transformations aren't applied until you save
+    - Use "Save As" to keep originals
+    - Test operations before committing
+    - Create backups of important images
+  </Accordion>
+
+  <Accordion title="Quality Preservation" icon="gem">
+    - Use lossless formats (PNG, TIFF) for editing
+    - Save JPEG at highest quality when converting
+    - Avoid multiple JPEG save cycles
+    - Use modern formats (WEBP, AVIF, JXL) for better compression
+  </Accordion>
+
+  <Accordion title="Efficiency Tips" icon="bolt">
+    - Learn keyboard shortcuts for frequent operations
+    - Configure external editors for quick access
+    - Use clipboard operations for quick transfers
+    - Set up custom toolbar for your workflow
+  </Accordion>
+</AccordionGroup>
+
+<Tip>
+  Combine ImageGlass's quick viewing with external editors for a powerful image workflow. Use ImageGlass for browsing and quick edits, and launch external tools for advanced operations.
+</Tip>

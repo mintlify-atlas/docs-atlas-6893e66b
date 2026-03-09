@@ -1,0 +1,186 @@
+---
+title: Slideshow Mode
+description: Present images in fullscreen with automatic transitions
+---
+
+## Overview
+
+Slideshow mode in ImageGlass provides an immersive, hands-free way to view your image collection with automatic transitions. Perfect for presentations, digital photo frames, or reviewing large image sets.
+
+## Starting Slideshow
+
+To start slideshow mode:
+
+1. Open an image in ImageGlass
+2. Press **F11** or go to **View > Slideshow**
+3. ImageGlass launches in fullscreen mode with automatic image transitions
+
+<Note>
+Slideshow opens as a separate window, allowing you to continue using ImageGlass normally in the background.
+</Note>
+
+## Slideshow Settings
+
+### Transition Interval
+
+Configure how long each image displays:
+
+<Steps>
+  <Step title="Open Settings">
+    Go to **Settings > Image** section
+  </Step>
+  
+  <Step title="Set Interval">
+    Adjust **Slideshow interval** (in seconds)
+  </Step>
+  
+  <Step title="Enable Random Intervals (Optional)">
+    Check **Use random interval** and set the range for varied timing
+  </Step>
+</Steps>
+
+### Display Options
+
+- **Fullscreen slideshow**: Automatically enters fullscreen mode (default)
+- **Show countdown**: Displays a countdown timer in the bottom-right corner
+- **Loop slideshow**: Automatically restarts from the first image when reaching the end
+- **Background color**: Customize the slideshow background color
+
+### Audio Notification
+
+Set **Images to notify sound** to play a system sound after viewing a specific number of images. Set to `0` to disable.
+
+## Controlling Slideshow
+
+### Playback Controls
+
+| Action | Keyboard Shortcut |
+|--------|------------------|
+| Pause/Resume | `Space` |
+| Next image | `Right Arrow` |
+| Previous image | `Left Arrow` |
+| Go to first image | `Home` |
+| Go to last image | `End` |
+| Exit slideshow | `Escape` |
+
+### View Controls
+
+| Action | Keyboard Shortcut |
+|--------|------------------|
+| Toggle countdown | `C` |
+| Toggle checkerboard | `B` |
+| Change background color | `M` |
+| Window fit | `F9` |
+| Frameless window | `F10` |
+| Fullscreen | `F11` |
+
+### Zoom Controls
+
+| Action | Keyboard Shortcut |
+|--------|------------------|
+| Actual size (100%) | `0` or `Numpad 0` |
+| Auto zoom | `1` or `Numpad 1` |
+| Lock zoom | `2` or `Numpad 2` |
+| Scale to width | `3` or `Numpad 3` |
+| Scale to height | `4` or `Numpad 4` |
+| Scale to fit | `5` or `Numpad 5` |
+| Scale to fill | `6` or `Numpad 6` |
+| Custom zoom | `Z` |
+
+<Tip>
+You can zoom using the mouse wheel and pan with `Ctrl+Wheel` (vertical) or `Shift+Wheel` (horizontal) during slideshow.
+</Tip>
+
+### Navigation
+
+| Action | Keyboard Shortcut |
+|--------|------------------|
+| Open context menu | `Alt+F` |
+| Open with external app | `D` |
+| Open file location | `L` |
+| Copy file path | `Ctrl+L` |
+| Move to recycle bin | `Delete` |
+| Delete permanently | `Shift+Delete` |
+
+## Image Loading Order
+
+Change the order in which images are displayed:
+
+1. Open the context menu during slideshow (`Alt+F`)
+2. Navigate to **Loading order**
+3. Select sorting criteria:
+   - File name
+   - File extension
+   - File size
+   - Creation date
+   - Last modified date
+   - Last access date
+   - Random
+4. Choose sort direction (Ascending/Descending)
+
+## Window Modes
+
+### Fullscreen Mode
+
+Slideshow typically runs in fullscreen mode:
+- Press `F11` to toggle fullscreen
+- Automatically uses the primary monitor
+- Hides all window chrome and controls
+
+### Frameless Mode
+
+For a borderless window without fullscreen:
+- Press `F10` to toggle frameless mode
+- Maintains window controls while removing title bar
+
+### Window Fit Mode
+
+Automatically resizes the window to match image dimensions:
+- Press `F9` to toggle window fit
+- Useful for comparing images side-by-side with other applications
+
+<Note>
+Window fit automatically exits fullscreen mode when enabled.
+</Note>
+
+## Tips and Best Practices
+
+<Tip>
+**For presentations**: Use slideshow with a fixed interval and loop enabled for continuous display.
+</Tip>
+
+<Tip>
+**For photo reviews**: Set a longer interval (10+ seconds) with countdown visible to pace your review.
+</Tip>
+
+<Tip>
+**For digital photo frames**: Enable random intervals and loop slideshow for natural variation.
+</Tip>
+
+<Warning>
+The cursor automatically hides after 3 seconds of inactivity. Move the mouse to show it again.
+</Warning>
+
+## Troubleshooting
+
+### Slideshow Won't Start
+
+- Ensure you have at least one image loaded
+- Check that slideshow interval is greater than 0
+- Verify the image file format is supported
+
+### Images Transition Too Quickly/Slowly
+
+- Adjust the slideshow interval in **Settings > Image**
+- Disable random interval if timing is inconsistent
+
+### Slideshow Stops Automatically
+
+- Check if **Loop slideshow** is enabled in settings
+- Verify that **Images to notify sound** isn't set to close slideshow
+
+## Related Features
+
+- [Color Management](/advanced/color-management) - Ensure accurate colors during slideshow
+- [EXIF Metadata](/advanced/exif-metadata) - View image information during slideshow
+- [Keyboard Shortcuts](/user-guide/keyboard-shortcuts) - Complete list of keyboard controls

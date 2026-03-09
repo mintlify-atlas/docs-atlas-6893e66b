@@ -1,80 +1,469 @@
 ---
-title: "Quickstart"
-description: "Start building awesome documentation in minutes"
+title: Quick Start Guide
+description: Get started with ImageGlass - learn the basics of viewing and navigating images in minutes
 ---
 
-## Get started in three steps
+# Quick Start Guide
 
-Get your documentation site running locally and make your first customization.
-
-### Step 1: Set up your local environment
-
-<AccordionGroup>
-  <Accordion icon="copy" title="Clone your docs locally">
-    During the onboarding process, you created a GitHub repository with your docs content if you didn't already have one. You can find a link to this repository in your [dashboard](https://dashboard.mintlify.com).
-    
-    To clone the repository locally so that you can make and preview changes to your docs, follow the [Cloning a repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) guide in the GitHub docs.
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Start the preview server">
-    1. Install the Mintlify CLI: `npm i -g mint`
-    2. Navigate to your docs directory and run: `mint dev`
-    3. Open `http://localhost:3000` to see your docs live!
-    
-    <Tip>Your preview updates automatically as you edit files.</Tip>
-  </Accordion>
-</AccordionGroup>
-
-### Step 2: Deploy your changes
-
-<AccordionGroup>
-  <Accordion icon="github" title="Install our GitHub app">
-    Install the Mintlify GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app).
-    
-    Our GitHub app automatically deploys your changes to your docs site, so you don't need to manage deployments yourself.
-</Accordion>
-<Accordion icon="palette" title="Update your site name and colors">
-    For a first change, let's update the name and colors of your docs site.
-
-    1. Open `docs.json` in your editor.
-    2. Change the `"name"` field to your project name.
-    3. Update the `"colors"` to match your brand.
-    4. Save and see your changes instantly at `http://localhost:3000`.
-
-    <Tip>Try changing the primary color to see an immediate difference!</Tip>
-  </Accordion>
-</AccordionGroup>
-
-### Step 3: Go live
-
-<Accordion icon="rocket" title="Publish your docs">
-  1. Commit and push your changes.
-  2. Your docs will update and be live in moments!
-</Accordion>
-
-## Next steps
-
-Now that you have your docs running, explore these key features:
-
-<CardGroup cols={2}>
-
-<Card title="Write Content" icon="pen-to-square" href="/essentials/markdown">
-  Learn MDX syntax and start writing your documentation.
-</Card>
-
-<Card title="Customize style" icon="palette" href="/essentials/settings">
-  Make your docs match your brand perfectly.
-</Card>
-
-<Card title="Add code examples" icon="square-code" href="/essentials/code">
-  Include syntax-highlighted code blocks.
-</Card>
-
-<Card title="API documentation" icon="code" href="/api-reference/introduction">
-  Auto-generate API docs from OpenAPI specs.
-</Card>
-
-</CardGroup>
+This guide will help you start viewing images with ImageGlass right away. You'll learn the essential features and shortcuts to navigate your image collection efficiently.
 
 <Note>
-  **Need help?** See our [full documentation](https://mintlify.com/docs) or join our [community](https://mintlify.com/community).
+  If you haven't installed ImageGlass yet, check out the [Installation Guide](/installation) first.
 </Note>
+
+## Opening Images
+
+ImageGlass provides several ways to open and view your images.
+
+### Method 1: Double-Click an Image File
+
+The simplest way to open an image in ImageGlass:
+
+<Steps>
+  <Step title="Set ImageGlass as Default">
+    If you set ImageGlass as your default image viewer during installation, simply double-click any image file in Windows Explorer.
+  </Step>
+  
+  <Step title="Open with ImageGlass">
+    If ImageGlass isn't your default viewer, right-click an image file, select **Open with → ImageGlass**.
+  </Step>
+</Steps>
+
+When you open an image this way, ImageGlass automatically loads all other images from the same folder, allowing you to browse through them seamlessly.
+
+### Method 2: Drag and Drop
+
+Quickly view images by dragging them onto ImageGlass:
+
+1. Open ImageGlass (it can be empty)
+2. Drag one or more image files from Windows Explorer
+3. Drop them onto the ImageGlass window
+
+<Note>
+  You can drag entire folders onto ImageGlass to load all images from that folder.
+</Note>
+
+### Method 3: Use the File Menu
+
+Open images from within ImageGlass:
+
+<Steps>
+  <Step title="Launch ImageGlass">
+    Start ImageGlass from the Start menu or desktop shortcut.
+  </Step>
+  
+  <Step title="Open File Dialog">
+    Click **Menu → Open file** (or press `Ctrl + O`).
+  </Step>
+  
+  <Step title="Select Image">
+    Browse to your image file, select it, and click **Open**.
+  </Step>
+</Steps>
+
+### Method 4: Clipboard Images
+
+View images directly from your clipboard:
+
+1. Copy an image to clipboard (from a website, screenshot, or another app)
+2. Open ImageGlass or switch to an already-open window
+3. Press `Ctrl + V` to paste and view the image
+
+## Navigating Between Images
+
+Once you've opened an image, ImageGlass loads all images from the same folder. Here's how to navigate through them:
+
+### Using Keyboard Shortcuts
+
+Keyboard navigation is the fastest way to browse images:
+
+| Action | Shortcut |
+|--------|----------|
+| Next image | `Right Arrow` or `Page Down` |
+| Previous image | `Left Arrow` or `Page Up` |
+| First image | `Home` |
+| Last image | `End` |
+| Go to specific image | `Ctrl + G` (opens Go To dialog) |
+
+<Tip>
+  The arrow keys work both for navigation and for panning when you're zoomed in. ImageGlass intelligently switches between modes.
+</Tip>
+
+### Using Mouse Navigation
+
+Navigate images with your mouse:
+
+- **Mouse wheel**: Scroll up for previous image, down for next image
+- **Mouse buttons**: Click the **Next/Previous buttons** on the toolbar (if visible)
+- **Thumbnail gallery**: Press `T` to show the thumbnail gallery at the bottom, then click any thumbnail
+
+### Viewing Order
+
+By default, ImageGlass maintains the same file order as Windows Explorer, including:
+
+- Natural sorting (e.g., "image1.jpg", "image2.jpg", "image10.jpg" in correct order)
+- Folder sort preferences from Explorer
+- Search results order
+
+## Basic Viewing Controls
+
+### Zoom Controls
+
+Adjust the image zoom level to see details or fit the image to your screen:
+
+| Action | Shortcut |
+|--------|----------|
+| Zoom in | `Ctrl + =` or `Ctrl + Mouse wheel up` |
+| Zoom out | `Ctrl + -` or `Ctrl + Mouse wheel down` |
+| Actual size (100%) | `Ctrl + 0` |
+| Fit to window | `Ctrl + M` |
+| Auto-zoom | `Ctrl + /` |
+| Lock zoom ratio | `Ctrl + L` |
+
+<Tip>
+  When zoomed in, you can pan the image by dragging with the mouse or using arrow keys.
+</Tip>
+
+### Window and Display Modes
+
+Customize how ImageGlass displays images:
+
+| Action | Shortcut |
+|--------|----------|
+| Full screen | `F11` |
+| Slideshow | `F12` |
+| Toggle toolbar | `Ctrl + T` |
+| Toggle thumbnail bar | `T` |
+| Window fit | `F` (resizes window to image size) |
+| Frameless window | `Ctrl + F11` |
+
+### Rotation and Flipping
+
+Quickly adjust image orientation:
+
+| Action | Shortcut |
+|--------|----------|
+| Rotate clockwise | `Ctrl + Right Arrow` |
+| Rotate counter-clockwise | `Ctrl + Left Arrow` |
+| Flip horizontal | `Ctrl + H` |
+| Flip vertical | `Ctrl + V` |
+
+<Warning>
+  These transformations are temporary by default. To save rotations permanently, use **Menu → Save image changes** or enable auto-save in Settings.
+</Warning>
+
+## Essential Features
+
+### Image Information
+
+View detailed information about the current image:
+
+<Steps>
+  <Step title="Open Image Info">
+    Press `I` or click **Menu → Image info** to open the information panel.
+  </Step>
+  
+  <Step title="View Details">
+    The panel displays:
+    - File name, path, and size
+    - Image dimensions and color space
+    - EXIF data (for photos): camera model, ISO, exposure time, date taken
+    - Frame information (for animated images)
+  </Step>
+</Steps>
+
+### Working with Animated Images
+
+ImageGlass fully supports animated formats (GIF, APNG, WebP):
+
+| Action | Shortcut |
+|--------|----------|
+| Play/Pause animation | `Space` |
+| Next frame | `Right Arrow` (when paused) |
+| Previous frame | `Left Arrow` (when paused) |
+| Go to first frame | `Home` (when paused) |
+| Go to last frame | `End` (when paused) |
+
+### Color Picker
+
+Pick colors from any image:
+
+1. Press `K` to activate Color Picker mode
+2. Move your mouse over the image
+3. Click to copy the color value to clipboard
+4. Press `Esc` to exit Color Picker mode
+
+<Tip>
+  The color picker displays RGB, HEX, and other color values in real-time as you move the cursor.
+</Tip>
+
+## Setting ImageGlass as Default Viewer
+
+If you skipped this during installation, here's how to set ImageGlass as your default image viewer:
+
+### Quick Method (Right-Click)
+
+<Steps>
+  <Step title="Right-click an Image">
+    Find any image file in Windows Explorer and right-click it.
+  </Step>
+  
+  <Step title="Choose Default App">
+    Select **Open with → Choose another app**.
+  </Step>
+  
+  <Step title="Select ImageGlass">
+    Choose **ImageGlass** from the list.
+    
+    Check the box **"Always use this app to open .jpg files"** (or whatever extension it is).
+  </Step>
+  
+  <Step title="Apply">
+    Click **OK** to set ImageGlass as the default.
+  </Step>
+</Steps>
+
+### Using ImageGlass Settings
+
+Set default associations for multiple formats at once:
+
+<Steps>
+  <Step title="Open Settings">
+    In ImageGlass, click **Menu → Settings** or press `Ctrl + ,`.
+  </Step>
+  
+  <Step title="Navigate to File Associations">
+    Click on **File associations** in the left sidebar.
+  </Step>
+  
+  <Step title="Select Formats">
+    Choose which image formats you want ImageGlass to handle:
+    
+    - Click **Select all** for all 90+ supported formats
+    - Or individually check formats like `.jpg`, `.png`, `.gif`, etc.
+  </Step>
+  
+  <Step title="Apply Changes">
+    Click **Set as default** to register ImageGlass for the selected formats.
+  </Step>
+</Steps>
+
+<Note>
+  You may need to restart Windows Explorer or log out and back in for changes to take effect.
+</Note>
+
+## Customizing Your Experience
+
+### Changing Themes
+
+Personalize ImageGlass with different themes:
+
+<Steps>
+  <Step title="Open Settings">
+    Press `Ctrl + ,` or click **Menu → Settings**.
+  </Step>
+  
+  <Step title="Select Theme">
+    Go to **Appearance → Theme**.
+    
+    Choose from built-in themes:
+    - **Kobe** (default light theme)
+    - Dark themes for low-light viewing
+    - Other community themes
+  </Step>
+  
+  <Step title="Apply">
+    Click **Apply** to preview the theme.
+    
+    Click **OK** to save your choice.
+  </Step>
+</Steps>
+
+### Customizing Toolbar
+
+Show or hide toolbar buttons based on your needs:
+
+1. Go to **Settings → Toolbar**
+2. Check or uncheck buttons you want to show/hide
+3. Drag buttons to reorder them
+4. Click **OK** to save
+
+### Background and Colors
+
+Adjust the viewing background:
+
+1. Go to **Settings → Appearance**
+2. Choose background color or pattern
+3. Adjust checkerboard pattern for transparent images
+4. Set window accent colors
+
+## Common Tasks
+
+### Copying Images
+
+Quickly copy images to clipboard or files:
+
+| Action | Shortcut |
+|--------|----------|
+| Copy image to clipboard | `Ctrl + C` |
+| Copy image file | `Ctrl + Shift + C` |
+| Copy image path | `Ctrl + Shift + P` |
+| Copy multiple images | Select in thumbnail bar → `Ctrl + C` |
+
+### Deleting Images
+
+Remove unwanted images:
+
+| Action | Shortcut |
+|--------|----------|
+| Delete to Recycle Bin | `Delete` |
+| Permanently delete | `Shift + Delete` |
+
+<Warning>
+  `Shift + Delete` permanently deletes the file without sending it to the Recycle Bin. Use with caution!
+</Warning>
+
+### Opening Image Location
+
+Quickly access the folder containing the current image:
+
+- Press `Ctrl + L` or click **Menu → Open location**
+- This opens Windows Explorer with the current image selected
+
+### Editing Images
+
+Open images in external editors:
+
+1. Press `E` or click **Menu → Edit image**
+2. Select your preferred image editor (Photoshop, GIMP, Paint.NET, etc.)
+3. The image opens in the selected application
+
+<Tip>
+  You can configure your default image editor in **Settings → Tools → Image editing app**.
+</Tip>
+
+## Keyboard Shortcuts Cheat Sheet
+
+Here are the most essential shortcuts to remember:
+
+### Navigation
+- `Right Arrow` / `Left Arrow` - Next/Previous image
+- `Page Down` / `Page Up` - Next/Previous image
+- `Home` / `End` - First/Last image
+- `Ctrl + G` - Go to specific image
+
+### Viewing
+- `Ctrl + =` / `Ctrl + -` - Zoom in/out
+- `Ctrl + 0` - Actual size (100%)
+- `F11` - Full screen
+- `F12` - Slideshow
+- `Space` - Play/Pause animation
+
+### Window
+- `T` - Toggle thumbnail bar
+- `I` - Toggle image info
+- `Ctrl + T` - Toggle toolbar
+- `F` - Window fit to image
+
+### Actions
+- `Ctrl + O` - Open file
+- `Ctrl + V` - Paste from clipboard
+- `Ctrl + C` - Copy image
+- `Delete` - Delete to Recycle Bin
+- `E` - Edit in external app
+- `Ctrl + ,` - Settings
+
+<Tip>
+  View all keyboard shortcuts in ImageGlass by pressing `F1` or going to **Menu → Keyboard shortcuts**.
+</Tip>
+
+## Multiple Windows and Instances
+
+ImageGlass can run multiple instances for comparing images or working with different folders:
+
+### Enabling Multiple Instances
+
+<Steps>
+  <Step title="Open Settings">
+    Press `Ctrl + ,` to open Settings.
+  </Step>
+  
+  <Step title="Enable Option">
+    Go to **General → Multi-instance**.
+    
+    Check **"Allow multiple instances of ImageGlass"**.
+  </Step>
+  
+  <Step title="Apply">
+    Click **OK** to save.
+  </Step>
+</Steps>
+
+### Opening New Windows
+
+Once enabled:
+
+- Press `Ctrl + N` to open the current image in a new window
+- Launch ImageGlass multiple times from the Start menu
+- Open different images from Windows Explorer
+
+<Tip>
+  Multiple instances are great for comparing images side-by-side or referencing one image while working in another application.
+</Tip>
+
+## Performance Tips
+
+### Startup Boost
+
+Enable faster launching:
+
+1. Go to **Settings → General**
+2. Enable **"Enable startup boost"**
+3. ImageGlass preloads in the background for instant launches
+
+### Image Loading
+
+For faster navigation with large images:
+
+1. Go to **Settings → Image loading**
+2. Enable **"Use async image loading"** for smoother transitions
+3. Adjust **"Auto-scale down large images"** to improve performance with huge files
+
+### Memory Management
+
+ImageGlass automatically manages memory, but you can:
+
+- Reduce image cache size in **Settings → Image loading → Cache**
+- Enable **"Unload image data after displaying"** for lower memory usage
+
+## Getting Help
+
+If you need assistance:
+
+- Press `F1` to view keyboard shortcuts
+- Visit **Menu → About** to check your version
+- Check the [full documentation](https://imageglass.org/docs) for detailed guides
+- Report issues on [GitHub](https://github.com/d2phap/ImageGlass/issues)
+- Join the [Discord community](https://discord.gg/tWjbynH2X8) for support
+
+## Next Steps
+
+Now that you know the basics, explore more advanced features:
+
+<CardGroup cols={2}>
+  <Card title="Supported Formats" icon="images" href="/guide/supported-formats">
+    See the complete list of supported image formats
+  </Card>
+  
+  <Card title="Keyboard Shortcuts" icon="keyboard" href="/guide/keyboard-shortcuts">
+    Master all available keyboard shortcuts
+  </Card>
+  
+  <Card title="Customization" icon="sliders" href="/configuration/settings-overview">
+    Learn advanced configuration options
+  </Card>
+  
+  <Card title="Features" icon="star" href="/guide/features">
+    Discover all ImageGlass features
+  </Card>
+</CardGroup>

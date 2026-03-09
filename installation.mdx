@@ -1,0 +1,308 @@
+---
+title: Installation Guide
+description: Step-by-step instructions to install ImageGlass on your Windows system
+---
+
+# Installing ImageGlass
+
+This guide will walk you through installing ImageGlass on your Windows computer. Choose the installation method that works best for you.
+
+## System Requirements
+
+Before installing ImageGlass, verify that your system meets these requirements:
+
+<CardGroup cols={2}>
+  <Card title="Operating System" icon="windows">
+    Windows 10 or Windows 11 (64-bit)
+    
+    Minimum version: 1809 (build 17763)
+  </Card>
+  
+  <Card title="Architecture" icon="microchip">
+    64-bit (x64 or ARM64)
+    
+    32-bit systems are not supported
+  </Card>
+</CardGroup>
+
+### Optional Requirements
+
+<Note>
+  **WebView2 Runtime** - Some advanced features require Microsoft Edge WebView2 Runtime (64-bit) v119.0.2151 or later. This is used for the modern settings interface and other web-based UI components.
+  
+  If not already installed, ImageGlass will prompt you to download it, or you can [download it directly from Microsoft](https://go.microsoft.com/fwlink/p/?LinkId=2124703).
+</Note>
+
+## Installation Methods
+
+ImageGlass offers two installation options to suit different user needs:
+
+### Option 1: Microsoft Store (Recommended)
+
+The Microsoft Store version provides the easiest installation experience with automatic updates.
+
+<Steps>
+  <Step title="Open Microsoft Store">
+    Open the Microsoft Store app on your Windows computer, or visit the [ImageGlass Store page](https://apps.microsoft.com/detail/9N33VZK3C7TH).
+  </Step>
+  
+  <Step title="Search for ImageGlass">
+    Search for "ImageGlass" in the Microsoft Store, or use the direct link to the app page.
+  </Step>
+  
+  <Step title="Install or Try">
+    Click **Get** to start a 7-day free trial, or **Buy** to purchase ImageGlass.
+    
+    The app will download and install automatically.
+  </Step>
+  
+  <Step title="Launch ImageGlass">
+    Once installed, click **Open** from the Store, or find ImageGlass in your Start menu.
+  </Step>
+</Steps>
+
+#### Microsoft Store Benefits
+
+- **Automatic updates** - Get new features and fixes automatically in the background
+- **Hotfix updates** - Critical fixes are delivered as soon as they're ready
+- **Easy installation** - Install on all your Windows devices with one purchase
+- **Secure distribution** - Apps are verified by Microsoft
+- **7-day free trial** - Try before you buy
+
+<Note>
+  **Supporting Development**: Purchasing from the Microsoft Store directly supports the ongoing development of ImageGlass. Alternatively, you can make a one-time donation via [GitHub Sponsors](https://github.com/sponsors/d2phap) and request a Store license code.
+</Note>
+
+### Option 2: Classic Installer (Free)
+
+The classic installer is completely free and available for download from the official website.
+
+<Steps>
+  <Step title="Download the Installer">
+    Visit [imageglass.org](https://imageglass.org) and navigate to the Downloads page.
+    
+    Download the latest version of ImageGlass Classic installer for your architecture (x64 or ARM64).
+  </Step>
+  
+  <Step title="Run the Installer">
+    Locate the downloaded `.exe` or `.msi` file and double-click to run it.
+    
+    If prompted by Windows SmartScreen, click **More info** and then **Run anyway**.
+  </Step>
+  
+  <Step title="Follow Installation Wizard">
+    The installer will guide you through the setup process:
+    
+    - Accept the license agreement (GPLv3)
+    - Choose installation location (default is recommended)
+    - Select whether to create desktop shortcut
+    - Choose whether to set ImageGlass as the default image viewer
+  </Step>
+  
+  <Step title="Complete Installation">
+    Click **Install** to begin the installation process.
+    
+    Wait for the installation to complete, then click **Finish**.
+  </Step>
+</Steps>
+
+#### Classic Installer Benefits
+
+- **Completely free** - No trial period or purchase required
+- **Portable installation options** - Some builds support portable mode
+- **All features included** - Full feature set including Explorer integration
+- **Manual update control** - Choose when to update
+
+<Warning>
+  The Classic version does not include automatic updates. You'll need to manually check for and install new versions.
+</Warning>
+
+## First Launch Setup
+
+When you launch ImageGlass for the first time, you'll be greeted with a Quick Setup wizard to help configure the application.
+
+<Steps>
+  <Step title="Welcome Screen">
+    The Quick Setup wizard welcomes you to ImageGlass and explains the setup process.
+  </Step>
+  
+  <Step title="Theme Selection">
+    Choose your preferred theme:
+    
+    - **Kobe** (default) - A clean, modern light theme
+    - **Dark themes** - For reduced eye strain in low light
+    - **Custom themes** - Available after installation
+    
+    You can change this later in Settings.
+  </Step>
+  
+  <Step title="File Associations">
+    Choose which image formats to open with ImageGlass by default.
+    
+    Options include:
+    - **All supported formats** - Set ImageGlass as default for all 90+ formats
+    - **Common formats only** - JPG, PNG, GIF, BMP, TIFF, WEBP
+    - **None** - Don't change file associations (configure manually later)
+  </Step>
+  
+  <Step title="Startup Options">
+    Configure startup behavior:
+    
+    - **Enable startup boost** - Preload ImageGlass in the background for faster launches
+    - **Check for updates** - Allow ImageGlass to check for new versions (Classic only)
+  </Step>
+  
+  <Step title="Complete Setup">
+    Review your choices and click **Finish** to complete the Quick Setup.
+    
+    ImageGlass is now ready to use!
+  </Step>
+</Steps>
+
+<Note>
+  You can re-run the Quick Setup wizard at any time from Settings → General → Run Quick Setup.
+</Note>
+
+## Installing WebView2 Runtime
+
+Some features in ImageGlass require the Microsoft Edge WebView2 Runtime, particularly the modern settings interface.
+
+### Check if WebView2 is Installed
+
+WebView2 is included with Windows 11 and recent Windows 10 updates. To check if it's installed:
+
+1. Press `Win + R` to open Run dialog
+2. Type `msedge://version` and press Enter
+3. Look for "Microsoft Edge WebView2 Runtime" in the list
+
+### Manual Installation
+
+If WebView2 is not installed:
+
+<Steps>
+  <Step title="Download WebView2 Runtime">
+    Visit the [Microsoft WebView2 download page](https://go.microsoft.com/fwlink/p/?LinkId=2124703).
+    
+    Download the **Evergreen Bootstrapper** or **Standalone Installer** (64-bit).
+  </Step>
+  
+  <Step title="Run the Installer">
+    Double-click the downloaded installer file.
+    
+    The installer will download and install the WebView2 Runtime automatically.
+  </Step>
+  
+  <Step title="Restart ImageGlass">
+    If ImageGlass was open, restart it to use the newly installed WebView2 Runtime.
+  </Step>
+</Steps>
+
+<Warning>
+  Make sure to download the **64-bit version** of WebView2 Runtime to match ImageGlass's architecture.
+</Warning>
+
+## Post-Installation Configuration
+
+### Setting ImageGlass as Default Viewer
+
+If you skipped file associations during setup, you can set ImageGlass as the default viewer later:
+
+#### Windows 11
+
+1. Right-click an image file
+2. Select **Open with → Choose another app**
+3. Select **ImageGlass** from the list
+4. Check **Always use this app to open .jpg files**
+5. Click **OK**
+
+#### Windows 10
+
+1. Go to **Settings → Apps → Default apps**
+2. Scroll down and click **Choose default apps by file type**
+3. Find the image extensions you want (e.g., `.jpg`, `.png`)
+4. Click the current default app and select **ImageGlass**
+
+#### Using ImageGlass Settings
+
+ImageGlass also provides a built-in file association tool:
+
+1. Open ImageGlass
+2. Go to **Menu → Settings** (or press `Ctrl + ,`)
+3. Navigate to **File associations**
+4. Select the formats you want ImageGlass to handle
+5. Click **Apply** or **Set as default for all**
+
+### Verifying Installation
+
+To confirm ImageGlass is installed correctly:
+
+<Steps>
+  <Step title="Launch ImageGlass">
+    Open ImageGlass from the Start menu or desktop shortcut.
+  </Step>
+  
+  <Step title="Check Version">
+    Click **Menu → About** to see the installed version.
+    
+    Current version should be 9.4.x or later.
+  </Step>
+  
+  <Step title="Test Image Viewing">
+    Open a sample image file to verify ImageGlass displays it correctly.
+  </Step>
+</Steps>
+
+## Troubleshooting
+
+### Installation Issues
+
+<AccordionGroup>
+  <Accordion title="Error: This app can't run on your PC">
+    This error indicates you're trying to install the 64-bit version on a 32-bit system.
+    
+    **Solution**: ImageGlass only supports 64-bit Windows. You'll need to upgrade to a 64-bit version of Windows to use ImageGlass.
+  </Accordion>
+  
+  <Accordion title="Microsoft Store installation fails">
+    If the Microsoft Store installation fails:
+    
+    1. Ensure Windows is up to date
+    2. Try resetting the Microsoft Store app: Settings → Apps → Microsoft Store → Advanced options → Reset
+    3. Sign out and back in to your Microsoft account
+    4. Try downloading the Classic installer instead
+  </Accordion>
+  
+  <Accordion title="Installer won't run (SmartScreen blocks it)">
+    Windows SmartScreen may block unrecognized installers.
+    
+    **Solution**:
+    1. Click **More info** on the SmartScreen warning
+    2. Click **Run anyway**
+    3. Alternatively, download from the Microsoft Store for verified installation
+  </Accordion>
+  
+  <Accordion title="WebView2 installation fails">
+    If WebView2 Runtime installation fails:
+    
+    1. Ensure Windows is fully updated
+    2. Try downloading the Standalone Installer instead of Bootstrapper
+    3. Check available disk space
+    4. Temporarily disable antivirus software during installation
+  </Accordion>
+</AccordionGroup>
+
+### Getting Help
+
+If you encounter issues during installation:
+
+- Visit the [ImageGlass GitHub Issues](https://github.com/d2phap/ImageGlass/issues) page
+- Join the [ImageGlass Discord community](https://discord.gg/tWjbynH2X8)
+- Check the [documentation](https://imageglass.org/docs) for more troubleshooting guides
+
+## Next Steps
+
+Now that ImageGlass is installed, learn how to use it:
+
+<Card title="Quick Start Guide" icon="rocket" href="/quickstart">
+  Learn the basics of viewing and navigating images with ImageGlass
+</Card>

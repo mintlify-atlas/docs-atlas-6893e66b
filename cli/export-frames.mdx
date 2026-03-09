@@ -1,0 +1,431 @@
+---
+title: Export Frames
+description: Extract individual frames from animated images and multi-frame files using igcmd
+---
+
+The `export-frames` command extracts individual frames from animated images (GIF, WebP, APNG) and multi-frame files (TIFF, ICO) into separate image files.
+
+## Syntax
+
+```bash
+igcmd.exe export-frames <imagePath>
+```
+
+## Parameters
+
+<ParamField path="imagePath" type="string" required>
+  Full path to the animated or multi-frame image file
+  
+  **Supported formats:**
+  - Animated GIF (`.gif`)
+  - Animated WebP (`.webp`)
+  - Animated PNG/APNG (`.png`)
+  - Multi-frame TIFF (`.tiff`, `.tif`)
+  - Multi-icon ICO (`.ico`)
+</ParamField>
+
+## Exit Codes
+
+| Code | Description |
+|------|-------------|
+| `0` | Frames exported successfully |
+| `2` | Error (file not found or invalid format) |
+
+## Behavior
+
+### Interactive Folder Selection
+
+When you run the command:
+
+1. **File validation** - Checks if the specified file exists
+2. **Folder picker** - Opens a dialog to select the destination folder
+3. **Frame extraction** - Extracts all frames to the selected folder
+4. **Progress display** - Shows extraction progress
+5. **Completion** - Displays summary of extracted frames
+
+### Output Files
+
+Extracted frames are saved as:
+- **Naming pattern:** `frame_001.png`, `frame_002.png`, etc.
+- **Format:** PNG (preserves transparency)
+- **Numbering:** Sequential, zero-padded
+- **Location:** User-selected destination folder
+
+## Examples
+
+### Basic Usage
+
+```bash
+igcmd.exe export-frames "C:\Images\animation.gif"
+```
+
+Opens folder picker, then extracts all frames from the GIF file.
+
+### Export Animated WebP
+
+```bash
+igcmd.exe export-frames "C:\Downloads\animated.webp"
+```
+
+Extracts frames from an animated WebP file.
+
+### Export APNG Frames
+
+```bash
+igcmd.exe export-frames "C:\Graphics\logo.png"
+```
+
+Extracts frames if the PNG file is animated (APNG format).
+
+### Multi-Frame TIFF
+
+```bash
+igcmd.exe export-frames "C:\Scans\document.tiff"
+```
+
+Extracts individual pages from a multi-page TIFF file.
+
+## Advanced Usage
+
+### Batch Frame Extraction
+
+```bash
+@echo off
+setlocal enabledelayedexpansion
+
+set "input_folder=C:\Animations"
+set "output_folder=C:\ExtractedFrames"
+
+for %%f in ("%input_folder%\*.gif") do (
+    echo Processing: %%~nxf
+    
+    rem Create output subfolder
+    set "dest=%output_folder%\%%~nf"
+    mkdir "!dest!" 2>nul
+    
+    rem Export frames (note: will show folder picker)
+    igcmd.exe export-frames "%%f"
+    
+    if !ERRORLEVEL! EQU 0 (
+        echo Success: %%~nxf
+    ) else (
+        echo Failed: %%~nxf
+    )
+)
+
+echo.
+echo Batch extraction complete
+pause
+```
+
+### PowerShell Batch Extraction
+
+```powershell
+# Process multiple animated files
+$sourceFolder = "C:\Animations"
+$files = Get-ChildItem $sourceFolder -Include *.gif,*.webp -Recurse
+
+foreach ($file in $files) {
+    Write-Host "Extracting frames from: $($file.Name)" -ForegroundColor Cyan
+    
+    & "C:\Program Files\ImageGlass\igcmd.exe" export-frames $file.FullName
+    
+    if ($LASTEXITCODE -eq 0) {
+        Write-Host "  Success" -ForegroundColor Green
+    } else {
+        Write-Host "  Failed" -ForegroundColor Red
+    }
+}
+
+Write-Host "Batch extraction complete" -ForegroundColor Green
+```
+
+### Error Handling
+
+```bash
+@echo off
+set "image=C:\Images\animation.gif"
+
+if not exist "%image%" (
+    echo Error: File not found: %image%
+    exit /b 3
+)
+
+echo Extracting frames from: %image%
+echo.
+
+igcmd.exe export-frames "%image%"
+
+if %ERRORLEVEL% EQU 0 (
+    echo.
+    echo Frames exported successfully
+) else if %ERRORLEVEL% EQU 2 (
+    echo.
+    echo Error: Invalid file or extraction failed
+    exit /b 2
+) else (
+    echo.
+    echo Unknown error occurred
+    exit /b 1
+)
+```
+
+### PowerShell with Error Handling
+
+```powershell
+function Export-ImageFrames {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ImagePath
+    )
+    
+    if (-not (Test-Path $ImagePath)) {
+        Write-Error "File not found: $ImagePath"
+        return $false
+    }
+    
+    Write-Host "Extracting frames from: $(Split-Path $ImagePath -Leaf)"
+    
+    $process = Start-Process -FilePath "igcmd.exe" `
+        -ArgumentList "export-frames", $ImagePath `
+        -Wait -PassThru -NoNewWindow
+    
+    if ($process.ExitCode -eq 0) {
+        Write-Host "Extraction successful" -ForegroundColor Green
+        return $true
+    } else {
+        Write-Host "Extraction failed (exit code: $($process.ExitCode))" -ForegroundColor Red
+        return $false
+    }
+}
+
+# Usage
+Export-ImageFrames "C:\Images\animation.gif"
+```
+
+## Supported File Formats
+
+### Animated GIF
+
+```bash
+igcmd.exe export-frames "animation.gif"
+```
+
+- **Format:** Graphics Interchange Format
+- **Typical use:** Web animations, simple animations
+- **Frames:** Unlimited
+- **Output:** Individual PNG files
+
+### Animated WebP
+
+```bash
+igcmd.exe export-frames "animation.webp"
+```
+
+- **Format:** WebP with animation
+- **Typical use:** Modern web animations, high-quality animations
+- **Frames:** Unlimited
+- **Output:** PNG files with alpha channel
+
+### Animated PNG (APNG)
+
+```bash
+igcmd.exe export-frames "animation.png"
+```
+
+- **Format:** Animated Portable Network Graphics
+- **Typical use:** High-quality animations with transparency
+- **Frames:** Unlimited
+- **Output:** PNG files preserving transparency
+
+### Multi-Frame TIFF
+
+```bash
+igcmd.exe export-frames "document.tiff"
+```
+
+- **Format:** Tagged Image File Format
+- **Typical use:** Scanned documents, multi-page images
+- **Frames:** Multiple pages
+- **Output:** PNG files (one per page)
+
+### Multi-Resolution ICO
+
+```bash
+igcmd.exe export-frames "icon.ico"
+```
+
+- **Format:** Windows Icon
+- **Typical use:** Application icons with multiple sizes
+- **Frames:** Multiple resolutions (16x16, 32x32, 48x48, etc.)
+- **Output:** PNG files (one per resolution)
+
+## Use Cases
+
+### Extract GIF Frames for Editing
+
+```bash
+@echo off
+echo Extracting frames for editing...
+igcmd.exe export-frames "source_animation.gif"
+echo.
+echo Edit the extracted frames, then recreate the GIF with your preferred tool.
+pause
+```
+
+### Analyze Animation Sequences
+
+```bash
+rem Extract frames to analyze animation sequence
+igcmd.exe export-frames "complex_animation.webp"
+echo Frames extracted for frame-by-frame analysis
+```
+
+### Convert Animation to Image Sequence
+
+```bash
+@echo off
+echo Converting animation to image sequence...
+igcmd.exe export-frames "%1"
+if %ERRORLEVEL% EQU 0 (
+    echo Image sequence created successfully
+)
+```
+
+### Extract Icon Sizes
+
+```bash
+rem Extract different icon resolutions
+igcmd.exe export-frames "application.ico"
+echo Individual icon sizes extracted
+```
+
+### Quality Comparison
+
+```bash
+rem Extract frames from different compression formats for quality comparison
+igcmd.exe export-frames "animation_original.gif"
+igcmd.exe export-frames "animation_compressed.webp"
+echo Compare extracted frames to evaluate compression quality
+```
+
+## Output Characteristics
+
+### Frame Naming
+
+Extracted frames follow this pattern:
+```
+frame_001.png
+frame_002.png
+frame_003.png
+...
+frame_100.png
+```
+
+- **Format:** PNG (lossless)
+- **Padding:** Zero-padded numbers (001, 002, etc.)
+- **Transparency:** Preserved from source
+- **Color depth:** Preserved from source
+
+### Frame Quality
+
+- **No quality loss** - Lossless PNG format
+- **Transparency preserved** - Alpha channel maintained
+- **Exact pixels** - Pixel-perfect extraction
+- **Original resolution** - No scaling applied
+
+### Destination Folder
+
+The folder picker allows you to:
+- Select existing folders
+- Create new folders
+- Navigate to any location
+- See pinned places (Quick Access)
+
+## Limitations
+
+### Interactive Requirement
+
+```
+Note: This command requires user interaction (folder selection dialog)
+and cannot run fully automated or in silent mode.
+```
+
+For automated workflows, you may need to:
+- Pre-create destination folders
+- Use alternative frame extraction tools
+- Develop custom automation scripts
+
+### File Size Considerations
+
+Extracting frames from large animations:
+- **High frame count** - Can generate hundreds of files
+- **Disk space** - PNG files may require significant storage
+- **Processing time** - Large files take longer to process
+
+**Example:**
+- 100-frame GIF (1920x1080) → ~200MB of PNG files
+- 500-frame animation → ~1GB of PNG files
+
+## Troubleshooting
+
+### File Not Found Error
+
+```bash
+if not exist "animation.gif" (
+    echo Error: File not found
+    echo Please check the file path
+    exit /b 2
+)
+```
+
+### Invalid Format Error
+
+Ensure the file is actually animated:
+- **Static images** - Cannot extract frames from single-frame images
+- **Corrupt files** - Damaged files may fail to extract
+- **Unsupported formats** - Some formats are not supported
+
+### Exit Code 2 Troubleshooting
+
+If you receive exit code 2:
+1. Verify the file exists
+2. Check file is not corrupted
+3. Ensure file format is supported
+4. Confirm file contains multiple frames
+5. Try opening the file in ImageGlass first
+
+## Related Commands
+
+### lossless-compress
+
+Compress extracted frames to reduce file size:
+
+```bash
+rem Extract frames
+igcmd.exe export-frames "animation.gif"
+
+rem Compress each frame
+for %%f in (*.png) do (
+    igcmd.exe lossless-compress "%%f"
+)
+```
+
+### start-slideshow
+
+View extracted frames as a slideshow:
+
+```bash
+rem Extract frames to a folder
+igcmd.exe export-frames "animation.gif"
+
+rem View frames as slideshow
+igcmd.exe start-slideshow "frame_001.png"
+```
+
+## See Also
+
+- [CLI Overview](/cli/overview)
+- [All Commands](/cli/igcmd-commands)
+- [Lossless Compression](/cli/igcmd-commands#lossless-compress)
+- [Start Slideshow](/cli/igcmd-commands#start-slideshow)

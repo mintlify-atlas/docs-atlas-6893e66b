@@ -1,0 +1,242 @@
+---
+title: Appearance Settings
+description: Customize ImageGlass visual appearance with themes, colors, and UI options
+icon: palette
+---
+
+## Theme Configuration
+
+ImageGlass supports separate themes for light and dark modes, allowing seamless transitions based on your Windows system theme.
+
+### Theme Selection
+
+<ParamField path="DarkTheme" type="string" default="Kobe">
+  Theme pack name to use when Windows is in dark mode
+  
+  **Example:** `"DarkTheme": "Kobe"`
+</ParamField>
+
+<ParamField path="LightTheme" type="string" default="Kobe-Light">
+  Theme pack name to use when Windows is in light mode
+  
+  **Example:** `"LightTheme": "Kobe-Light"`
+</ParamField>
+
+### Built-in Themes
+
+ImageGlass includes these default themes:
+
+- **Kobe** (Dark) - Modern dark theme with accent colors
+- **Kobe-Light** (Light) - Clean light theme variant
+
+<Info>
+  Learn how to install additional themes in the [Themes](/configuration/themes) section.
+</Info>
+
+## Background Colors
+
+### Viewer Background
+
+<ParamField path="BackgroundColor" type="string" default="(follows theme)">
+  Background color of the main viewer area in hex format
+  
+  **Values:**
+  - Empty string `""` - Use theme's default background color
+  - Hex color - Custom color (e.g., `"#1e1e1e"`, `"#ffffff00"` with alpha)
+  
+  **Example:** `"BackgroundColor": "#2b2b2b"`
+</ParamField>
+
+<ParamField path="ShowCheckerboard" type="boolean" default="false">
+  Display checkerboard pattern for transparent images
+</ParamField>
+
+<ParamField path="ShowCheckerboardOnlyImageRegion" type="boolean" default="false">
+  Limit checkerboard to image bounds only (not full viewer)
+</ParamField>
+
+### Slideshow Background
+
+<ParamField path="SlideshowBackgroundColor" type="string" default="#000000">
+  Background color for slideshow mode
+  
+  **Example:** `"SlideshowBackgroundColor": "#000000"`
+</ParamField>
+
+## Window Appearance
+
+### Window Backdrop
+
+<ParamField path="WindowBackdrop" type="string" default="Mica">
+  Windows 11 acrylic/material effect for the window
+  
+  **Options:**
+  - `"None"` - No backdrop effect
+  - `"Mica"` - Windows 11 Mica material (recommended)
+  - Other Windows 11 backdrop styles
+</ParamField>
+
+### Window Icon
+
+<ParamField path="ShowAppIcon" type="boolean" default="true">
+  Display ImageGlass icon in the title bar
+</ParamField>
+
+## Toolbar Appearance
+
+### Toolbar Layout
+
+<ParamField path="ShowToolbar" type="boolean" default="true">
+  Show/hide the main toolbar on startup
+</ParamField>
+
+<ParamField path="EnableCenterToolbar" type="boolean" default="true">
+  Center toolbar buttons horizontally
+</ParamField>
+
+<ParamField path="ToolbarIconHeight" type="number" default="24">
+  Height of toolbar icons in pixels
+  
+  **Range:** 16-48 pixels
+  
+  **Example:** `"ToolbarIconHeight": 32`
+</ParamField>
+
+<ParamField path="HideToolbarInFullscreen" type="boolean" default="false">
+  Automatically hide toolbar in fullscreen mode
+</ParamField>
+
+## Gallery Appearance
+
+### Gallery Display
+
+<ParamField path="ShowGallery" type="boolean" default="true">
+  Show/hide the thumbnail gallery panel
+</ParamField>
+
+<ParamField path="ShowGalleryScrollbars" type="boolean" default="false">
+  Display scrollbars in the gallery panel
+</ParamField>
+
+<ParamField path="ShowGalleryFileName" type="boolean" default="true">
+  Show filename below thumbnails
+</ParamField>
+
+<ParamField path="ThumbnailSize" type="number" default="50">
+  Thumbnail size in pixels
+  
+  **Minimum:** 20 pixels
+  
+  **Example:** `"ThumbnailSize": 70`
+</ParamField>
+
+<ParamField path="GalleryColumns" type="number" default="3">
+  Number of thumbnail columns in vertical gallery layout
+  
+  **Minimum:** 1 column
+</ParamField>
+
+<ParamField path="HideGalleryInFullscreen" type="boolean" default="false">
+  Auto-hide gallery in fullscreen mode
+</ParamField>
+
+## Navigation Buttons
+
+<ParamField path="EnableNavigationButtons" type="boolean" default="true">
+  Show left/right arrow navigation buttons on the viewer
+</ParamField>
+
+Navigation button appearance is controlled by the active theme's SVG icons.
+
+## Welcome Image
+
+<ParamField path="ShowWelcomeImage" type="boolean" default="true">
+  Display welcome image when no image is loaded
+</ParamField>
+
+## Fullscreen & Special Modes
+
+### Frameless Mode
+
+<ParamField path="EnableFrameless" type="boolean" default="false">
+  Enable frameless window mode (no title bar or borders)
+  
+  <Note>Hold **Shift** key to move the window in frameless mode</Note>
+</ParamField>
+
+### Window Always on Top
+
+<ParamField path="EnableWindowTopMost" type="boolean" default="false">
+  Keep ImageGlass window always on top of other windows
+</ParamField>
+
+### Window Fit Mode
+
+<ParamField path="EnableWindowFit" type="boolean" default="false">
+  Automatically resize window to fit the image
+</ParamField>
+
+<ParamField path="CenterWindowFit" type="boolean" default="true">
+  Center the window when Window Fit mode is enabled
+</ParamField>
+
+## Frame Navigation Tool
+
+<ParamField path="ShowFrameNavTool" type="boolean" default="false">
+  Show frame navigation controls for multi-frame images (GIF, TIFF, etc.)
+</ParamField>
+
+## Color Hex Format
+
+Color values use hex format with optional alpha channel:
+
+- **RGB:** `"#RRGGBB"` (e.g., `"#ff0000"` for red)
+- **RGBA:** `"#RRGGBBAA"` (e.g., `"#ff0000ff"` for opaque red)
+- **Short RGB:** `"#RGB"` (e.g., `"#f00"` for red)
+- **Short RGBA:** `"#RGBA"` (e.g., `"#f00f"` for opaque red)
+
+<Tip>
+  Use `00` alpha for fully transparent, `ff` for fully opaque
+</Tip>
+
+## Layout Configuration
+
+<ParamField path="Layout" type="object" default="{}">
+  Advanced layout configuration for toolbar and gallery positioning
+  
+  **Structure:** `{ "ControlName": "DockStyle;order" }`
+  
+  This is typically managed through the Settings UI.
+</ParamField>
+
+## Applying Changes
+
+<Steps>
+  <Step title="Edit Configuration">
+    Modify `igconfig.json` with your preferred settings
+  </Step>
+  
+  <Step title="Save File">
+    Ensure the JSON is valid before saving
+  </Step>
+  
+  <Step title="Restart ImageGlass">
+    Changes take effect on next launch (some settings apply immediately)
+  </Step>
+</Steps>
+
+<Warning>
+  Invalid color hex codes will be ignored and default to theme colors
+</Warning>
+
+## See Also
+
+<CardGroup cols={2}>
+  <Card title="Themes" icon="brush" href="/configuration/themes">
+    Install and create custom theme packs
+  </Card>
+  
+  <Card title="Advanced Configs" icon="code" href="/configuration/advanced-configs">
+    Explore hidden appearance options
+  </Card>
+</CardGroup>

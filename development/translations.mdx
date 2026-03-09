@@ -1,0 +1,364 @@
+---
+title: Translations
+description: Help translate ImageGlass into your language using Crowdin
+---
+
+## Overview
+
+ImageGlass is available in multiple languages thanks to the amazing work of community translators. We use [Crowdin](https://crowdin.com/project/imageglass/invite) to manage translations, making it easy for anyone to contribute.
+
+## Why Translate ImageGlass?
+
+By translating ImageGlass, you:
+- **Make the software accessible** to users who don't speak English
+- **Help grow the community** in your language region
+- **Gain recognition** as a contributor to an open source project
+- **Improve your translation skills** with a real-world project
+
+## Getting Started with Crowdin
+
+### 1. Create a Crowdin Account
+
+1. Visit the [ImageGlass Crowdin page](https://crowdin.com/project/imageglass/invite)
+2. Click **Sign Up** to create a free account
+3. Verify your email address
+
+### 2. Join the ImageGlass Project
+
+1. Go to [ImageGlass on Crowdin](https://crowdin.com/project/imageglass/invite)
+2. Click **Join** to become a translator
+3. Select your language(s)
+
+### 3. Start Translating
+
+1. Select your language from the list
+2. Click on a file to start translating (usually the main application file)
+3. Translate strings in the Crowdin editor
+4. Click **Save** to submit your translations
+
+## Available Languages
+
+ImageGlass currently supports many languages, including:
+
+- Arabic (Egypt)
+- Armenian
+- Bulgarian
+- Catalan
+- Chinese Simplified
+- Chinese Traditional
+- Croatian
+- Czech
+- Danish
+- Dutch
+- Finnish
+- French
+- German
+- Greek
+- Hebrew
+- Hungarian
+- Indonesian
+- And many more...
+
+<Note>
+Don't see your language? Request it on the [ImageGlass Crowdin page](https://crowdin.com/project/imageglass/invite) or contact the maintainers.
+</Note>
+
+## Translation Guidelines
+
+### General Principles
+
+1. **Be consistent** - Use the same translations for recurring terms
+2. **Be concise** - UI space is limited, keep translations short
+3. **Be natural** - Translate meaning, not just words
+4. **Be accurate** - Ensure technical terms are correct
+5. **Use glossary** - Check Crowdin glossary for standard terms
+
+### Context is Important
+
+Crowdin provides context for each string:
+- **Screenshots** - Show where the text appears
+- **String keys** - Indicate the purpose (e.g., `FrmMain.MnuCopyPath`)
+- **Comments** - Additional context from developers
+
+Always review the context before translating.
+
+### Common Translation Patterns
+
+#### Menu Items
+
+Menu items usually end with `...` (ellipsis) if they open a dialog:
+
+```json
+// English
+"FrmMain.MnuPrint": "Print..."
+
+// Keep the ellipsis in your translation
+"FrmMain.MnuPrint": "إطبع…" // Arabic
+```
+
+#### Keyboard Shortcuts
+
+Do not translate keyboard shortcut keys:
+
+```json
+// English
+"Shortcut.NextImage": "Ctrl+Right"
+
+// Keep shortcuts in English
+"Shortcut.NextImage": "Ctrl+Right" // All languages
+```
+
+#### Placeholders
+
+Keep placeholders like `{0}`, `{1}` in your translation:
+
+```json
+// English
+"Error.FileNotFound": "File '{0}' not found."
+
+// Preserve the {0} placeholder
+"Error.FileNotFound": "Fichier '{0}' introuvable." // French
+```
+
+#### Technical Terms
+
+Some terms should remain in English or use standard translations:
+
+- **File formats**: JPEG, PNG, GIF, WebP (usually not translated)
+- **Technical features**: Zoom, DPI, RGB (check conventions in your language)
+- **Brand names**: ImageGlass, Windows (never translate)
+
+### Quality Checklist
+
+Before submitting translations:
+
+- [ ] Translation is grammatically correct
+- [ ] Translation fits the UI context
+- [ ] Placeholders are preserved
+- [ ] Keyboard shortcuts are unchanged
+- [ ] Punctuation matches UI conventions
+- [ ] Technical terms are accurate
+- [ ] Tone is appropriate for the context
+
+## Language Pack Structure
+
+ImageGlass language files are stored as JSON files with the `.iglang.json` extension:
+
+```
+Setup/Assets/Language/
+├── Arabic, Egypt.iglang.json
+├── French.iglang.json
+├── German.iglang.json
+└── ...
+```
+
+### Language File Format
+
+Each language file contains:
+
+```json
+{
+  "_Metadata": {
+    "Code": "ar-SA",
+    "EnglishName": "Arabic",
+    "LocalName": "الاسم المحلي للغة",
+    "Author": "sysy1413",
+    "MinVersion": "9.3"
+  },
+  "Items": {
+    "FrmMain.MnuCopyPath": "نسخ مسار الصورة",
+    "FrmMain.MnuPrint": "إطبع…",
+    "_.ImageOrderBy._Extension": "ملحق",
+    // ... more translations
+  }
+}
+```
+
+### Metadata Fields
+
+- **Code**: Language code (e.g., `en-US`, `fr-FR`, `de-DE`)
+- **EnglishName**: English name of the language
+- **LocalName**: Name in the native language
+- **Author**: Translator's name/username
+- **MinVersion**: Minimum ImageGlass version supporting this language pack
+
+## Testing Your Translations
+
+### In Crowdin
+
+Crowdin provides a preview feature:
+1. Translate some strings
+2. Use the preview to see your translations in context
+3. Adjust as needed
+
+### In ImageGlass (Advanced)
+
+If you want to test locally:
+
+1. **Download your translation** from Crowdin:
+   - Go to your language
+   - Click **Download**
+   - Save as `<LanguageName>.iglang.json`
+
+2. **Install ImageGlass** on your system
+
+3. **Add your language file**:
+   - Navigate to ImageGlass installation folder
+   - Go to `Language` subfolder
+   - Copy your `.iglang.json` file there
+
+4. **Select your language**:
+   - Open ImageGlass
+   - Go to **Settings** > **Language**
+   - Select your language from the dropdown
+   - Restart ImageGlass
+
+5. **Test the UI**:
+   - Check all menus and dialogs
+   - Look for text that doesn't fit
+   - Verify translations make sense in context
+
+## Updating Existing Translations
+
+ImageGlass is constantly evolving. To update translations:
+
+1. **Check for new strings**:
+   - Crowdin highlights untranslated strings
+   - Look for strings marked as "New"
+
+2. **Review changed strings**:
+   - Crowdin marks strings that have changed in the source
+   - Update your translation to match
+
+3. **Review existing translations**:
+   - Other translators may suggest improvements
+   - Vote on suggestions or propose your own
+
+## Translation Workflow
+
+### For Translators
+
+1. Translations are submitted on Crowdin
+2. Translations are reviewed by language moderators (if applicable)
+3. Approved translations are automatically synced to GitHub
+4. Translations are included in the next ImageGlass release
+
+### Release Cycle
+
+Translations merged before a release will be included. Check the [ImageGlass roadmap](https://github.com/d2phap/ImageGlass/discussions/2287) for release schedules.
+
+## Advanced: Language Pack Development
+
+If you want to create a custom language pack or understand the format:
+
+### Key Naming Convention
+
+Keys follow this pattern:
+```
+<FormName>.<ControlName>[._PropertyName]
+```
+
+Examples:
+- `FrmMain.MnuFile` - Menu item on main form
+- `FrmSettings.Nav._Viewer` - Navigation item in settings
+- `_.Metadata._FileLastAccessTime` - Global metadata string
+
+### Special Prefixes
+
+- `_` (underscore) - Global strings not tied to a specific form
+- `_Tooltip` - Tooltip text for a control
+- `_Description` - Description or help text
+- `_Error` - Error message
+
+### Creating a New Language Pack
+
+1. **Copy the English template**:
+   - Download the English language file from Crowdin
+   - Save with your language name
+
+2. **Update metadata**:
+   ```json
+   {
+     "_Metadata": {
+       "Code": "your-language-code",
+       "EnglishName": "Your Language",
+       "LocalName": "Nome na língua nativa",
+       "Author": "YourName",
+       "MinVersion": "9.4"
+     },
+     "Items": {
+       // Your translations
+     }
+   }
+   ```
+
+3. **Translate all items**
+
+4. **Test the language pack**
+
+5. **Submit to Crowdin** or create a pull request on GitHub
+
+## Becoming a Language Moderator
+
+Experienced translators can become moderators to:
+- Review and approve translations
+- Manage translation consistency
+- Help onboard new translators
+
+To become a moderator:
+1. Contribute quality translations consistently
+2. Show understanding of translation guidelines
+3. Contact the project maintainer via [Discord](https://discord.gg/tWjbynH2X8) or email
+
+## Recognition
+
+Translators are recognized in:
+- Language pack metadata (Author field)
+- ImageGlass contributors page
+- Crowdin project page
+
+## Getting Help
+
+If you need help with translations:
+
+1. **Crowdin discussions** - Ask in the language-specific discussion
+2. **ImageGlass Discord** - Join the [Discord server](https://discord.gg/tWjbynH2X8)
+3. **GitHub issues** - Create an issue for translation-related bugs
+4. **Email** - Contact phap@imageglass.org
+
+## Translation Statistics
+
+Check translation progress for all languages:
+- Visit the [ImageGlass Crowdin project](https://crowdin.com/project/imageglass)
+- View overall progress and language-specific completion rates
+
+## Contributing Translations to Development
+
+### For Developers
+
+If you're contributing code that adds new strings:
+
+1. **Add English strings** to the source code
+2. **Update language templates** in `Setup/Assets/Language/`
+3. **Sync with Crowdin** so translators can add translations
+4. **Document the context** - Add comments in code or Crowdin
+
+### Pull Request Checklist
+
+When your PR adds new translatable strings:
+
+- [ ] English strings added to appropriate locations
+- [ ] String keys follow naming conventions
+- [ ] Context provided for translators
+- [ ] Language template files updated
+- [ ] PR description mentions new translatable strings
+
+## Thank You!
+
+Translations make ImageGlass accessible to millions of users worldwide. Thank you for your contributions!
+
+## Next Steps
+
+- [Join ImageGlass on Crowdin](https://crowdin.com/project/imageglass/invite)
+- [Getting Started](/development/getting-started) - Set up development environment
+- [Contributing Guide](/development/contributing-guide) - Other ways to contribute

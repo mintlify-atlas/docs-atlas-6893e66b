@@ -1,0 +1,395 @@
+---
+title: Viewing Images
+description: Learn how to view and navigate images in ImageGlass
+icon: eye
+---
+
+## Opening Images
+
+ImageGlass provides multiple ways to open and view images:
+
+<CardGroup cols={2}>
+  <Card title="From File Explorer" icon="folder-open">
+    - Double-click any image file
+    - Right-click → Open with → ImageGlass
+    - Drag and drop image(s) onto ImageGlass window
+    - Set ImageGlass as default photo viewer
+  </Card>
+
+  <Card title="Within ImageGlass" icon="image">
+    - Press `Ctrl+O` to open file dialog
+    - Press `Ctrl+V` to paste from clipboard
+    - Drag and drop files into the window
+    - Use command line: `ImageGlass.exe "path\to\image.jpg"`
+  </Card>
+</CardGroup>
+
+## Navigation Methods
+
+<Tabs>
+  <Tab title="Keyboard">
+    Navigate through images using keyboard shortcuts:
+    
+    <Table>
+      <thead>
+        <tr>
+          <th>Key</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>`→` / `Page Up`</td>
+          <td>Next image</td>
+        </tr>
+        <tr>
+          <td>`←` / `Page Down`</td>
+          <td>Previous image</td>
+        </tr>
+        <tr>
+          <td>`Home`</td>
+          <td>First image in folder</td>
+        </tr>
+        <tr>
+          <td>`End`</td>
+          <td>Last image in folder</td>
+        </tr>
+        <tr>
+          <td>`F`</td>
+          <td>Go to specific image (by number or name)</td>
+        </tr>
+      </tbody>
+    </Table>
+  </Tab>
+
+  <Tab title="Mouse">
+    Use mouse for intuitive navigation:
+    
+    - **Scroll wheel** - Navigate images (when configured)
+    - **Side buttons** (X1/X2) - Previous/Next image
+    - **Click gallery thumbnails** - Jump to specific image
+    - **Arrow buttons** - Click on-screen navigation arrows (if enabled)
+  </Tab>
+
+  <Tab title="Gallery Bar">
+    The thumbnail gallery provides visual navigation:
+    
+    1. Press `G` to toggle gallery visibility
+    2. Click any thumbnail to jump to that image
+    3. Use scroll wheel or arrow keys in gallery
+    4. Current image is highlighted
+    5. Drag gallery edge to resize
+  </Tab>
+</Tabs>
+
+## Zoom Controls
+
+ImageGlass offers multiple zoom modes to suit different viewing needs.
+
+### Zoom Modes
+
+<AccordionGroup>
+  <Accordion title="Auto Zoom (Default)" icon="expand">
+    Press `1` or `NumPad 1`
+    
+    Automatically fits images to the window size. Large images are scaled down, small images remain at their original size.
+    
+    **Best for:** General viewing, mixed-size images
+  </Accordion>
+
+  <Accordion title="Lock Zoom" icon="lock">
+    Press `2` or `NumPad 2`
+    
+    Maintains a fixed zoom level across all images. Useful when comparing images or maintaining consistent viewing scale.
+    
+    **Best for:** Comparing multiple images, pixel-level inspection
+  </Accordion>
+
+  <Accordion title="Scale to Width" icon="arrows-left-right">
+    Press `3` or `NumPad 3`
+    
+    Scales images to match window width, may require vertical scrolling for tall images.
+    
+    **Best for:** Wide images, panoramas, web page screenshots
+  </Accordion>
+
+  <Accordion title="Scale to Height" icon="arrows-up-down">
+    Press `4` or `NumPad 4`
+    
+    Scales images to match window height, may require horizontal scrolling for wide images.
+    
+    **Best for:** Tall images, portraits, mobile screenshots
+  </Accordion>
+
+  <Accordion title="Scale to Fit" icon="compress">
+    Press `5` or `NumPad 5`
+    
+    Scales images to fit entirely within the window, never requiring scrolling.
+    
+    **Best for:** Viewing complete images, presentations
+  </Accordion>
+
+  <Accordion title="Scale to Fill" icon="expand">
+    Press `6` or `NumPad 6`
+    
+    Scales images to fill the window completely, may crop parts of the image.
+    
+    **Best for:** Wallpapers, immersive viewing
+  </Accordion>
+
+  <Accordion title="Actual Size (100%)" icon="one">
+    Press `0` or `NumPad 0`
+    
+    Displays images at their original pixel dimensions (1:1 pixel ratio).
+    
+    **Best for:** Pixel-perfect viewing, quality checking, detailed work
+  </Accordion>
+</AccordionGroup>
+
+### Manual Zoom
+
+<CardGroup cols={2}>
+  <Card title="Zoom In/Out" icon="magnifying-glass">
+    - Press `+` or `=` to zoom in
+    - Press `-` to zoom out
+    - Scroll mouse wheel to zoom at cursor position
+    - Pinch gesture on touch screens
+  </Card>
+
+  <Card title="Custom Zoom" icon="percent">
+    Press `Z` to enter a specific zoom percentage:
+    - Type any value (e.g., 50%, 150%, 200%)
+    - Press Enter to apply
+    - Use for precise zoom levels
+  </Card>
+</CardGroup>
+
+## Panning Large Images
+
+When an image is zoomed in beyond the window size:
+
+<Steps>
+  <Step title="Mouse Drag">
+    Click and drag anywhere on the image to pan
+  </Step>
+  
+  <Step title="Keyboard Pan">
+    - `Alt+Arrows` - Pan in small increments
+    - `Ctrl+Alt+Arrows` - Pan to edges instantly
+  </Step>
+  
+  <Step title="Scroll Wheel">
+    - `Ctrl+Wheel` - Pan vertically
+    - `Shift+Wheel` - Pan horizontally
+  </Step>
+  
+  <Step title="Touch Gesture">
+    Drag with one finger to pan on touch screens
+  </Step>
+</Steps>
+
+## Viewing Multi-Frame Images
+
+ImageGlass supports animated and multi-frame formats like GIF, WEBP, TIFF, AVIF, and HEIC.
+
+<Tabs>
+  <Tab title="Animation Control">
+    - **Auto-play** - Animations play automatically by default
+    - **Pause/Resume** - Press `Ctrl+Space` to toggle animation
+    - **Frame info** - Displays current frame number and total frames
+  </Tab>
+
+  <Tab title="Frame Navigation">
+    Navigate through frames manually:
+    
+    - `Ctrl+→` - Next frame
+    - `Ctrl+←` - Previous frame
+    - `Ctrl+Home` - First frame
+    - `Ctrl+End` - Last frame
+  </Tab>
+
+  <Tab title="Frame Navigator Tool">
+    Press `P` to open Frame Navigator tool:
+    
+    - Visual frame timeline
+    - Play/pause controls
+    - Frame-by-frame stepping
+    - Export individual frames
+    - Frame information display
+  </Tab>
+</Tabs>
+
+## Window Modes
+
+ImageGlass offers various window modes for different viewing scenarios:
+
+<CardGroup cols={2}>
+  <Card title="Full Screen" icon="maximize">
+    **Shortcut:** `F11`
+    
+    Hides all UI elements for distraction-free viewing. Press `F11` or `Escape` to exit.
+    
+    - Entire screen used for image
+    - UI appears on mouse movement
+    - Perfect for presentations
+  </Card>
+
+  <Card title="Frameless" icon="window-restore">
+    **Shortcut:** `F10`
+    
+    Removes window border while staying in windowed mode. Useful for screenshots and cleaner appearance.
+    
+    - No title bar or borders
+    - Still resizable and movable
+    - Can be combined with other modes
+  </Card>
+
+  <Card title="Window Fit" icon="window-maximize">
+    **Shortcut:** `F9`
+    
+    Automatically resizes window to match current image dimensions.
+    
+    - Window matches image size
+    - Useful for pixel-perfect viewing
+    - Respects screen boundaries
+  </Card>
+
+  <Card title="Always on Top" icon="thumbtack">
+    **Menu:** Layout → Always on Top
+    
+    Keeps ImageGlass window above all others, useful for reference images while working.
+  </Card>
+</CardGroup>
+
+## Slideshow Mode
+
+View images automatically with slideshow mode:
+
+<Steps>
+  <Step title="Start Slideshow">
+    Press `F12` or click Slideshow in menu
+  </Step>
+  
+  <Step title="Configure Settings">
+    - Set interval (seconds between images)
+    - Choose full screen or windowed
+    - Enable/disable countdown timer
+    - Select zoom mode
+  </Step>
+  
+  <Step title="Control Playback">
+    - `Space` - Pause/resume
+    - `→` / `←` - Manual navigation
+    - `C` - Toggle countdown display
+    - `Escape` - Exit slideshow
+  </Step>
+</Steps>
+
+<Tip>
+  Slideshow settings are preserved between sessions. Configure once and reuse anytime.
+</Tip>
+
+## Layout Customization
+
+<AccordionGroup>
+  <Accordion title="Toolbar" icon="toolbox">
+    **Toggle:** `T`
+    
+    - Position: Top, Bottom, Left, or Right
+    - Customizable buttons
+    - Center or left alignment
+    - Icon size adjustment
+  </Accordion>
+
+  <Accordion title="Gallery Bar" icon="images">
+    **Toggle:** `G`
+    
+    - Position: Bottom (default), Top, Left, or Right
+    - Horizontal strip or vertical thumbnails
+    - Resizable by dragging edge
+    - Show/hide filenames
+  </Accordion>
+
+  <Accordion title="Background" icon="palette">
+    **Change:** `M`
+    
+    - Solid colors
+    - Checkerboard pattern (press `B`)
+    - Custom colors via theme
+    - System accent color support
+  </Accordion>
+</AccordionGroup>
+
+## Image Information
+
+View detailed information about the current image:
+
+<CardGroup cols={2}>
+  <Card title="Toolbar Info" icon="info">
+    The toolbar displays:
+    - Current image index (e.g., "5 / 23")
+    - Filename
+    - Dimensions (width × height)
+    - File size
+    - Zoom percentage
+  </Card>
+
+  <Card title="Full Properties" icon="file-lines">
+    Press `Alt+Enter` for Windows Properties dialog:
+    - Complete file information
+    - EXIF data (if available)
+    - File dates and attributes
+    - Location and permissions
+  </Card>
+</CardGroup>
+
+## Loading Order
+
+Customize how images are sorted in the folder:
+
+Press `Shift+O` to access loading order options:
+
+<Tabs>
+  <Tab title="Order By">
+    - Name (default)
+    - Date Created
+    - Date Modified
+    - File Size
+    - Random
+    - Extension
+  </Tab>
+
+  <Tab title="Order Type">
+    - Ascending (A→Z, 0→9)
+    - Descending (Z→A, 9→0)
+  </Tab>
+
+  <Tab title="Explorer Sort">
+    Enable "Use Explorer sort order" to match Windows File Explorer's natural sorting (e.g., "image1, image2, image10" instead of "image1, image10, image2")
+  </Tab>
+</Tabs>
+
+## Tips for Better Viewing
+
+<AccordionGroup>
+  <Accordion title="Performance" icon="gauge-high">
+    - Enable gallery cache for faster thumbnail loading
+    - Adjust thumbnail cache size in Settings
+    - Use hardware acceleration when available
+    - Disable frame animation for better performance on large GIFs
+  </Accordion>
+
+  <Accordion title="Quality" icon="gem">
+    - Use "Actual Size" (0) for pixel-perfect viewing
+    - Configure interpolation settings for zooming
+    - Enable high-quality scaling in Settings
+    - View individual color channels with `Shift+C`
+  </Accordion>
+
+  <Accordion title="Workflow" icon="list-check">
+    - Set up custom keyboard shortcuts for frequent actions
+    - Create toolbar layouts for different tasks
+    - Use Lock Zoom mode for consistent comparison
+    - Enable Always on Top for reference images
+  </Accordion>
+</AccordionGroup>

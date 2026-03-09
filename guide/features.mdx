@@ -1,0 +1,166 @@
+---
+title: Features
+description: Comprehensive overview of ImageGlass features and capabilities
+icon: sparkles
+---
+
+## Core Features
+
+ImageGlass is a lightweight, versatile image viewer designed for Windows with a focus on speed, simplicity, and modern design.
+
+### Image Viewing
+
+<AccordionGroup>
+  <Accordion title="Multiple Zoom Modes" icon="magnifying-glass">
+    - **Auto Zoom** - Automatically fits images to window size
+    - **Lock Zoom** - Maintains a fixed zoom level across images
+    - **Scale to Width** - Fits image width to window
+    - **Scale to Height** - Fits image height to window
+    - **Scale to Fit** - Fits entire image within window
+    - **Scale to Fill** - Fills window completely with image
+    - **Actual Size (100%)** - Displays image at original dimensions
+  </Accordion>
+
+  <Accordion title="Image Navigation" icon="arrows-left-right">
+    - Navigate through images with keyboard arrows or mouse
+    - Jump to first/last image in folder
+    - Multi-frame image support (GIF, TIFF, AVIF, HEIC, etc.)
+    - Frame-by-frame navigation for animated formats
+    - Configurable loading orders (name, date, size, random, etc.)
+    - Explorer sort order integration
+  </Accordion>
+
+  <Accordion title="Pan & Transform" icon="hand">
+    - Pan images in any direction using keyboard or mouse
+    - Pan to specific sides (left, right, top, bottom)
+    - Touch gesture support for panning and zooming
+    - Smooth zoom with configurable speed and levels
+  </Accordion>
+</AccordionGroup>
+
+### Image Manipulation
+
+<CardGroup cols={2}>
+  <Card title="Color Operations" icon="palette">
+    - Invert colors
+    - View individual color channels (R, G, B, A)
+    - Color picker tool with multiple format outputs
+    - Checkerboard background for transparency
+  </Card>
+
+  <Card title="Transformations" icon="rotate">
+    - Rotate left/right
+    - Flip horizontal/vertical
+    - Crop with aspect ratio presets
+    - Resize with multiple resampling methods
+  </Card>
+</CardGroup>
+
+### File Management
+
+- Open images from file, clipboard, or drag-and-drop
+- Save images in multiple formats (AVIF, WEBP, PNG, JPG, JXL, etc.)
+- Rename files directly from viewer
+- Move to Recycle Bin or permanently delete
+- Copy/cut files and image data to clipboard
+- Open images with external editors
+- Set as desktop background or lock screen
+
+## Advanced Features
+
+### Window Modes
+
+<Tabs>
+  <Tab title="Full Screen">
+    Press `F11` to enter full screen mode for distraction-free viewing. All UI elements are hidden, giving you maximum screen space for your images.
+  </Tab>
+  <Tab title="Frameless">
+    Press `F10` to toggle frameless mode, removing the window border while keeping the application in windowed mode.
+  </Tab>
+  <Tab title="Window Fit">
+    Press `F9` to automatically resize the window to fit the current image dimensions.
+  </Tab>
+  <Tab title="Always on Top">
+    Keep the ImageGlass window above all other windows for easy reference while working.
+  </Tab>
+</Tabs>
+
+### Slideshow Mode
+
+- Automatic image playback with configurable intervals
+- Full screen slideshow support
+- Countdown timer display
+- Pause/resume with spacebar
+- Navigate manually during slideshow
+- Configurable background and zoom settings
+
+### Customization
+
+<AccordionGroup>
+  <Accordion title="Appearance" icon="paintbrush">
+    - Modern dark and light themes
+    - Custom theme support (JSON-based)
+    - System accent color integration
+    - Configurable toolbar layout and buttons
+    - Gallery/thumbnail bar (top, bottom, left, or right)
+  </Accordion>
+
+  <Accordion title="Behavior" icon="sliders">
+    - Customizable keyboard shortcuts
+    - Mouse wheel actions (zoom, pan, browse)
+    - Mouse button actions (configurable)
+    - Touch gesture support
+    - Startup boost mode for faster loading
+  </Accordion>
+
+  <Accordion title="Performance" icon="gauge-high">
+    - Configurable thumbnail cache size
+    - Image interpolation settings (scale up/down)
+    - Pan and zoom speed adjustment
+    - Memory-efficient image loading
+  </Accordion>
+</AccordionGroup>
+
+### Tools & Extensions
+
+<CardGroup cols={2}>
+  <Card title="Built-in Tools" icon="toolbox">
+    - **Color Picker** - Extract colors from images with various format outputs (HEX, RGB, HSL, CMYK)
+    - **Crop Tool** - Crop images with multiple aspect ratio presets
+    - **Frame Navigator** - Navigate and export frames from animated images
+    - **Resize Tool** - Resize images by pixels or percentage
+    - **Lossless Compression** - Optimize image file sizes without quality loss
+  </Card>
+
+  <Card title="External Tools" icon="plug">
+    - ExifGlass for EXIF metadata viewing and editing
+    - Custom tool integration via configuration
+    - Piped tool support for real-time editing
+    - Configurable hotkeys for external tools
+  </Card>
+</CardGroup>
+
+### Multi-Language Support
+
+ImageGlass supports over 40 languages including:
+- English, Spanish, French, German, Italian
+- Chinese (Simplified & Traditional), Japanese, Korean
+- Portuguese, Russian, Polish, Turkish, Arabic
+- And many more...
+
+## Integration Features
+
+- **Windows Shell Integration** - Set as default photo viewer
+- **File Association Management** - Custom file extension icons
+- **Print Support** - Print images directly from the viewer
+- **Share Integration** - Share images via Windows Share menu
+- **Auto-update** - Keep ImageGlass up to date automatically
+
+## Technical Features
+
+- **Multi-format Support** - Over 90+ image formats supported
+- **RAW Format Support** - View camera RAW files from major manufacturers
+- **SVG Rendering** - Vector graphics support with WebView2
+- **Multi-frame Images** - Full support for GIF, WEBP, TIFF, AVIF, HEIC animations
+- **High DPI Support** - Crisp display on high-resolution screens
+- **Hardware Acceleration** - GPU-accelerated rendering for smooth performance

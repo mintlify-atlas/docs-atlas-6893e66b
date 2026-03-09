@@ -1,0 +1,392 @@
+---
+title: Set Wallpaper
+description: Set images as desktop wallpaper or lock screen background using igcmd
+---
+
+ImageGlass provides command-line tools to set images as your Windows desktop wallpaper or lock screen background.
+
+## set-wallpaper
+
+Set an image as the Windows desktop wallpaper with a specified display style.
+
+### Syntax
+
+```bash
+igcmd.exe set-wallpaper <imagePath> <style>
+```
+
+### Parameters
+
+<ParamField path="imagePath" type="string" required>
+  Full path to the image file to set as wallpaper
+  
+  **Examples:**
+  - `"C:\Photos\landscape.jpg"`
+  - `"D:\Images\nature.png"`
+  - `"%USERPROFILE%\Pictures\photo.jpg"`
+</ParamField>
+
+<ParamField path="style" type="enum" required>
+  Wallpaper display style
+  
+  **Options:**
+  - `Centered` (or `0`) - Center the image on screen without scaling
+  - `Stretched` (or `1`) - Stretch to fill the entire screen
+  - `Tiled` (or `2`) - Tile the image across the screen
+  - `Current` (or `-1`) - Use the current Windows wallpaper style
+</ParamField>
+
+### Exit Codes
+
+| Code | Description |
+|------|-------------|
+| `0` | Wallpaper set successfully |
+| `1` | Administrator privileges required |
+| `2` | Error (invalid style or file error) |
+
+### Examples
+
+#### Set Centered Wallpaper
+
+```bash
+igcmd.exe set-wallpaper "C:\Photos\landscape.jpg" Centered
+```
+
+Centers the image on the desktop without stretching or scaling.
+
+#### Set Stretched Wallpaper
+
+```bash
+igcmd.exe set-wallpaper "C:\Photos\nature.png" Stretched
+```
+
+Stretches the image to fill the entire screen.
+
+#### Set Tiled Wallpaper
+
+```bash
+igcmd.exe set-wallpaper "C:\Photos\pattern.jpg" Tiled
+```
+
+Tiles the image repeatedly across the screen (useful for patterns).
+
+#### Use Current Style
+
+```bash
+igcmd.exe set-wallpaper "C:\Photos\photo.jpg" Current
+```
+
+Applies the image using whatever wallpaper style is currently set in Windows.
+
+#### Using Numeric Style Values
+
+```bash
+igcmd.exe set-wallpaper "C:\Photos\image.jpg" 0
+igcmd.exe set-wallpaper "C:\Photos\image.jpg" 1
+igcmd.exe set-wallpaper "C:\Photos\image.jpg" 2
+```
+
+### Wallpaper Styles Explained
+
+#### Centered (0)
+
+- Image displayed at original size
+- Positioned in the center of the screen
+- No scaling or distortion
+- Background color visible if image is smaller than screen
+- **Best for:** Icons, logos, or images you want to preserve exactly
+
+#### Stretched (1)
+
+- Image scaled to fill entire screen
+- Maintains aspect ratio (may crop sides)
+- No background color visible
+- May distort if aspect ratios don't match
+- **Best for:** Photos, wallpapers designed for your screen resolution
+
+#### Tiled (2)
+
+- Image repeated across the screen
+- No scaling applied
+- Creates a pattern effect
+- **Best for:** Small patterns, textures, or repeating designs
+
+#### Current (-1)
+
+- Uses the existing Windows wallpaper setting
+- Useful when you want to change the image but keep the same display style
+- **Best for:** Scripts that rotate wallpapers without changing user preferences
+
+### Advanced Usage
+
+#### Random Wallpaper Script
+
+```bash
+@echo off
+setlocal enabledelayedexpansion
+
+set "folder=C:\Wallpapers"
+set /a "count=0"
+
+for %%f in ("%folder%\*.jpg" "%folder%\*.png") do (
+    set /a "count+=1"
+    set "file[!count!]=%%f"
+)
+
+set /a "random=(%RANDOM% %% count) + 1"
+igcmd.exe set-wallpaper "!file[%random%]!" Stretched
+
+if %ERRORLEVEL% EQU 0 (
+    echo Wallpaper changed successfully
+)
+```
+
+#### Wallpaper Rotation Schedule
+
+```bash
+@echo off
+rem Run this script via Task Scheduler
+
+set "wallpapers[0]=C:\Wallpapers\morning.jpg"
+set "wallpapers[1]=C:\Wallpapers\afternoon.jpg"
+set "wallpapers[2]=C:\Wallpapers\evening.jpg"
+set "wallpapers[3]=C:\Wallpapers\night.jpg"
+
+set hour=%time:~0,2%
+if %hour% LSS 12 set idx=0
+if %hour% GEQ 12 if %hour% LSS 17 set idx=1
+if %hour% GEQ 17 if %hour% LSS 21 set idx=2
+if %hour% GEQ 21 set idx=3
+
+call igcmd.exe set-wallpaper "!wallpapers[%idx%]!" Stretched
+```
+
+#### PowerShell Wallpaper Changer
+
+```powershell
+$images = Get-ChildItem "C:\Wallpapers" -Include *.jpg,*.png -Recurse
+$random = $images | Get-Random
+
+& "C:\Program Files\ImageGlass\igcmd.exe" set-wallpaper $random.FullName Stretched
+
+if ($LASTEXITCODE -eq 0) {
+    Write-Host "Wallpaper set to: $($random.Name)" -ForegroundColor Green
+}
+```
+
+### Error Handling
+
+#### Check for Invalid Files
+
+```bash
+@echo off
+set "image=C:\Photos\wallpaper.jpg"
+
+if not exist "%image%" (
+    echo Error: File not found: %image%
+    exit /b 3
+)
+
+igcmd.exe set-wallpaper "%image%" Stretched
+
+if %ERRORLEVEL% EQU 2 (
+    echo Error: Invalid image file or style
+    exit /b 1
+)
+
+echo Wallpaper set successfully
+```
+
+#### Handle Administrator Requirements
+
+```bash
+@echo off
+igcmd.exe set-wallpaper "C:\Photos\image.jpg" Centered
+
+if %ERRORLEVEL% EQU 1 (
+    echo Administrator privileges required
+    echo Please run as administrator
+    exit /b 1
+)
+```
+
+---
+
+## set-lock-screen
+
+Set an image as the Windows lock screen background.
+
+### Syntax
+
+```bash
+igcmd.exe set-lock-screen <imagePath>
+```
+
+### Parameters
+
+<ParamField path="imagePath" type="string" required>
+  Full path to the image file to set as lock screen background
+</ParamField>
+
+### Exit Codes
+
+| Code | Description |
+|------|-------------|
+| `0` | Lock screen set successfully |
+| `1` | Administrator privileges required |
+| `2` | Error setting lock screen |
+
+### Examples
+
+#### Basic Usage
+
+```bash
+igcmd.exe set-lock-screen "C:\Photos\lockscreen.jpg"
+```
+
+#### With Error Checking
+
+```bash
+@echo off
+set "image=C:\Photos\lockscreen.jpg"
+
+if not exist "%image%" (
+    echo File not found: %image%
+    exit /b 3
+)
+
+igcmd.exe set-lock-screen "%image%"
+
+if %ERRORLEVEL% EQU 0 (
+    echo Lock screen updated successfully
+) else if %ERRORLEVEL% EQU 1 (
+    echo Administrator privileges required
+    exit /b 1
+) else (
+    echo Failed to set lock screen
+    exit /b 2
+)
+```
+
+#### PowerShell Example
+
+```powershell
+$lockScreenImage = "C:\Photos\lockscreen.jpg"
+
+if (Test-Path $lockScreenImage) {
+    & "C:\Program Files\ImageGlass\igcmd.exe" set-lock-screen $lockScreenImage
+    
+    if ($LASTEXITCODE -eq 0) {
+        Write-Host "Lock screen updated" -ForegroundColor Green
+    } elseif ($LASTEXITCODE -eq 1) {
+        Write-Host "Administrator privileges required" -ForegroundColor Yellow
+    } else {
+        Write-Host "Failed to set lock screen" -ForegroundColor Red
+    }
+} else {
+    Write-Host "Image file not found" -ForegroundColor Red
+}
+```
+
+### Automated Lock Screen Changes
+
+#### Daily Lock Screen Update
+
+```bash
+@echo off
+rem Add to Task Scheduler to run daily
+
+set "folder=C:\LockScreens"
+set "date=%date:~-4%%date:~3,2%%date:~0,2%"
+
+for /f "delims=" %%i in ('dir /b /a-d "%folder%\*.jpg" ^| findstr /i "%date%"') do (
+    igcmd.exe set-lock-screen "%folder%\%%i"
+    goto :done
+)
+
+rem Fallback to default
+igcmd.exe set-lock-screen "%folder%\default.jpg"
+
+:done
+```
+
+#### Random Lock Screen
+
+```powershell
+# PowerShell script for random lock screen
+$images = Get-ChildItem "C:\LockScreens" -Filter *.jpg
+$random = $images | Get-Random
+
+& igcmd.exe set-lock-screen $random.FullName
+
+Write-Host "Lock screen set to: $($random.Name)"
+```
+
+### Requirements and Limitations
+
+#### Windows Permissions
+
+- May require administrator privileges depending on system configuration
+- Uses Windows Runtime (WinRT) APIs
+- Requires Windows 10 or later
+
+#### Image Requirements
+
+- Supported formats: JPG, PNG, BMP, and other standard image formats
+- Recommended resolution: Match or exceed your screen resolution
+- File size: No strict limit, but smaller files load faster
+
+#### Lock Screen Behavior
+
+- Immediately applies the new background
+- Overrides Windows Spotlight if enabled
+- Persists until changed again
+- Synchronized across user sessions
+
+### Security Considerations
+
+#### Administrator Privileges
+
+If exit code `1` is returned:
+
+```bash
+# Run as administrator
+PowerShell -Command "Start-Process igcmd.exe -ArgumentList 'set-lock-screen','C:\Photos\image.jpg' -Verb RunAs"
+```
+
+#### File Access
+
+- Ensure the image file is accessible to the SYSTEM account
+- Avoid using network paths or removable drives
+- Use local, permanently available paths
+
+## Combined Script Example
+
+Set both wallpaper and lock screen:
+
+```bash
+@echo off
+set "image=C:\Photos\background.jpg"
+
+echo Setting wallpaper...
+igcmd.exe set-wallpaper "%image%" Stretched
+if %ERRORLEVEL% NEQ 0 (
+    echo Failed to set wallpaper
+    exit /b 1
+)
+
+echo Setting lock screen...
+igcmd.exe set-lock-screen "%image%"
+if %ERRORLEVEL% NEQ 0 (
+    echo Failed to set lock screen
+    exit /b 1
+)
+
+echo Background updated successfully!
+```
+
+## See Also
+
+- [CLI Overview](/cli/overview)
+- [All Commands](/cli/igcmd-commands)
+- [File Associations](/cli/file-associations)

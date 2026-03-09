@@ -1,0 +1,180 @@
+---
+title: Settings Overview
+description: Understanding ImageGlass configuration system and settings file structure
+icon: settings
+---
+
+## Configuration File Location
+
+ImageGlass stores user settings in `igconfig.json`, a JSON-based configuration file.
+
+### Default Locations
+
+<AccordionGroup>
+  <Accordion title="Windows User Profile">
+    **Path:** `%APPDATA%\ImageGlass\Settings\igconfig.json`
+    
+    This is the primary location for user-specific settings.
+  </Accordion>
+
+  <Accordion title="Portable Installation">
+    **Path:** `[ImageGlass Installation]\Settings\igconfig.json`
+    
+    When running in portable mode, settings are stored alongside the application.
+  </Accordion>
+</AccordionGroup>
+
+## Configuration File Structure
+
+The configuration file follows this basic structure:
+
+```json igconfig.json
+{
+  "_Metadata": {
+    "Description": "ImageGlass configuration file",
+    "Version": 9.1
+  },
+  "AutoUpdate": "0",
+  "EnableSlideshow": false,
+  "ShowToolbar": true,
+  "DarkTheme": "Kobe",
+  "LightTheme": "Kobe-Light",
+  // ... additional settings
+}
+```
+
+### Metadata Section
+
+<ParamField path="_Metadata.Description" type="string">
+  Human-readable description of the configuration file
+</ParamField>
+
+<ParamField path="_Metadata.Version" type="number">
+  Configuration file version (current: 9.1)
+</ParamField>
+
+## Configuration Categories
+
+ImageGlass settings are organized into several categories:
+
+<CardGroup cols={2}>
+  <Card title="General" icon="gear" href="/configuration/appearance">
+    Startup behavior, auto-update, multi-instance support
+  </Card>
+  
+  <Card title="Image" icon="image">
+    Loading orders, color management, format support
+  </Card>
+  
+  <Card title="Viewer" icon="eye">
+    Zoom modes, panning, navigation controls
+  </Card>
+  
+  <Card title="Performance" icon="gauge" href="/configuration/performance">
+    Image Booster cache, async loading, gallery cache
+  </Card>
+  
+  <Card title="Appearance" icon="palette" href="/configuration/appearance">
+    Themes, colors, toolbar customization
+  </Card>
+  
+  <Card title="Advanced" icon="code" href="/configuration/advanced-configs">
+    Power user settings, debugging, hidden options
+  </Card>
+</CardGroup>
+
+## Settings Management
+
+### Accessing Settings
+
+You can access ImageGlass settings in multiple ways:
+
+1. **Settings UI**: Open ImageGlass → Menu → Settings
+2. **Direct File Editing**: Edit `igconfig.json` with any text editor
+3. **Command Line**: Use `igcmd.exe` for configuration management
+
+<Warning>
+  **Always backup your configuration file before making manual edits.** Invalid JSON will cause ImageGlass to use default settings.
+</Warning>
+
+### Reset to Defaults
+
+To reset all settings to defaults:
+
+<Steps>
+  <Step title="Close ImageGlass">
+    Ensure all ImageGlass instances are closed
+  </Step>
+  
+  <Step title="Delete Configuration File">
+    Delete `igconfig.json` from your configuration directory
+  </Step>
+  
+  <Step title="Restart ImageGlass">
+    Launch ImageGlass - it will create a new configuration file with defaults
+  </Step>
+</Steps>
+
+## Configuration API Version
+
+ImageGlass uses version `9` for configuration compatibility checking. Settings from older versions are automatically migrated when detected.
+
+### Version History
+
+- **Version 9.x**: Current configuration format (ImageGlass 9.x)
+- **Version 8.x**: Legacy format (auto-migrated)
+- **Version 7.x and earlier**: Legacy format (auto-migrated)
+
+## Data Types
+
+Configuration values use standard JSON data types:
+
+<ParamField path="Boolean" type="boolean">
+  `true` or `false` values for feature toggles
+  
+  **Example:** `"ShowToolbar": true`
+</ParamField>
+
+<ParamField path="Number" type="number">
+  Integer or floating-point numbers for dimensions, speeds, etc.
+  
+  **Example:** `"ThumbnailSize": 50`
+</ParamField>
+
+<ParamField path="String" type="string">
+  Text values for paths, names, colors (hex format)
+  
+  **Example:** `"DarkTheme": "Kobe"`
+</ParamField>
+
+<ParamField path="Array" type="array">
+  Lists of values for zoom levels, formats, etc.
+  
+  **Example:** `"ZoomLevels": [10, 25, 50, 100, 200]`
+</ParamField>
+
+<ParamField path="Object" type="object">
+  Complex structures for toolbar buttons, hotkeys, tools
+  
+  **Example:** `"MenuHotkeys": { "MnuOpen": ["Ctrl+O"] }`
+</ParamField>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Appearance Settings" icon="palette" href="/configuration/appearance">
+    Customize themes and visual appearance
+  </Card>
+  
+  <Card title="Performance Tuning" icon="gauge" href="/configuration/performance">
+    Optimize cache and loading settings
+  </Card>
+  
+  <Card title="Advanced Configs" icon="code" href="/configuration/advanced-configs">
+    Explore power user options
+  </Card>
+  
+  <Card title="Themes" icon="brush" href="/configuration/themes">
+    Install and manage theme packs
+  </Card>
+</CardGroup>

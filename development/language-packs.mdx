@@ -1,0 +1,558 @@
+---
+title: Language Packs
+description: Learn how to create and contribute language translations for ImageGlass
+---
+
+## Overview
+
+ImageGlass supports multiple languages through language pack files. The application currently ships with over 40 language translations, making it accessible to users worldwide. You can contribute new translations or improve existing ones through the Crowdin platform or by creating language pack files directly.
+
+## Available Languages
+
+ImageGlass currently includes translations for:
+
+- Arabic (Egypt)
+- Armenian
+- Bulgarian
+- Catalan
+- Chinese (Simplified)
+- Chinese (Traditional)
+- Croatian
+- Czech
+- Danish
+- Dutch
+- Finnish
+- French
+- German
+- Greek
+- Hebrew
+- Hungarian
+- Indonesian
+- Irish
+- Italian
+- Japanese
+- Korean
+- Kurdish (Kurmanji)
+- Kyrgyz
+- Lithuanian
+- Malay
+- Norwegian (Bokmål)
+- Persian
+- Polish
+- Portuguese
+- Portuguese (Brazilian)
+- Romanian
+- Russian
+- Serbian (Cyrillic)
+- Serbian (Latin)
+- Slovak
+- Slovenian
+- Spanish
+- Swedish
+- Thai
+- Turkish
+- Ukrainian
+- Vietnamese
+
+## Language File Format
+
+Language packs use the `.iglang.json` format - a structured JSON file containing all translatable strings.
+
+### File Structure
+
+```json
+{
+  "_Metadata": {
+    "Code": "fr-FR",
+    "EnglishName": "French",
+    "LocalName": "Français",
+    "Author": "Jonas Boumediene",
+    "MinVersion": "9.3"
+  },
+  "Items": {
+    "FrmMain.MnuOpenFile": "Ouvrir un fichier…",
+    "FrmMain.MnuSave": "Sauvegarder",
+    "FrmMain.MnuSaveAs": "Sauvegarder sous…",
+    "FrmMain.MnuPrint": "Imprimer…",
+    "FrmMain.MnuExit": "Quitter"
+  }
+}
+```
+
+### Metadata Section
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| `Code` | string | Yes | Language code (e.g., "en-US", "fr-FR", "ja-JP") |
+| `EnglishName` | string | Yes | English name of the language (e.g., "French", "Japanese") |
+| `LocalName` | string | Yes | Native name of the language (e.g., "Français", "日本語") |
+| `Author` | string | Yes | Name of the translator or translation team |
+| `MinVersion` | string | Yes | Minimum ImageGlass version required (e.g., "9.3") |
+
+### Items Section
+
+The `Items` section contains key-value pairs where:
+- **Key**: The translation identifier (e.g., `FrmMain.MnuOpenFile`)
+- **Value**: The translated string in the target language
+
+#### Key Format
+
+Keys follow the pattern: `ComponentName.ElementName[.Property]`
+
+Examples:
+- `FrmMain.MnuOpenFile` - Main form, Open File menu item
+- `FrmSettings.Nav._General` - Settings form, General navigation item
+- `FrmMain.MnuSave._Success` - Main form, Save menu success message
+- `_.ImageOrderBy._Name` - Global constant, sort by name option
+
+## Translation Categories
+
+### 1. Menu Items
+
+Menu items from the main window, context menus, and submenus.
+
+```json
+"FrmMain.MnuFile": "Fichier",
+"FrmMain.MnuOpenFile": "Ouvrir un fichier…",
+"FrmMain.MnuSave": "Sauvegarder",
+"FrmMain.MnuPrint": "Imprimer…",
+"FrmMain.MnuExit": "Quitter"
+```
+
+### 2. Toolbar Actions
+
+```json
+"FrmMain.MnuZoomIn": "Zoomer",
+"FrmMain.MnuZoomOut": "Dézoomer",
+"FrmMain.MnuRotateLeft": "Pivoter à gauche",
+"FrmMain.MnuRotateRight": "Pivoter à droite"
+```
+
+### 3. Settings and Dialogs
+
+```json
+"FrmSettings.Nav._General": "Général",
+"FrmSettings.Nav._Appearance": "Apparence",
+"FrmSettings._Theme": "Thème",
+"FrmSettings._DisplayLanguage": "Langue d'affichage"
+```
+
+### 4. Messages and Notifications
+
+```json
+"FrmMain.MnuSave._Success": "L'image est enregistrée",
+"FrmMain.MnuSave._Error": "Impossible d'enregistrer l'image",
+"FrmMain.MnuSave._Confirm": "Êtes-vous sûr de vouloir écraser cette image ?"
+```
+
+### 5. Global Constants
+
+Reusable strings and constants used throughout the application.
+
+```json
+"_._OK": "OK",
+"_._Cancel": "Annuler",
+"_._Yes": "Oui",
+"_._No": "Non",
+"_._Save": "Sauvegarder",
+"_._Close": "Fermer"
+```
+
+### 6. Tooltips and Descriptions
+
+```json
+"FrmCrop.BtnSave._Tooltip": "Sauvegarder l'image",
+"FrmCrop.BtnReset._Tooltip": "Réinitialiser la sélection",
+"FrmCrop.BtnCopy._Tooltip": "Copier la sélection dans le presse-papiers"
+```
+
+## Translation Guidelines
+
+### Best Practices
+
+1. **Consistency**: Use consistent terminology throughout the translation
+2. **Context**: Consider the UI context when translating
+3. **Length**: Keep translations similar in length to avoid UI layout issues
+4. **Formality**: Maintain appropriate formality level for your language
+5. **Placeholders**: Preserve placeholders like `{0}`, `{1}` in the exact same position
+
+### Special Characters
+
+#### Ellipsis (…)
+Use ellipsis (…) for actions that open dialogs or require additional input:
+```json
+"FrmMain.MnuOpenFile": "Open file…",
+"FrmMain.MnuSaveAs": "Save as…"
+```
+
+#### Placeholders
+Maintain placeholders for dynamic content:
+```json
+"FrmMain._OpenWith": "Open with {0}",
+"_.ImageInfo._ListCount": "{0} file(s)",
+"FrmExportFrames._Exporting": "Exporting frames {0}/{1} \n{2}…"
+```
+
+#### Keyboard Shortcuts
+Do not translate keyboard shortcut indicators:
+```json
+"FrmMain.MnuOpenFile": "Open file… (Ctrl+O)"
+```
+
+#### Special Formatting
+- `\n` - Line break (preserve)
+- `\r\n` - Windows line break (preserve)
+- HTML entities if present (preserve)
+
+### Common Translation Patterns
+
+#### Confirmation Messages
+```json
+"FrmMain.MnuDelete._Description": "Are you sure you want to delete this file?"
+```
+
+#### Error Messages
+```json
+"FrmMain.MnuSave._Error": "Unable to save the image"
+```
+
+#### Success Messages
+```json
+"FrmMain.MnuSave._Success": "The image has been saved"
+```
+
+#### Progress Messages
+```json
+"FrmMain.MnuSave._Saving": "Saving the image…"
+```
+
+## Contributing Translations
+
+### Method 1: Crowdin (Recommended)
+
+Crowdin is the easiest way to contribute translations with a user-friendly interface and collaboration features.
+
+#### Getting Started
+
+1. Visit the [ImageGlass Crowdin page](https://crowdin.com/project/imageglass/invite)
+2. Create a free Crowdin account or sign in
+3. Select your language from the list
+4. Start translating strings
+
+#### Translation Workflow
+
+1. **Browse Strings**: View all translatable strings in the interface
+2. **Translate**: Enter your translation in the text box
+3. **Review Context**: See screenshots and context information
+4. **Vote**: Vote on translations by other contributors
+5. **Discuss**: Use comments to discuss translations with other contributors
+
+#### Crowdin Features
+
+- **Translation Memory**: Suggests previously translated similar strings
+- **Machine Translation**: Provides suggestions from MT engines
+- **Glossary**: Maintains consistent terminology
+- **Quality Checks**: Identifies potential issues (placeholders, length, etc.)
+- **Screenshots**: Visual context for UI strings
+
+#### Proofreading
+
+Experienced translators can become proofreaders to:
+- Review and approve translations
+- Ensure quality and consistency
+- Manage translation discussions
+
+### Method 2: Manual Translation
+
+For developers or those who prefer working directly with files.
+
+#### Step 1: Get the Template
+
+1. Download an existing `.iglang.json` file as a template
+2. Or export strings from Crowdin
+
+#### Step 2: Create Your Language File
+
+1. Copy an existing language file (e.g., `French.iglang.json`)
+2. Rename to your language (e.g., `Spanish.iglang.json`)
+3. Update the metadata section:
+
+```json
+{
+  "_Metadata": {
+    "Code": "es-ES",
+    "EnglishName": "Spanish",
+    "LocalName": "Español",
+    "Author": "Your Name",
+    "MinVersion": "9.3"
+  },
+  "Items": {
+    // Your translations here
+  }
+}
+```
+
+#### Step 3: Translate Strings
+
+Translate each value in the `Items` section, keeping keys unchanged:
+
+```json
+"FrmMain.MnuOpenFile": "Abrir archivo…",
+"FrmMain.MnuSave": "Guardar",
+"FrmMain.MnuExit": "Salir"
+```
+
+#### Step 4: Validate Your File
+
+1. Ensure valid JSON syntax (use a JSON validator)
+2. Check all placeholders are preserved
+3. Test special characters and encoding (UTF-8)
+4. Verify string lengths for UI compatibility
+
+#### Step 5: Test Your Translation
+
+1. Install the language pack (see installation section below)
+2. Switch ImageGlass to your language
+3. Review all UI elements
+4. Check for truncation or layout issues
+5. Test with different window sizes
+
+#### Step 6: Submit Your Translation
+
+1. Create a pull request on [GitHub](https://github.com/d2phap/ImageGlass)
+2. Or email the file to: phap@imageglass.org
+3. Include your name/handle for credits
+
+## Installing Language Packs
+
+### Using the UI
+
+1. Open ImageGlass Settings
+2. Navigate to **Language**
+3. Click **Install new language pack…**
+4. Select your `.iglang.json` file
+5. The language will appear in the language dropdown
+6. Select your language to apply it
+
+### Using Command Line (igcmd)
+
+```bash
+igcmd.exe install-languages "C:\path\to\language.iglang.json"
+```
+
+The language pack will be installed to:
+- Per-user: `%AppData%\ImageGlass\Languages\`
+- System-wide: `<ImageGlass Install Dir>\Languages\`
+
+### Testing Your Language Pack
+
+1. Install the language pack
+2. Open ImageGlass Settings → **Language**
+3. Select your language from the **Display language** dropdown
+4. Restart ImageGlass if needed
+5. Navigate through all menus and dialogs
+6. Verify translations appear correctly
+
+## Language Code Reference
+
+Use standard language-region codes:
+
+| Code | Language |
+|------|----------|
+| en-US | English (United States) |
+| fr-FR | French (France) |
+| de-DE | German (Germany) |
+| es-ES | Spanish (Spain) |
+| it-IT | Italian (Italy) |
+| ja-JP | Japanese (Japan) |
+| ko-KR | Korean (Korea) |
+| zh-CN | Chinese (Simplified) |
+| zh-TW | Chinese (Traditional) |
+| pt-BR | Portuguese (Brazil) |
+| pt-PT | Portuguese (Portugal) |
+| ru-RU | Russian (Russia) |
+| ar-EG | Arabic (Egypt) |
+
+For complete list, see [ISO 639-1 language codes](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) and [ISO 3166-1 country codes](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2).
+
+## Translation Tips by Section
+
+### Main Window (FrmMain)
+
+The primary application window with menus, toolbar, and viewer.
+
+**Key areas:**
+- File operations (open, save, print)
+- Image navigation (next, previous, first, last)
+- View options (zoom, rotate, flip)
+- Tools and actions
+
+### Settings Window (FrmSettings)
+
+Configuration dialogs and preferences.
+
+**Key areas:**
+- Navigation tabs (General, Appearance, Viewer, etc.)
+- Settings labels and descriptions
+- Button labels
+- Help text
+
+### Tool Windows
+
+Specialized tool dialogs:
+- **FrmCrop**: Crop tool interface
+- **FrmResize**: Resize image dialog
+- **FrmColorPicker**: Color picker tool
+- **FrmExportFrames**: Frame export dialog
+- **FrmSlideshow**: Slideshow controls
+
+### Global Strings (_.*)
+
+Common UI elements used throughout:
+- Button labels (OK, Cancel, Yes, No)
+- Common actions (Save, Close, Delete)
+- Messages (Error, Warning, Success)
+
+## Quality Assurance
+
+### Self-Review Checklist
+
+- [ ] All placeholders (`{0}`, `{1}`, etc.) preserved
+- [ ] Ellipsis (…) used consistently for dialogs
+- [ ] No untranslated strings
+- [ ] Consistent terminology throughout
+- [ ] Appropriate formality level
+- [ ] No grammatical errors
+- [ ] Text length suitable for UI
+- [ ] Valid JSON syntax
+- [ ] UTF-8 encoding without BOM
+
+### Testing Checklist
+
+- [ ] Language installs successfully
+- [ ] Language appears in dropdown
+- [ ] All menu items translated
+- [ ] All dialogs translated
+- [ ] No text truncation
+- [ ] No layout issues
+- [ ] Special characters display correctly
+- [ ] Keyboard shortcuts work
+
+## Updating Existing Translations
+
+Language packs may need updates when:
+- New features are added to ImageGlass
+- New strings are introduced
+- Existing translations need improvement
+
+### Update Process
+
+1. Check Crowdin for new strings in your language
+2. Translate any missing strings
+3. Review and improve existing translations
+4. Submit updates via Crowdin or pull request
+
+### Version Compatibility
+
+The `MinVersion` field specifies the minimum ImageGlass version:
+- If new strings are added, update `MinVersion`
+- Older ImageGlass versions will fall back to English for missing strings
+
+## Community and Support
+
+### Getting Help
+
+- **Crowdin Discussions**: Ask questions in the Crowdin project
+- **GitHub Issues**: Report translation issues on [GitHub](https://github.com/d2phap/ImageGlass/issues)
+- **Email**: Contact phap@imageglass.org
+
+### Translation Credits
+
+All translators are credited in:
+- The application About dialog
+- The GitHub repository
+- Release notes
+
+### Join the Community
+
+- Become a translator on Crowdin
+- Help review and improve translations
+- Assist other translators
+- Test language packs before release
+
+## Exporting Language Packs
+
+You can export your current language configuration:
+
+1. Open ImageGlass Settings → **Language**
+2. Click **Export language pack…**
+3. Save the `.iglang.json` file
+4. Share with others or submit as contribution
+
+## Technical Details
+
+### File Encoding
+
+Language files must use **UTF-8 encoding without BOM** to support all characters properly.
+
+### JSON Validation
+
+Use these tools to validate your JSON:
+- [JSONLint](https://jsonlint.com/)
+- VS Code with JSON validation
+- Online JSON validators
+
+### File Size
+
+Typical language pack file sizes:
+- Compressed: ~30-50 KB
+- Uncompressed: ~30-50 KB (JSON text)
+
+Large variations in file size may indicate:
+- Missing translations (smaller)
+- Encoding issues (larger)
+- Formatting issues
+
+## Best Practices Summary
+
+1. **Use Crowdin** for easy collaboration and quality checks
+2. **Stay consistent** with terminology and style
+3. **Test thoroughly** before submitting
+4. **Preserve formatting** and special characters
+5. **Consider context** when translating
+6. **Respect length** to avoid UI issues
+7. **Communicate** with other translators
+8. **Update regularly** as new strings are added
+
+## Resources
+
+- [ImageGlass Crowdin Project](https://crowdin.com/project/imageglass/invite)
+- [GitHub Repository](https://github.com/d2phap/ImageGlass)
+- [Contributing Guidelines](https://github.com/d2phap/ImageGlass/blob/develop/CONTRIBUTING.md)
+- Existing language files: `Setup/Assets/Language/` in source code
+
+## FAQ
+
+### Can I create a translation for a language variant?
+
+Yes! You can create region-specific translations (e.g., `en-GB` for British English, `pt-BR` for Brazilian Portuguese).
+
+### How do I update an existing translation?
+
+Use Crowdin to update strings, or download the existing file, make changes, and submit via pull request.
+
+### What if my translation is too long for the UI?
+
+Try to find shorter alternatives while maintaining meaning. You can also report UI layout issues on GitHub.
+
+### Can I translate the documentation too?
+
+Documentation translation is currently handled separately. Contact the maintainers for information.
+
+### How long until my translation is included?
+
+Crowdin translations are typically included in the next release. Direct submissions may take longer to review.
+
+## Thank You!
+
+Thank you for contributing to ImageGlass translations and making the application accessible to users worldwide. Your work helps millions of people use ImageGlass in their native language.

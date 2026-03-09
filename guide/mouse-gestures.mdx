@@ -1,0 +1,299 @@
+---
+title: Mouse & Touch Gestures
+description: Learn how to use mouse and touch gestures in ImageGlass
+icon: hand-pointer
+---
+
+## Overview
+
+ImageGlass provides comprehensive mouse and touch gesture support for intuitive image navigation and manipulation.
+
+## Mouse Wheel Actions
+
+The mouse wheel behavior can be customized based on modifier keys. These actions are fully configurable in Settings.
+
+<AccordionGroup>
+  <Accordion title="Default Mouse Wheel Actions" icon="mouse">
+    <Table>
+      <thead>
+        <tr>
+          <th>Action</th>
+          <th>Gesture</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Zoom</td>
+          <td>Scroll wheel</td>
+          <td>Zoom in/out at cursor position</td>
+        </tr>
+        <tr>
+          <td>Pan Vertically</td>
+          <td>`Ctrl` + Scroll</td>
+          <td>Pan image up and down</td>
+        </tr>
+        <tr>
+          <td>Pan Horizontally</td>
+          <td>`Shift` + Scroll</td>
+          <td>Pan image left and right</td>
+        </tr>
+        <tr>
+          <td>Browse Images</td>
+          <td>`Alt` + Scroll</td>
+          <td>Navigate to next/previous image</td>
+        </tr>
+      </tbody>
+    </Table>
+  </Accordion>
+
+  <Accordion title="Available Mouse Wheel Actions" icon="sliders">
+    You can configure the mouse wheel to perform any of these actions:
+    
+    - **Zoom** - Zoom in/out
+    - **Pan Vertically** - Scroll image up/down
+    - **Pan Horizontally** - Scroll image left/right
+    - **Browse Images** - Go to next/previous image
+    - **Do Nothing** - Disable wheel action
+
+    <Tip>
+      Configure mouse wheel actions in Settings (`Ctrl+,`) under **Mouse** section.
+    </Tip>
+  </Accordion>
+</AccordionGroup>
+
+## Mouse Click Actions
+
+Mouse clicks can trigger various actions. All click actions are customizable.
+
+<CardGroup cols={2}>
+  <Card title="Default Click Actions" icon="mouse-pointer">
+    - **Left Double-Click** - Toggle between Actual Size and Auto Zoom
+    - **Middle Click** - Refresh current image
+    - **Right Click** - Open context menu
+    - **X Button 1** (Back) - View previous image
+    - **X Button 2** (Forward) - View next image
+  </Card>
+
+  <Card title="Configurable Buttons" icon="gear">
+    - Left Click
+    - Left Double-Click
+    - Middle Click
+    - Right Click
+    - X Button 1 (Back)
+    - X Button 2 (Forward)
+  </Card>
+</CardGroup>
+
+### Available Click Actions
+
+You can assign any of these actions to mouse buttons:
+
+<Tabs>
+  <Tab title="Navigation">
+    - View Next Image
+    - View Previous Image
+    - Go to First Image
+    - Go to Last Image
+    - Next Frame
+    - Previous Frame
+  </Tab>
+
+  <Tab title="Zoom & Pan">
+    - Zoom In
+    - Zoom Out
+    - Actual Size
+    - Auto Zoom
+    - Lock Zoom
+    - Scale to Width/Height/Fit/Fill
+  </Tab>
+
+  <Tab title="File Operations">
+    - Open File
+    - Save
+    - Save As
+    - Refresh
+    - Reload
+    - Delete
+  </Tab>
+
+  <Tab title="View Options">
+    - Full Screen
+    - Slideshow
+    - Toggle Toolbar
+    - Toggle Gallery
+    - Open Context Menu
+    - Open Main Menu
+  </Tab>
+</Tabs>
+
+## Mouse Drag Actions
+
+ImageGlass supports dragging to pan images that are zoomed in.
+
+<Card title="Image Panning" icon="hand">
+  When an image is zoomed in beyond the window size:
+  
+  1. Click and hold the **left mouse button** on the image
+  2. Drag the mouse to pan the image in any direction
+  3. Release to stop panning
+  
+  This works for both mouse and touchpad/trackpad devices.
+</Card>
+
+## Touch Gestures
+
+<Note>
+  Touch gestures are available on touch-enabled Windows devices.
+</Note>
+
+<AccordionGroup>
+  <Accordion title="Pan Gesture" icon="hand">
+    **Single-finger pan** - Drag with one finger to pan the image
+    
+    - Supports both horizontal and vertical panning
+    - Works with inertia for smooth scrolling
+    - Pan continues briefly after lifting finger
+
+    <Steps>
+      <Step title="Touch the image">
+        Place one finger on the image
+      </Step>
+      <Step title="Drag to pan">
+        Move your finger in any direction to pan
+      </Step>
+      <Step title="Release">
+        Lift your finger - image continues moving with inertia
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="Pinch Zoom Gesture" icon="magnifying-glass">
+    **Two-finger pinch** - Zoom in and out with pinch gesture
+    
+    - **Pinch out** (spread fingers apart) - Zoom in
+    - **Pinch in** (bring fingers together) - Zoom out
+    - Zoom center follows the midpoint between your fingers
+
+    <Steps>
+      <Step title="Place two fingers">
+        Touch the screen with two fingers
+      </Step>
+      <Step title="Pinch to zoom">
+        Move fingers apart to zoom in, together to zoom out
+      </Step>
+      <Step title="Release">
+        Lift fingers to finish zooming
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="Two-Finger Tap" icon="hand-dots">
+    **Two-finger tap** - Context menu (configurable)
+    
+    Quickly tap the screen with two fingers to trigger the assigned action.
+  </Accordion>
+</AccordionGroup>
+
+### Touch Gesture Configuration
+
+Touch gestures are automatically enabled on compatible devices. The following gestures are supported:
+
+<Table>
+  <thead>
+    <tr>
+      <th>Gesture</th>
+      <th>Fingers</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Pan</td>
+      <td>1</td>
+      <td>Pan image in any direction</td>
+    </tr>
+    <tr>
+      <td>Pinch/Zoom</td>
+      <td>2</td>
+      <td>Zoom in/out around touch point</td>
+    </tr>
+    <tr>
+      <td>Two-Finger Tap</td>
+      <td>2</td>
+      <td>Context menu (configurable)</td>
+    </tr>
+  </tbody>
+</Table>
+
+## Customizing Mouse Actions
+
+To customize mouse and wheel actions:
+
+<Steps>
+  <Step title="Open Settings">
+    Press `Ctrl+,` or click Settings in the menu
+  </Step>
+  
+  <Step title="Navigate to Mouse section">
+    Find the **Mouse** settings panel
+  </Step>
+  
+  <Step title="Configure wheel actions">
+    Select desired action for each modifier key combination:
+    - Scroll (no modifier)
+    - Ctrl + Scroll
+    - Shift + Scroll
+    - Alt + Scroll
+  </Step>
+  
+  <Step title="Configure click actions">
+    Assign actions to each mouse button:
+    - Left Click / Double-Click
+    - Middle Click
+    - Right Click
+    - X Buttons (side buttons)
+  </Step>
+  
+  <Step title="Save changes">
+    Click **Save** or **Apply** to use your new configuration
+  </Step>
+</Steps>
+
+## Tips & Best Practices
+
+<CardGroup cols={2}>
+  <Card title="For Mouse Users" icon="mouse">
+    - Use wheel for quick zooming at cursor position
+    - Assign frequently-used actions to side buttons
+    - Keep right-click for context menu access
+    - Use `Ctrl+Wheel` for precise vertical panning
+  </Card>
+
+  <Card title="For Touch Users" icon="hand">
+    - Single-finger pan for navigation
+    - Pinch gestures for natural zooming
+    - Two-finger tap for quick menu access
+    - Swipe gestures work in gallery mode
+  </Card>
+</CardGroup>
+
+<Tip>
+  Experiment with different configurations to find what works best for your workflow. You can always reset to defaults in the Settings panel.
+</Tip>
+
+## Advanced: Toggle Actions
+
+Some actions support "toggle" behavior, allowing you to assign different actions based on the current state:
+
+<Accordion title="Toggle Action Example">
+  For example, you can configure a button to:
+  - **When toolbar is hidden**: Show toolbar
+  - **When toolbar is visible**: Hide toolbar
+  
+  This allows a single button/gesture to act as a toggle switch for various features.
+</Accordion>
+
+<Warning>
+  Touch gestures require Windows 7 or later with touch-enabled hardware. Some gestures may not work in WebView2 mode (used for SVG rendering).
+</Warning>

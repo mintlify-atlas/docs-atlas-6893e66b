@@ -1,0 +1,568 @@
+---
+title: EXIF Metadata
+description: View and utilize image EXIF data, camera settings, and technical information
+---
+
+## Overview
+
+ImageGlass automatically reads and displays EXIF (Exchangeable Image File Format) metadata from your images. Access detailed information about camera settings, capture time, GPS coordinates, copyright, and more without opening external tools.
+
+## What is EXIF Metadata?
+
+EXIF metadata is embedded information stored within image files, typically by digital cameras and smartphones. It includes:
+
+- **Camera settings** - ISO, aperture, shutter speed, focal length
+- **Date and time** - When the photo was taken
+- **Camera information** - Make, model, lens details
+- **Image properties** - Dimensions, color space, orientation
+- **Copyright and attribution** - Artist, copyright, software used
+- **GPS location** - Where the photo was taken (if available)
+
+<Note>
+Not all images contain EXIF data. Screenshots, digital artwork, and images edited in some programs may have limited or no EXIF information.
+</Note>
+
+## Viewing EXIF Data
+
+### In Title Bar / Image Info
+
+ImageGlass displays selected EXIF fields in the title bar or image info overlay.
+
+**Default visible fields:**
+- File name and path
+- Image dimensions
+- File size
+- Date/time information
+- Rating (if set)
+
+### Configuring Visible Information
+
+<Steps>
+  <Step title="Open Settings">
+    Go to **Settings > Image Info**
+  </Step>
+  
+  <Step title="Select Information Tags">
+    Choose which EXIF fields to display:
+    - **App Name** - ImageGlass branding
+    - **Name** - File name
+    - **Path** - Full file path
+    - **Zoom** - Current zoom percentage
+    - **ListCount** - Image position in list (e.g., "3/25")
+    - **FileSize** - File size in bytes/KB/MB
+    - **Dimension** - Width x Height in pixels
+    - **FrameCount** - Number of frames (for animated images)
+    - **ColorSpace** - Color space and profile
+    - **ExifRating** - Star rating
+    - **ExifDateTime** - EXIF modification date
+    - **ExifDateTimeOriginal** - Original capture date
+    - **DateTimeAuto** - Best available date (auto-selects)
+    - **ModifiedDateTime** - File system modification date
+  </Step>
+  
+  <Step title="Customize Format">
+    Drag and drop to reorder fields
+    
+    Choose separator characters
+  </Step>
+</Steps>
+
+<Tip>
+Use **DateTimeAuto** to automatically display the most relevant date: EXIF Original, EXIF Modified, or File Modified (in that priority).
+</Tip>
+
+## EXIF Data Fields
+
+### Date and Time Fields
+
+ImageGlass tracks three different timestamps:
+
+#### EXIF Date Time Original
+```csharp
+public DateTime? ExifDateTimeOriginal { get; set; }
+```
+
+The **original capture date** from the camera. This is when the photo was actually taken and should not change when editing.
+
+**Display format:** `2024-03-08 14:30:45 (o)`
+
+The `(o)` suffix indicates "original" date.
+
+#### EXIF Date Time
+```csharp
+public DateTime? ExifDateTime { get; set; }
+```
+
+The **last modification date** in EXIF data. Updated when the image is edited or processed.
+
+**Display format:** `2024-03-08 15:20:30 (e)`
+
+The `(e)` suffix indicates "EXIF" date.
+
+#### Modified Date Time
+```csharp
+public DateTime FileLastWriteTime { get; set; }
+```
+
+The **file system modification date**. Updated whenever the file is saved.
+
+**Display format:** `2024-03-08 16:45:12 (m)`
+
+The `(m)` suffix indicates "modified" date.
+
+#### Auto Date Time
+
+Automatically selects the best available date:
+
+```csharp
+if (ExifDateTimeOriginal != null)
+    return ExifDateTimeOriginal + " (o)";
+else if (ExifDateTime != null)
+    return ExifDateTime + " (e)";
+else
+    return FileLastWriteTime + " (m)";
+```
+
+<Tip>
+Use **DateTimeAuto** in image info to always see the most meaningful date without configuration.
+</Tip>
+
+### Rating
+
+```csharp
+public int ExifRatingPercent { get; set; }
+```
+
+Image rating from 0-100%, typically displayed as stars:
+
+- **0%** - No rating
+- **1-20%** - ★☆☆☆☆ (1 star)
+- **21-40%** - ★★☆☆☆ (2 stars)
+- **41-60%** - ★★★☆☆ (3 stars)
+- **61-80%** - ★★★★☆ (4 stars)
+- **81-100%** - ★★★★★ (5 stars)
+
+**Display format:** `★★★★☆ (4/5)`
+
+<Note>
+Ratings are read-only in ImageGlass. Use photo management software like Adobe Lightroom or Windows Photos to set ratings.
+</Note>
+
+### Camera Settings
+
+ImageGlass reads camera technical information:
+
+#### ISO Speed
+```csharp
+public int? ExifISOSpeed { get; set; }
+```
+
+Camera sensor sensitivity (e.g., 100, 400, 1600, 3200).
+
+#### Exposure Time
+```csharp
+public float? ExifExposureTime { get; set; }
+```
+
+Shutter speed in seconds (e.g., 1/500, 1/60, 2.5).
+
+#### F-Number (Aperture)
+```csharp
+public float? ExifFNumber { get; set; }
+```
+
+Lens aperture value (e.g., f/2.8, f/5.6, f/16).
+
+#### Focal Length
+```csharp
+public float? ExifFocalLength { get; set; }
+```
+
+Lens focal length in millimeters (e.g., 24mm, 50mm, 200mm).
+
+### Device Information
+
+#### Camera Model
+```csharp
+public string? ExifModel { get; set; }
+```
+
+Camera or phone model (e.g., "Canon EOS R5", "iPhone 15 Pro").
+
+#### Artist
+```csharp
+public string? ExifArtist { get; set; }
+```
+
+Photographer or artist name.
+
+#### Copyright
+```csharp
+public string? ExifCopyright { get; set; }
+```
+
+Copyright information.
+
+#### Software
+```csharp
+public string? ExifSoftware { get; set; }
+```
+
+Software used to create or edit the image.
+
+#### Image Description
+```csharp
+public string? ExifImageDescription { get; set; }
+```
+
+Image title or description.
+
+## Color Space Information
+
+### Color Space
+```csharp
+public string ColorSpace { get; set; }
+```
+
+The image's color space:
+- **sRGB** - Standard RGB (most common)
+- **AdobeRGB** - Adobe RGB (wider gamut)
+- **CMYK** - Cyan, Magenta, Yellow, Black (print)
+- **Grayscale** - Black and white
+
+### Color Profile
+```csharp
+public string ColorProfile { get; set; }
+```
+
+Embedded ICC profile name:
+- `sRGB IEC61966-2.1`
+- `Adobe RGB (1998)`
+- `Display P3`
+- Custom profile names
+
+**Display format:**
+```
+ColorSpace/ProfileName
+```
+
+Examples:
+- `sRGB/sRGB IEC61966-2.1`
+- `RGB/Adobe RGB (1998)`
+- `RGB/-` (no profile)
+
+<Note>
+Color profile information helps ensure accurate color display. See [Color Management](/advanced/color-management) for details.
+</Note>
+
+## File Metadata
+
+ImageGlass also displays file system information:
+
+### File Properties
+
+```csharp
+public class IgMetadata
+{
+    public string FilePath { get; set; }
+    public string FileName { get; set; }
+    public string FileExtension { get; set; }
+    public long FileSize { get; set; }
+    public DateTime FileCreationTime { get; set; }
+    public DateTime FileLastAccessTime { get; set; }
+    public DateTime FileLastWriteTime { get; set; }
+}
+```
+
+### Image Properties
+
+```csharp
+public class IgMetadata
+{
+    public uint OriginalWidth { get; set; }     // Source dimensions
+    public uint OriginalHeight { get; set; }
+    public uint RenderedWidth { get; set; }     // Displayed dimensions
+    public uint RenderedHeight { get; set; }
+    public int FrameCount { get; set; }         // Animation frames
+    public bool HasAlpha { get; set; }          // Transparency
+    public bool CanAnimate { get; set; }        // Is animated
+}
+```
+
+## Metadata Loading
+
+ImageGlass loads metadata in two stages:
+
+### Quick Metadata (Ping)
+
+```csharp
+public static IgMetadata LoadMetadata(string filePath)
+```
+
+Loads metadata without reading the full image:
+
+<Steps>
+  <Step title="Read File Headers">
+    Extracts basic information from file headers
+  </Step>
+  
+  <Step title="Parse EXIF Data">
+    Reads EXIF tags using ImageMagick
+  </Step>
+  
+  <Step title="Extract Color Profile">
+    Identifies embedded ICC profiles
+  </Step>
+  
+  <Step title="Return Metadata">
+    Provides all information instantly
+  </Step>
+</Steps>
+
+**Performance:** Very fast, no image decoding required.
+
+### EXIF Profile Reading
+
+ImageGlass uses ImageMagick's EXIF profile reader:
+
+```csharp
+if (imgM.GetExifProfile() is IExifProfile exifProfile)
+{
+    // Read rating
+    meta.ExifRatingPercent = GetExifValue(exifProfile, ExifTag.RatingPercent);
+    
+    // Read dates
+    meta.ExifDateTimeOriginal = GetExifValue(exifProfile, ExifTag.DateTimeOriginal);
+    meta.ExifDateTime = GetExifValue(exifProfile, ExifTag.DateTime);
+    
+    // Read camera settings
+    meta.ExifISOSpeed = GetExifValue(exifProfile, ExifTag.ISOSpeed);
+    meta.ExifExposureTime = GetExifValue(exifProfile, ExifTag.ExposureTime);
+    meta.ExifFNumber = GetExifValue(exifProfile, ExifTag.FNumber);
+    meta.ExifFocalLength = GetExifValue(exifProfile, ExifTag.FocalLength);
+    
+    // Read text fields
+    meta.ExifArtist = GetExifValue(exifProfile, ExifTag.Artist);
+    meta.ExifCopyright = GetExifValue(exifProfile, ExifTag.Copyright);
+}
+```
+
+## Practical Uses
+
+### Photography Review
+
+Enable camera settings in image info to review:
+
+<Steps>
+  <Step title="Configure Display">
+    Add camera EXIF fields to image info:
+    - ISO Speed
+    - Exposure Time
+    - F-Number
+    - Focal Length
+  </Step>
+  
+  <Step title="Browse Images">
+    Navigate through photos normally
+  </Step>
+  
+  <Step title="Review Settings">
+    See camera settings in title bar for each image
+  </Step>
+  
+  <Step title="Learn and Improve">
+    Identify patterns in successful shots
+  </Step>
+</Steps>
+
+### Image Organization
+
+Use date fields for organization:
+
+- **Sort by capture date** - Use ExifDateTimeOriginal
+- **Find recent edits** - Use ExifDateTime
+- **Track file changes** - Use ModifiedDateTime
+
+<Tip>
+ImageGlass's loading order can sort by any date field. Use **Loading Order > Last Modified** to see recently edited images first.
+</Tip>
+
+### Copyright Management
+
+View copyright information:
+
+<Steps>
+  <Step title="Enable Copyright Display">
+    Add **ExifCopyright** and **ExifArtist** to image info
+  </Step>
+  
+  <Step title="Verify Attribution">
+    Check images have proper copyright tags
+  </Step>
+  
+  <Step title="Identify Ownership">
+    Quickly see who created each image
+  </Step>
+</Steps>
+
+### Color Space Verification
+
+For color-accurate workflows:
+
+<Steps>
+  <Step title="Enable Color Info">
+    Add **ColorSpace** to image info
+  </Step>
+  
+  <Step title="Verify Profiles">
+    Ensure images use expected color space
+  </Step>
+  
+  <Step title="Identify Issues">
+    Spot images with wrong or missing profiles
+  </Step>
+</Steps>
+
+## EXIF Data Sources
+
+ImageGlass reads EXIF from multiple sources:
+
+### Primary: ImageMagick
+
+Most comprehensive EXIF reading:
+- Supports all standard EXIF tags
+- Handles proprietary camera formats
+- Reads RAW file EXIF data
+
+### Fallback: GDI+ PropertyItems
+
+For formats without ImageMagick EXIF support:
+
+```csharp
+using var fs = File.OpenRead(filePath);
+using var img = Image.FromStream(fs, false, false);
+
+// Read EXIF_DateTimeOriginal (tag 36867)
+var pi = img.GetPropertyItem(0x9003);
+var dateTimeText = enc.GetString(pi.Value, 0, pi.Len - 1);
+```
+
+Provides basic date/time information as a fallback.
+
+## Supported File Formats
+
+EXIF metadata support by format:
+
+| Format | EXIF Support | Notes |
+|--------|-------------|-------|
+| **JPEG** | Full | Most common EXIF carrier |
+| **TIFF** | Full | Professional standard |
+| **PNG** | Limited | Text chunks, not traditional EXIF |
+| **WebP** | Full | Modern format with EXIF |
+| **HEIF/HEIC** | Full | Apple's format, complete EXIF |
+| **RAW formats** | Full | CR2, NEF, ARW, etc. |
+| **GIF** | None | No EXIF support |
+| **BMP** | None | No EXIF support |
+| **SVG** | None | Vector format, no EXIF |
+
+<Note>
+PNG files can contain EXIF-like data in text chunks (tEXt, iTXt, zTXt), which ImageGlass may read depending on the encoder.
+</Note>
+
+## Privacy Considerations
+
+### Location Data
+
+Some images contain GPS coordinates in EXIF:
+
+<Warning>
+Sharing images with GPS EXIF data reveals the location where photos were taken. Remove GPS tags before sharing sensitive images.
+</Warning>
+
+### Personal Information
+
+EXIF can contain:
+- Your name (Artist field)
+- Camera serial number
+- Software and device information
+- Editing history
+
+**To protect privacy:**
+- Use EXIF removal tools before sharing
+- Configure camera to not embed GPS
+- Use "Export for Web" features in editors
+
+## Troubleshooting
+
+### No EXIF Data Displayed
+
+**Possible causes:**
+- Image format doesn't support EXIF
+- EXIF data was stripped during editing
+- File is corrupted
+- Image is a screenshot or digital creation
+
+**Solutions:**
+- Verify file format supports EXIF (see table above)
+- Check original file before editing
+- Use EXIF reader tool to verify data exists
+
+### Wrong Date Displayed
+
+**Possible causes:**
+- Camera clock was set incorrectly
+- File was edited and timestamp updated
+- Timezone conversion issues
+
+**Solutions:**
+- Use **ExifDateTimeOriginal** for true capture time
+- Check camera date/time settings
+- Use EXIF editing tool to correct dates
+
+### Incomplete EXIF Data
+
+**Possible causes:**
+- Limited metadata from source device
+- Some fields not supported by camera
+- Data stripped by editing software
+
+**Solutions:**
+- Check camera settings for metadata options
+- Enable "Preserve EXIF" in editing software
+- Use original unedited files when possible
+
+### Special Characters Garbled
+
+**Possible causes:**
+- Character encoding issues
+- Unicode not properly supported
+
+**Solutions:**
+- Check camera language settings
+- Re-save with UTF-8 encoding
+- Edit metadata with specialized tools
+
+## Best Practices
+
+<Tip>
+**Preserve originals**: Keep original files with EXIF intact for archival purposes.
+</Tip>
+
+<Tip>
+**Set camera clock**: Ensure your camera's date/time is accurate for proper EXIF timestamps.
+</Tip>
+
+<Tip>
+**Use consistent copyright**: Set copyright information in-camera or during import for automatic attribution.
+</Tip>
+
+<Tip>
+**Review before sharing**: Check EXIF data before sharing images publicly to avoid privacy issues.
+</Tip>
+
+## Related Features
+
+- [Color Management](/advanced/color-management) - Utilize color space EXIF data
+- [Image Info Settings](/user-guide/settings#image-info) - Configure visible EXIF fields
+- [Slideshow](/advanced/slideshow) - View EXIF during slideshow presentations
+- [File Management](/user-guide/file-operations) - Organize by EXIF dates

@@ -1,0 +1,253 @@
+---
+title: Supported Formats
+description: Complete list of image formats supported by ImageGlass
+icon: file-image
+---
+
+## Overview
+
+ImageGlass supports over **90+ image formats** out of the box, including modern formats, RAW camera files, and legacy formats.
+
+## Standard Image Formats
+
+<CardGroup cols={2}>
+  <Card title="Common Formats" icon="image">
+    - **PNG** - Portable Network Graphics
+    - **JPG/JPEG** - Joint Photographic Experts Group
+    - **GIF** - Graphics Interchange Format
+    - **BMP** - Bitmap Image File
+    - **TIFF/TIF** - Tagged Image File Format
+    - **ICO** - Icon Format
+    - **CUR** - Cursor Format
+  </Card>
+
+  <Card title="Modern Formats" icon="sparkles">
+    - **WEBP** - Web Picture Format
+    - **AVIF** - AV1 Image File Format
+    - **JXL** - JPEG XL
+    - **HEIC/HEIF** - High Efficiency Image Format
+    - **APNG** - Animated PNG
+    - **QOI** - Quite OK Image Format
+    - **FLIF** - Free Lossless Image Format
+  </Card>
+</CardGroup>
+
+## Vector & Document Formats
+
+<Accordion title="Vector Graphics" icon="vector-square">
+  - **SVG** - Scalable Vector Graphics (rendered via WebView2)
+  - **EMF** - Enhanced Metafile
+  - **WMF** - Windows Metafile
+</Accordion>
+
+## RAW Camera Formats
+
+ImageGlass supports RAW image files from major camera manufacturers:
+
+<AccordionGroup>
+  <Accordion title="Canon" icon="camera">
+    - **CR2** - Canon Raw 2
+    - **CR3** - Canon Raw 3
+    - **CRW** - Canon Raw
+  </Accordion>
+
+  <Accordion title="Nikon" icon="camera">
+    - **NEF** - Nikon Electronic Format
+    - **NRW** - Nikon Raw
+  </Accordion>
+
+  <Accordion title="Sony" icon="camera">
+    - **ARW** - Sony Alpha Raw
+    - **SRF** - Sony Raw Format
+    - **SR2** - Sony Raw 2
+  </Accordion>
+
+  <Accordion title="Fujifilm" icon="camera">
+    - **RAF** - Fuji Raw
+  </Accordion>
+
+  <Accordion title="Olympus" icon="camera">
+    - **ORF** - Olympus Raw Format
+  </Accordion>
+
+  <Accordion title="Panasonic" icon="camera">
+    - **RW2** - Panasonic Raw 2
+    - **RAW** - Panasonic Raw
+  </Accordion>
+
+  <Accordion title="Pentax" icon="camera">
+    - **PEF** - Pentax Electronic File
+    - **PTX** - Pentax Raw
+  </Accordion>
+
+  <Accordion title="Other Manufacturers" icon="camera">
+    - **DNG** - Digital Negative (Adobe)
+    - **3FR** - Hasselblad 3F Raw
+    - **ARI** - ARRI Raw
+    - **BAY** - Casio Raw
+    - **CAP** - Phase One Capture
+    - **DCR** - Kodak Raw
+    - **DCS** - Kodak DCS Raw
+    - **DRF** - Kodak Digital Raw
+    - **EIP** - Enhanced Image Package
+    - **ERF** - Epson Raw
+    - **FFF** - Imacon Raw
+    - **GPR** - GoPro Raw
+    - **IIQ** - Phase One Raw
+    - **K25** - Kodak K25 Raw
+    - **KDC** - Kodak Digital Camera Raw
+    - **MDC** - Minolta Raw
+    - **MEF** - Mamiya Raw
+    - **MOS** - Leaf Raw
+    - **MRW** - Minolta Raw
+    - **OBM** - Olympus Raw
+    - **R3D** - RED Raw
+    - **RWL** - Leica Raw
+    - **RWZ** - Rawzor Raw
+    - **SRW** - Samsung Raw
+    - **X3F** - Sigma Raw
+  </Accordion>
+</AccordionGroup>
+
+## Specialized Formats
+
+<Table>
+  <thead>
+    <tr>
+      <th>Format</th>
+      <th>Extension</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Adobe Formats</td>
+      <td>.PSD, .PSB</td>
+      <td>Photoshop Document, Photoshop Big</td>
+    </tr>
+    <tr>
+      <td>HDR Formats</td>
+      <td>.HDR, .EXR</td>
+      <td>High Dynamic Range, OpenEXR</td>
+    </tr>
+    <tr>
+      <td>JPEG Variants</td>
+      <td>.JP2, .JXR, .JFIF</td>
+      <td>JPEG 2000, JPEG XR, JPEG File Interchange Format</td>
+    </tr>
+    <tr>
+      <td>Windows HD Photo</td>
+      <td>.HDP, .WDP</td>
+      <td>HD Photo, Windows Media Photo</td>
+    </tr>
+    <tr>
+      <td>Truevision</td>
+      <td>.TGA</td>
+      <td>Truevision Graphics Adapter</td>
+    </tr>
+    <tr>
+      <td>DirectDraw Surface</td>
+      <td>.DDS</td>
+      <td>DirectDraw Surface (texture format)</td>
+    </tr>
+    <tr>
+      <td>FITS</td>
+      <td>.FITS</td>
+      <td>Flexible Image Transport System (astronomy)</td>
+    </tr>
+    <tr>
+      <td>PCX</td>
+      <td>.PCX</td>
+      <td>PiCture eXchange</td>
+    </tr>
+    <tr>
+      <td>CUT</td>
+      <td>.CUT</td>
+      <td>Dr. Halo</td>
+    </tr>
+    <tr>
+      <td>PNM Formats</td>
+      <td>.PBM, .PGM, .PPM</td>
+      <td>Portable Bitmap, Graymap, Pixmap</td>
+    </tr>
+    <tr>
+      <td>Other</td>
+      <td>.DIB, .HIF, .VIFF, .WPG, .XBM, .XPM, .XV, .PXN</td>
+      <td>Various legacy and specialized formats</td>
+    </tr>
+  </tbody>
+</Table>
+
+## Animated Formats
+
+ImageGlass provides full support for multi-frame and animated images:
+
+- **GIF** - Animated GIF with frame navigation
+- **WEBP** - Animated WEBP
+- **APNG** - Animated PNG
+- **TIFF** - Multi-page TIFF documents
+- **AVIF** - Animated AVIF
+- **HEIC/HEIF** - Multi-frame HEIC images
+- **JXL** - Animated JPEG XL
+- **ICO** - Multi-resolution icons
+
+<Note>
+  Some formats like AVIF, HEIC, HEIF, PSD, and JXL are treated as single-frame formats by default for better performance. Use the Frame Navigator tool to access all frames.
+</Note>
+
+## Save/Export Formats
+
+When saving or exporting images, ImageGlass supports the following formats:
+
+<CardGroup cols={3}>
+  <Card title="Modern" icon="sparkles">
+    - AVIF
+    - WEBP
+    - JXL
+  </Card>
+  
+  <Card title="Standard" icon="file">
+    - PNG
+    - JPG
+    - GIF
+    - BMP
+    - TIFF
+  </Card>
+  
+  <Card title="Other" icon="file-export">
+    - EMF
+    - WMF
+    - EXIF
+    - ICO
+    - Base64 (.b64, .txt)
+  </Card>
+</CardGroup>
+
+## Complete Format List
+
+Here's the complete list of all supported file extensions:
+
+```text
+.3fr .apng .ari .arw .avif .b64 .bay .bmp .cap .cr2 .cr3 .crw .cur .cut
+.dcr .dcs .dds .dib .dng .drf .eip .emf .erf .exif .exr .fff .fits .flif
+.gif .gifv .gpr .hdp .hdr .heic .heif .hif .ico .iiq .jfif .jp2 .jpe .jpeg
+.jpg .jxl .jxr .k25 .kdc .mdc .mef .mjpeg .mos .mrw .nef .nrw .obm .orf
+.pbm .pcx .pef .pgm .png .ppm .psb .psd .ptx .pxn .qoi .r3d .raf .raw .rw2
+.rwl .rwz .sr2 .srf .srw .svg .tga .tif .tiff .viff .wdp .webp .wmf .wpg
+.x3f .xbm .xpm .xv
+```
+
+<Tip>
+  ImageGlass uses Windows Imaging Component (WIC) codecs, which means it can support additional formats if you have third-party codecs installed on your system.
+</Tip>
+
+## Format-Specific Notes
+
+### SVG Files
+SVG files are rendered using Microsoft WebView2 for accurate vector graphics display. Make sure WebView2 runtime is installed for optimal SVG viewing.
+
+### RAW Files
+RAW format support is provided through WIC codecs. Image quality and feature support may vary depending on your installed codecs.
+
+### Multi-Frame Images
+Use the **Frame Navigator** tool (`P` key) to navigate through frames, control animation playback, and export individual frames from animated or multi-page images.

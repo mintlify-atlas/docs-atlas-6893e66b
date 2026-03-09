@@ -1,0 +1,538 @@
+---
+title: igcmd Commands
+description: Complete reference for all ImageGlass command-line interface commands
+---
+
+Complete reference documentation for all 14 igcmd commands.
+
+## Quick Setup & Updates
+
+### quick-setup
+
+Launch the ImageGlass quick setup wizard for initial configuration.
+
+```bash
+igcmd.exe quick-setup
+```
+
+**Parameters:** None
+
+**Exit Codes:**
+- `0` - Setup completed successfully
+- `2` - Error during setup
+
+**Example:**
+```bash
+igcmd.exe quick-setup
+```
+
+---
+
+### check-for-update
+
+Check for available ImageGlass updates and display the update dialog.
+
+```bash
+igcmd.exe check-for-update
+```
+
+**Parameters:** None
+
+**Exit Codes:**
+- `0` - Check completed successfully
+- `2` - Error checking for updates
+
+**Example:**
+```bash
+igcmd.exe check-for-update
+```
+
+---
+
+## Wallpaper & Lock Screen
+
+### set-wallpaper
+
+Set an image as the Windows desktop wallpaper.
+
+```bash
+igcmd.exe set-wallpaper <imagePath> <style>
+```
+
+<ParamField path="imagePath" type="string" required>
+  Full path to the image file
+</ParamField>
+
+<ParamField path="style" type="enum" required>
+  Wallpaper display style. Options:
+  - `Centered` (0) - Center image on screen
+  - `Stretched` (1) - Stretch to fill screen
+  - `Tiled` (2) - Tile image across screen
+  - `Current` (-1) - Use current Windows wallpaper style
+</ParamField>
+
+**Exit Codes:**
+- `0` - Wallpaper set successfully
+- `1` - Administrator privileges required
+- `2` - Error setting wallpaper (invalid style or file error)
+
+**Examples:**
+```bash
+# Set wallpaper centered
+igcmd.exe set-wallpaper "C:\Photos\landscape.jpg" Centered
+
+# Set wallpaper stretched
+igcmd.exe set-wallpaper "C:\Photos\nature.png" Stretched
+
+# Set wallpaper tiled
+igcmd.exe set-wallpaper "C:\Photos\pattern.jpg" Tiled
+
+# Use current wallpaper style
+igcmd.exe set-wallpaper "C:\Photos\photo.jpg" Current
+```
+
+**See also:** [Set Wallpaper Guide](/cli/set-wallpaper)
+
+---
+
+### set-lock-screen
+
+Set an image as the Windows lock screen background.
+
+```bash
+igcmd.exe set-lock-screen <imagePath>
+```
+
+<ParamField path="imagePath" type="string" required>
+  Full path to the image file
+</ParamField>
+
+**Exit Codes:**
+- `0` - Lock screen set successfully
+- `1` - Administrator privileges required
+- `2` - Error setting lock screen
+
+**Example:**
+```bash
+igcmd.exe set-lock-screen "C:\Photos\lockscreen.jpg"
+```
+
+---
+
+## File Associations
+
+### set-default-viewer
+
+Register ImageGlass as the default photo viewer for specified file extensions.
+
+```bash
+igcmd.exe set-default-viewer [extensions] [--per-machine] [--ui]
+```
+
+<ParamField path="extensions" type="string" default="all supported formats">
+  Semicolon-separated list of extensions. Example: `.jpg;.png;.gif`
+  
+  If omitted, all supported image formats are registered.
+</ParamField>
+
+<ParamField path="--per-machine" type="flag">
+  Apply system-wide (requires administrator privileges)
+</ParamField>
+
+<ParamField path="--ui" type="flag">
+  Show confirmation dialog on success
+</ParamField>
+
+**Exit Codes:**
+- `0` - Registration successful
+- `1` - Administrator privileges required (with --per-machine)
+- `2` - Error during registration
+
+**Examples:**
+```bash
+# Register all supported formats (current user)
+igcmd.exe set-default-viewer
+
+# Register specific formats
+igcmd.exe set-default-viewer ".jpg;.png;.gif"
+
+# Register system-wide with confirmation
+igcmd.exe set-default-viewer ".jpg;.png" --per-machine --ui
+```
+
+**See also:** [File Associations Guide](/cli/file-associations)
+
+---
+
+### remove-default-viewer
+
+Unregister ImageGlass as the default photo viewer for specified file extensions.
+
+```bash
+igcmd.exe remove-default-viewer [extensions] [--per-machine] [--ui]
+```
+
+<ParamField path="extensions" type="string" default="all registered formats">
+  Semicolon-separated list of extensions. Example: `.jpg;.png;.gif`
+  
+  If omitted, all registered formats are unregistered.
+</ParamField>
+
+<ParamField path="--per-machine" type="flag">
+  Apply system-wide (requires administrator privileges)
+</ParamField>
+
+<ParamField path="--ui" type="flag">
+  Show confirmation dialog on success
+</ParamField>
+
+**Exit Codes:**
+- `0` - Unregistration successful
+- `1` - Administrator privileges required (with --per-machine)
+- `2` - Error during unregistration
+
+**Examples:**
+```bash
+# Unregister all formats
+igcmd.exe remove-default-viewer
+
+# Unregister specific formats
+igcmd.exe remove-default-viewer ".jpg;.png"
+
+# Unregister system-wide
+igcmd.exe remove-default-viewer --per-machine
+```
+
+**See also:** [File Associations Guide](/cli/file-associations)
+
+---
+
+## Image Operations
+
+### export-frames
+
+Export individual frames from animated images (GIF, WebP, APNG, etc.).
+
+```bash
+igcmd.exe export-frames <imagePath>
+```
+
+<ParamField path="imagePath" type="string" required>
+  Full path to the animated image file
+</ParamField>
+
+**Behavior:**
+- Opens a folder picker dialog to select destination
+- Extracts all frames to the selected folder
+- Frames are numbered sequentially
+
+**Exit Codes:**
+- `0` - Frames exported successfully
+- `2` - Error (file not found or invalid format)
+
+**Examples:**
+```bash
+# Export frames from animated GIF
+igcmd.exe export-frames "C:\Images\animation.gif"
+
+# Export frames from animated WebP
+igcmd.exe export-frames "C:\Images\animated.webp"
+```
+
+**Supported formats:**
+- Animated GIF
+- Animated WebP
+- Animated PNG (APNG)
+- Multi-frame TIFF
+
+**See also:** [Export Frames Guide](/cli/export-frames)
+
+---
+
+### lossless-compress
+
+Perform lossless compression on an image to reduce file size without quality loss.
+
+```bash
+igcmd.exe lossless-compress <imagePath>
+```
+
+<ParamField path="imagePath" type="string" required>
+  Full path to the image file to compress
+</ParamField>
+
+**Behavior:**
+- Compresses the image file in-place
+- No quality loss (lossless compression)
+- Original file is overwritten
+
+**Exit Codes:**
+- `0` - Compression successful
+- `1` - Administrator privileges required
+- `2` - Error during compression
+
+**Example:**
+```bash
+igcmd.exe lossless-compress "C:\Photos\image.png"
+```
+
+**Note:** Make a backup before compressing if you want to preserve the original file.
+
+---
+
+### start-slideshow
+
+Start a slideshow from a specific image file.
+
+```bash
+igcmd.exe start-slideshow <imagePath>
+```
+
+<ParamField path="imagePath" type="string" required>
+  Full path to the starting image file
+</ParamField>
+
+**Behavior:**
+- Opens fullscreen slideshow viewer
+- Starts with the specified image
+- Includes all images in the same folder
+
+**Exit Codes:**
+- `0` - Slideshow completed
+- `2` - Error (file not found or invalid path)
+
+**Example:**
+```bash
+igcmd.exe start-slideshow "C:\Photos\vacation\IMG001.jpg"
+```
+
+---
+
+## Customization
+
+### install-languages
+
+Install one or more language pack files.
+
+```bash
+igcmd.exe install-languages <filePath> [filePath2] [filePath3] ...
+```
+
+<ParamField path="filePath" type="string" required>
+  Path to language pack file(s) (.iglang files)
+  
+  Multiple files can be specified separated by spaces
+</ParamField>
+
+**Exit Codes:**
+- `0` - Language pack(s) installed successfully
+- `1` - Administrator privileges required
+- `2` - Error during installation
+
+**Examples:**
+```bash
+# Install single language pack
+igcmd.exe install-languages "Spanish.iglang"
+
+# Install multiple language packs
+igcmd.exe install-languages "French.iglang" "German.iglang" "Italian.iglang"
+```
+
+**Installation location:**
+- Language packs are installed to the ImageGlass languages directory
+- After installation, select the language in ImageGlass settings
+
+---
+
+### install-themes
+
+Install one or more theme pack files.
+
+```bash
+igcmd.exe install-themes <filePath> [filePath2] [filePath3] ...
+```
+
+<ParamField path="filePath" type="string" required>
+  Path to theme pack file(s) (.igtheme files)
+  
+  Multiple files can be specified separated by spaces
+</ParamField>
+
+**Exit Codes:**
+- `0` - Theme pack(s) installed successfully
+- `1` - Administrator privileges required
+- `2` - Error during installation
+
+**Examples:**
+```bash
+# Install single theme
+igcmd.exe install-themes "DarkMode.igtheme"
+
+# Install multiple themes
+igcmd.exe install-themes "Theme1.igtheme" "Theme2.igtheme"
+
+# Install with UI confirmation
+igcmd.exe install-themes "Custom.igtheme" --ui
+```
+
+**Installation location:**
+- User themes: `%APPDATA%\ImageGlass\Themes\`
+- After installation, select the theme in ImageGlass settings
+
+---
+
+### uninstall-theme
+
+Uninstall a theme pack by removing its directory.
+
+```bash
+igcmd.exe uninstall-theme <themeDirPath>
+```
+
+<ParamField path="themeDirPath" type="string" required>
+  Full path to the theme directory to remove
+</ParamField>
+
+**Exit Codes:**
+- `0` - Theme uninstalled successfully
+- `2` - Error (theme not found or is default theme)
+
+**Example:**
+```bash
+igcmd.exe uninstall-theme "C:\Users\User\AppData\Roaming\ImageGlass\Themes\CustomTheme"
+```
+
+**Note:** The default theme cannot be uninstalled.
+
+---
+
+## Performance
+
+### set-startup-boost
+
+Enable startup boost to launch ImageGlass with Windows for faster subsequent launches.
+
+```bash
+igcmd.exe set-startup-boost [--ui]
+```
+
+<ParamField path="--ui" type="flag">
+  Show confirmation dialog on success
+</ParamField>
+
+**Exit Codes:**
+- `0` - Startup boost enabled successfully
+- `1` - Administrator privileges required
+- `2` - Error enabling startup boost
+
+**Examples:**
+```bash
+# Enable startup boost
+igcmd.exe set-startup-boost
+
+# Enable with confirmation
+igcmd.exe set-startup-boost --ui
+```
+
+**Behavior:**
+- Adds ImageGlass to Windows startup
+- Runs in background to reduce launch time
+- Does not open a window on startup
+
+---
+
+### remove-startup-boost
+
+Disable startup boost and remove ImageGlass from Windows startup.
+
+```bash
+igcmd.exe remove-startup-boost [--ui]
+```
+
+<ParamField path="--ui" type="flag">
+  Show confirmation dialog on success
+</ParamField>
+
+**Exit Codes:**
+- `0` - Startup boost disabled successfully
+- `1` - Administrator privileges required
+- `2` - Error disabling startup boost
+
+**Examples:**
+```bash
+# Disable startup boost
+igcmd.exe remove-startup-boost
+
+# Disable with confirmation
+igcmd.exe remove-startup-boost --ui
+```
+
+---
+
+## Global Options
+
+These options can be combined with most commands:
+
+### --ui
+
+Show UI dialogs for success and error messages.
+
+```bash
+igcmd.exe <command> [arguments] --ui
+```
+
+### --per-machine
+
+Apply settings system-wide instead of current user only. Requires administrator privileges.
+
+```bash
+igcmd.exe <command> [arguments] --per-machine
+```
+
+### --hide-admin-error-ui
+
+Suppress error dialogs when administrator privileges are required.
+
+```bash
+igcmd.exe <command> [arguments] --hide-admin-error-ui
+```
+
+## Exit Code Handling
+
+All commands return standard exit codes that can be checked in scripts:
+
+```bash
+# Batch script example
+@echo off
+igcmd.exe set-wallpaper "image.jpg" Centered
+
+if %ERRORLEVEL% EQU 0 (
+    echo Success
+) else if %ERRORLEVEL% EQU 1 (
+    echo Administrator privileges required
+) else if %ERRORLEVEL% EQU 3 (
+    echo File not found
+) else (
+    echo Error occurred
+)
+```
+
+```powershell
+# PowerShell example
+igcmd.exe set-wallpaper "image.jpg" Centered
+
+switch ($LASTEXITCODE) {
+    0 { Write-Host "Success" }
+    1 { Write-Host "Administrator privileges required" }
+    3 { Write-Host "File not found" }
+    default { Write-Host "Error occurred" }
+}
+```
+
+## See Also
+
+- [CLI Overview](/cli/overview)
+- [Quick Setup Guide](/cli/quick-setup)
+- [Wallpaper Commands](/cli/set-wallpaper)
+- [File Associations](/cli/file-associations)
+- [Export Frames](/cli/export-frames)
