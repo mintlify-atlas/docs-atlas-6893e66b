@@ -89,7 +89,7 @@ Extracts individual pages from a multi-page TIFF file.
 
 ### Batch Frame Extraction
 
-```bash
+```batch
 @echo off
 setlocal enabledelayedexpansion
 
@@ -142,7 +142,7 @@ Write-Host "Batch extraction complete" -ForegroundColor Green
 
 ### Error Handling
 
-```bash
+```batch
 @echo off
 set "image=C:\Images\animation.gif"
 
@@ -264,7 +264,7 @@ igcmd.exe export-frames "icon.ico"
 
 ### Extract GIF Frames for Editing
 
-```bash
+```batch
 @echo off
 echo Extracting frames for editing...
 igcmd.exe export-frames "source_animation.gif"
@@ -275,7 +275,7 @@ pause
 
 ### Analyze Animation Sequences
 
-```bash
+```batch
 rem Extract frames to analyze animation sequence
 igcmd.exe export-frames "complex_animation.webp"
 echo Frames extracted for frame-by-frame analysis
@@ -283,7 +283,7 @@ echo Frames extracted for frame-by-frame analysis
 
 ### Convert Animation to Image Sequence
 
-```bash
+```batch
 @echo off
 echo Converting animation to image sequence...
 igcmd.exe export-frames "%1"
@@ -294,7 +294,7 @@ if %ERRORLEVEL% EQU 0 (
 
 ### Extract Icon Sizes
 
-```bash
+```batch
 rem Extract different icon resolutions
 igcmd.exe export-frames "application.ico"
 echo Individual icon sizes extracted
@@ -302,7 +302,7 @@ echo Individual icon sizes extracted
 
 ### Quality Comparison
 
-```bash
+```batch
 rem Extract frames from different compression formats for quality comparison
 igcmd.exe export-frames "animation_original.gif"
 igcmd.exe export-frames "animation_compressed.webp"
